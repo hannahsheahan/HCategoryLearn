@@ -8,7 +8,7 @@ public class TotalScoreUpdateScript : MonoBehaviour {
     public Text ScoreUpdate;
     private int currentTotalScore;
     private int trialScore;
-
+    private Color colr;
     // ********************************************************************** //
 
     void Update () 
@@ -20,7 +20,9 @@ public class TotalScoreUpdateScript : MonoBehaviour {
         if (GameController.control.flashTotalScore)
         {
             // show how much the score will be updated by
-            ScoreUpdate.color = Color.white;
+            colr = Color.white;
+            colr.a = 0.6f;
+            ScoreUpdate.color = colr;
             ScoreUpdate.fontSize = 18;
 
             trialScore = GameController.control.trialScore;
@@ -28,22 +30,28 @@ public class TotalScoreUpdateScript : MonoBehaviour {
             {
                 ScoreUpdate.text = "+" + trialScore.ToString();
 
-                TotalScore.color = Color.cyan;  // flash cyan since +ve update
-                TotalScore.fontSize = 36;
+                colr = Color.cyan;
+                colr.a = 0.7f;
+                TotalScore.color = colr;  // flash cyan since +ve update
+                TotalScore.fontSize = 34;
             }
             else
             {
                 ScoreUpdate.text = trialScore.ToString();
 
-                TotalScore.color = Color.red;  // flash red since -ve update
-                TotalScore.fontSize = 36;
+                colr = Color.red;
+                colr.a = 0.7f;
+                TotalScore.color = colr;  // flash red since -ve update
+                TotalScore.fontSize = 34;
             }
 
         }
         else
         {
-            TotalScore.color = Color.white;
-            TotalScore.fontSize = 26;
+            colr = Color.white;
+            colr.a = 0.6f;
+            TotalScore.color = colr;
+            TotalScore.fontSize = 22;
 
             ScoreUpdate.text = "";
         }

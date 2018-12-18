@@ -61,7 +61,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\CelebrateBothRewardsHit.cs" />
     <Compile Include="Assets\Scripts\ChoiceMadeScript.cs" />
     <Compile Include="Assets\Scripts\ContinueButtonScript.cs" />
     <Compile Include="Assets\Scripts\DataController.cs" />

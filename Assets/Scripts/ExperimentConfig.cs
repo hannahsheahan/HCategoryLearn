@@ -114,7 +114,7 @@ public class ExperimentConfig
 
             case "micro_debug":            // ----Mini debugging test experiment-----
                 practiceTrials = 1 + getReadyTrial;
-                nExecutedTrials = 1;                                         // note that this is only used for the micro_debug version
+                nExecutedTrials = 3;                                         // note that this is only used for the micro_debug version
                 totalTrials = nExecutedTrials + setupAndCloseTrials + practiceTrials;        // accounts for the Persistent, StartScreen and Exit 'trials'
                 restFrequency = 2 + restbreakOffset;                            // Take a rest after this many normal trials
                 restbreakDuration = 5.0f;                                       // how long are the imposed rest breaks?
@@ -143,8 +143,8 @@ public class ExperimentConfig
         minDwellAtReward = 0.1f;
         displayMessageTime = 1.5f;
         errorDwellTime = 1.5f;                // Note: should be at least as long as displayMessageTime
-        pausePriorFeedbackTime = 0.5f;
-        feedbackFlashDuration = 1.0f;         // duration that colour button feedback is shown for
+        pausePriorFeedbackTime = 0.3f;
+        feedbackFlashDuration = 1.2f;         // duration that colour button feedback is shown for
         numberPresentsPerRoom = 4;
 
         // These variables define the environment (are less likely to be played with)
@@ -565,7 +565,7 @@ public class ExperimentConfig
             rewardTypes[trial] = context;
 
             // Write the answer to the question
-            trialAnswers[trial] = context;   // for now
+            trialAnswers[trial] = "A";   // for now
             trialQuestions[trial] = "Question placeholder"; // for now
 
 
