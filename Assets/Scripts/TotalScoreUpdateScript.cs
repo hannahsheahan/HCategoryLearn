@@ -21,7 +21,7 @@ public class TotalScoreUpdateScript : MonoBehaviour {
         {
             // show how much the score will be updated by
             ScoreUpdate.color = Color.white;
-            ScoreUpdate.fontSize = 24;
+            ScoreUpdate.fontSize = 18;
 
             trialScore = GameController.control.trialScore;
             if (trialScore>=0)
@@ -29,21 +29,21 @@ public class TotalScoreUpdateScript : MonoBehaviour {
                 ScoreUpdate.text = "+" + trialScore.ToString();
 
                 TotalScore.color = Color.cyan;  // flash cyan since +ve update
-                TotalScore.fontSize = 50;
+                TotalScore.fontSize = 36;
             }
             else
             {
                 ScoreUpdate.text = trialScore.ToString();
 
                 TotalScore.color = Color.red;  // flash red since -ve update
-                TotalScore.fontSize = 50;
+                TotalScore.fontSize = 36;
             }
 
         }
         else
         {
             TotalScore.color = Color.white;
-            TotalScore.fontSize = 36;
+            TotalScore.fontSize = 26;
 
             ScoreUpdate.text = "";
         }

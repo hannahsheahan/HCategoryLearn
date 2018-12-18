@@ -52,12 +52,16 @@ public class ExperimentConfig
     public Vector3[][] presentPositions;
 
     // Rewards
-    private string[] possibleRewardTypes; 
+    private string[] possibleRewardTypes;
     private string[] rewardTypes;             // diamond or gold? (martini or beer)
+    private string[] trialAnswers;            // correct answer
+    private string[][] possibleTrialAnswers;  // options presented on each trial
+    private string[] trialQuestions;
+
     public int numberPresentsPerRoom;
 
     // Timer variables (public since fewer things go wrong if these are changed externally, since this will be tracked in the data, but please don't...)
-    public float maxMovementTime;
+    public float maxResponseTime;
     public float preDisplayCueTime;
     public float goalHitPauseTime;
     public float finalGoalHitPauseTime;
@@ -68,22 +72,28 @@ public class ExperimentConfig
     public float errorDwellTime;
     public float restbreakDuration;
     public float getReadyDuration;
+    public float pausePriorFeedbackTime;
+    public float feedbackFlashDuration;
     private float dataRecordFrequency;       // NOTE: this frequency is referred to in TrackingScript.cs for player data and here for state data
 
     // Randomisation of trial sequence
     public System.Random rand = new System.Random();
+
+    public List<string> possibleQuestions = new List<string>();
+    public List<string[]> possibleOptions = new List<string[]>();
+    public List<string> possibleCorrectAnswers = new List<string>();
 
     // Preset experiments
     public string experimentVersion;
     private int nExecutedTrials;            // to be used in micro_debug mode only
     // ********************************************************************** //
     // Use a constructor to set this up
-    public ExperimentConfig() 
+    public ExperimentConfig()
     {
         //experimentVersion = "mturk_learnpilot";
-        experimentVersion = "micro_debug"; 
+        experimentVersion = "micro_debug";
         //experimentVersion = "singleblock_labpilot";
-        
+
 
         // Set these variables to define your experiment:
         switch (experimentVersion)
@@ -97,13 +107,13 @@ public class ExperimentConfig
 
             case "singleblock_labpilot":   // ----Mini 1 block test experiment-----
                 practiceTrials = 1 + getReadyTrial;
-                totalTrials = 16  + setupAndCloseTrials + practiceTrials;        // accounts for the Persistent, StartScreen and Exit 'trials'
-                restFrequency = 20   + restbreakOffset;                          // Take a rest after this many normal trials
+                totalTrials = 16 + setupAndCloseTrials + practiceTrials;        // accounts for the Persistent, StartScreen and Exit 'trials'
+                restFrequency = 20 + restbreakOffset;                          // Take a rest after this many normal trials
                 restbreakDuration = 5.0f;                                        // how long are the imposed rest breaks?
                 break;
 
             case "micro_debug":            // ----Mini debugging test experiment-----
-                practiceTrials = 0 + getReadyTrial;
+                practiceTrials = 1 + getReadyTrial;
                 nExecutedTrials = 1;                                         // note that this is only used for the micro_debug version
                 totalTrials = nExecutedTrials + setupAndCloseTrials + practiceTrials;        // accounts for the Persistent, StartScreen and Exit 'trials'
                 restFrequency = 2 + restbreakOffset;                            // Take a rest after this many normal trials
@@ -116,36 +126,41 @@ public class ExperimentConfig
         }
 
         // Figure out how many rest breaks we will have and add them to the trial list
-        nbreaks = Math.Max( (int)((totalTrials - setupAndCloseTrials - practiceTrials) / restFrequency), 0 );  // round down to whole integer
+        nbreaks = Math.Max((int)((totalTrials - setupAndCloseTrials - practiceTrials) / restFrequency), 0);  // round down to whole integer
         totalTrials = totalTrials + nbreaks;
-       
+
         // Timer variables (measured in seconds) - these can later be changed to be different per trial for jitter etc
         dataRecordFrequency = 0.04f;
-        getReadyDuration = 5.0f;    // how long do we have to 'get ready' after the practice, before main experiment begins?
+        getReadyDuration = 5.0f;         // how long do we have to 'get ready' after the practice, before main experiment begins?
 
         // Note that when used, jitters ADD to these values - hence they are minimums
-        maxMovementTime        = 60.0f;   // time allowed to collect both rewards, incl. wait after hitting first one
-        preDisplayCueTime      = 1.5f;    // will take a TR during this period
-        displayCueTime         = 2.0f;
-        goCueDelay             = 1.5f;    // will take a TR during this period
-        goalHitPauseTime       = 1.0f;    // we will take a TR during this period
-        finalGoalHitPauseTime  = 2.0f;    // we will take a TR during this period (but should be independent of first goal hit time in case we want to jitter)
-        minDwellAtReward       = 0.1f;      
-        displayMessageTime     = 1.5f;     
-        errorDwellTime         = 1.5f;    // Note: should be at least as long as displayMessageTime
-        numberPresentsPerRoom  = 4;
+        maxResponseTime = 10.0f;         // time allowed to collect both rewards, incl. wait after hitting first one
+        preDisplayCueTime = 1.5f;        // will take a TR during this period
+        displayCueTime = 2.0f;
+        goCueDelay = 1.5f;               // will take a TR during this period
+        goalHitPauseTime = 1.0f;         // we will take a TR during this period
+        finalGoalHitPauseTime = 2.0f;    // we will take a TR during this period (but should be independent of first goal hit time in case we want to jitter)
+        minDwellAtReward = 0.1f;
+        displayMessageTime = 1.5f;
+        errorDwellTime = 1.5f;                // Note: should be at least as long as displayMessageTime
+        pausePriorFeedbackTime = 0.5f;
+        feedbackFlashDuration = 1.0f;         // duration that colour button feedback is shown for
+        numberPresentsPerRoom = 4;
 
         // These variables define the environment (are less likely to be played with)
         roomSize = 5;           // rooms are each 5x5 grids. If this changes, you will need to change this code
         playerYposition = 72.5f;
-        starYposition   = 74.5f;
-
+        starYposition = 74.5f;
 
         // Define a maze, start and goal positions, and reward type for each trial
         trialMazes = new string[totalTrials];
         starRooms = new string[totalTrials];
         starPositions = new Vector3[totalTrials];
         rewardTypes = new string[totalTrials];
+        trialAnswers = new string[totalTrials];
+        trialQuestions = new string[totalTrials];
+        possibleTrialAnswers = new string[totalTrials][];  // ***HRS to test this works
+
         presentPositions = new Vector3[totalTrials][];
 
         // Generate a list of all the possible (player or star) spawn locations
@@ -159,7 +174,7 @@ public class ExperimentConfig
         trialMazes[3] = "ConsentScreen";
         trialMazes[4] = "StartScreen";
         trialMazes[5] = "InstructionsScreen";
-        trialMazes[setupTrials + practiceTrials-1] = "GetReady";
+        trialMazes[setupTrials + practiceTrials - 1] = "GetReady";
         trialMazes[totalTrials - 1] = "Exit";
 
         // Add in the practice trials in an open arena with little fog and no colour
@@ -175,15 +190,15 @@ public class ExperimentConfig
 
                 //---- training block 1
                 nextTrial = AddTrainingBlock(nextTrial);
-                nextTrial = RestBreakHere(nextTrial);                  
+                nextTrial = RestBreakHere(nextTrial);
 
                 //---- training block 2
                 nextTrial = AddTrainingBlock(nextTrial);
-                nextTrial = RestBreakHere(nextTrial);                   
+                nextTrial = RestBreakHere(nextTrial);
 
                 //---- training block 3
                 nextTrial = AddTrainingBlock(nextTrial);
-                nextTrial = RestBreakHere(nextTrial);                   
+                nextTrial = RestBreakHere(nextTrial);
 
                 //---- training block 4
                 nextTrial = AddTrainingBlock(nextTrial);
@@ -199,7 +214,7 @@ public class ExperimentConfig
             case "micro_debug":            // ----Mini debugging test experiment-----
 
                 // It can be useful to specify a miniature trial sequence for playing and debugging scenes
-                nextTrial = AddTrainingBlock_micro(nextTrial, nExecutedTrials); 
+                nextTrial = AddTrainingBlock_micro(nextTrial, nExecutedTrials);
                 break;
 
             default:
@@ -231,13 +246,13 @@ public class ExperimentConfig
         for (int trial = setupTrials; trial < setupTrials + practiceTrials - 1; trial++)
         {
             // just make the rewards on each side of the hallway/bridge
-            if ( trial % 2 == 0 )
+            if (trial % 2 == 0)
             {
-                SetDoubleRewardTrial(trial, "cheese", "blue", "red", "yellow");  
+                SetDoubleRewardTrial(trial, "cheese", "blue", "red", "yellow");
             }
             else
             {
-                SetDoubleRewardTrial(trial, "cheese", "red", "green", "blue"); 
+                SetDoubleRewardTrial(trial, "cheese", "red", "green", "blue");
             }
             trialMazes[trial] = "Practice";   // reset the maze for a practice trial
         }
@@ -252,7 +267,7 @@ public class ExperimentConfig
         int n = fourRooms.Length;
         int ind = rand.Next(n);   // Note: for some reason c# wants this stored to do randomisation, not directly input to fourRooms[rand.Next(n)]
 
-        return fourRooms[ind]; 
+        return fourRooms[ind];
     }
 
     // ********************************************************************** //
@@ -403,20 +418,7 @@ public class ExperimentConfig
                     break;
             }
 
-            // switch the side of the room the rewards are located on for each context
-            if (blockLength % 2 != 0)
-            {
-                Debug.Log("Error: Odd number of trials specified per block. Specify even number for proper counterbalancing");
-            }
-
-            if (i < (blockLength / 2))
-            {
-                contextSide = 1;
-            }
-            else
-            {
-                contextSide = 2;
-            }
+            contextSide = 1;  // ***HRS for now
 
             // Store trial setup in array, for later randomisation
             arrayContexts[i] = context;
@@ -474,7 +476,7 @@ public class ExperimentConfig
             }
 
             // switch the side of the room the rewards are located on for each context
-            if (i < (blockLength/2)) 
+            if (i < (blockLength / 2))
             {
                 contextSide = 1;
             }
@@ -505,40 +507,40 @@ public class ExperimentConfig
 
         bool trialSetCorrectly = false;
 
-            switch (context)
-            {
-                case "cheese":
-                       
-                    if (contextSide==1)
-                    {
-                        SetDoubleRewardTrial(trial, context, startRoom, "yellow", "blue");
-                        trialSetCorrectly = true;
-                    } 
-                    else if (contextSide==2)
-                    {
-                        SetDoubleRewardTrial(trial, context, startRoom, "green", "red");
-                        trialSetCorrectly = true;
-                    }
-                    break;
+        switch (context)
+        {
+            case "cheese":
 
-                case "wine":
+                if (contextSide == 1)
+                {
+                    SetDoubleRewardTrial(trial, context, startRoom, "yellow", "blue");
+                    trialSetCorrectly = true;
+                }
+                else if (contextSide == 2)
+                {
+                    SetDoubleRewardTrial(trial, context, startRoom, "green", "red");
+                    trialSetCorrectly = true;
+                }
+                break;
 
-                    if (contextSide == 1)
-                    {
-                        SetDoubleRewardTrial(trial, context, startRoom, "yellow", "green");
-                        trialSetCorrectly = true;
-                    }
-                    else if (contextSide == 2)
-                    {
-                        SetDoubleRewardTrial(trial, context, startRoom, "blue", "red");
-                        trialSetCorrectly = true;
-                    }
-                    break;
+            case "wine":
 
-                default:
-                    break;
-            }
-    
+                if (contextSide == 1)
+                {
+                    SetDoubleRewardTrial(trial, context, startRoom, "yellow", "green");
+                    trialSetCorrectly = true;
+                }
+                else if (contextSide == 2)
+                {
+                    SetDoubleRewardTrial(trial, context, startRoom, "blue", "red");
+                    trialSetCorrectly = true;
+                }
+                break;
+
+            default:
+                break;
+        }
+
         if (!trialSetCorrectly)
         {
             Debug.Log("Something went wrong specifying the rooms affiliated with each context!");
@@ -553,7 +555,7 @@ public class ExperimentConfig
         // Note: use this function within another that modulates context such that e.g. for 'cheese', the rooms for room1 and room2 reward are set
 
         // Check that we've inputted a valid trial number
-        if ( (trial < setupTrials - 1) || (trial == setupTrials - 1) )
+        if ((trial < setupTrials - 1) || (trial == setupTrials - 1))
         {
             Debug.Log("Trial randomisation failed: invalid trial number input writing to.");
         }
@@ -562,16 +564,58 @@ public class ExperimentConfig
             // Write the trial according to context and room/start locations
             rewardTypes[trial] = context;
 
+            // Write the answer to the question
+            trialAnswers[trial] = context;   // for now
+            trialQuestions[trial] = "Question placeholder"; // for now
+
+
             // this is a double reward trial
-            trialMazes[trial] = "MainTrial"; 
+            trialMazes[trial] = "MainTrial";
 
             // select random locations in rooms 1 and 2 for the two rewards (one in each)
             starRooms[trial] = rewardRoom1;
 
             // For a randomly selected reward location within each room
-            starPositions[trial] = RandomPositionInRoom(rewardRoom1);  
+            starPositions[trial] = RandomPositionInRoom(rewardRoom1);
 
         }
+    }
+
+    // ********************************************************************** //
+
+    private void SetPossibleQuestions()
+    {
+        // This function creates a list of possible questions (and answers) from which to generate trials.
+        // Each possible question comes with several 'possible' option answers, as well as a correct answer. 
+        // Each question-possible answers-actual answer tuple is associated through the same index.
+
+        // Create lists of Q-PA-A for all questions, then loop through to allocate appropriately
+
+        // ---- Question ---
+        possibleQuestions.Add("Q: is this a bird?");
+        // possibleOptions.Add({"Yes","No","Not sure"});
+        possibleCorrectAnswers.Add("No");
+
+        // ---- Question ---
+        possibleQuestions.Add("Q: is this a cat?");
+        // possibleOptions.Add({"Yes","No","Definitely not"});
+        possibleCorrectAnswers.Add("Definitely not");
+
+        // ---- Question ---
+        possibleQuestions.Add("Q: is this a cheese?");
+        // possibleOptions.Add({"Yes","No","Not sure"});
+        possibleCorrectAnswers.Add("Yes");
+
+ 
+    }
+
+    // ********************************************************************** //
+
+    private void RandomisePossibleQuestionsOrder() 
+    {
+        // This function will loop through all 'real' trials and allocate a random trial to each
+        // ***HRS to compare to ShuffleTrialOrderAndStoreBlock() ordering.
+
     }
 
     // ********************************************************************** //
@@ -674,6 +718,7 @@ public class ExperimentConfig
             {
                 rewardInd = rand.Next(n);           // select a random reward type
                 rewardTypes[trial] = possibleRewardTypes[rewardInd];
+                trialAnswers[trial] = "placeholder";
                 //trialMazes[trial] = "FourRooms_" + rewardTypes[trial];
                 trialMazes[trial] = "MainTrial";
                 GenerateRandomTrialPositions(trial);   // randomly position player start and reward/s locations
@@ -724,6 +769,27 @@ public class ExperimentConfig
     public string GetRewardType(int trial)
     {
         return rewardTypes[trial];
+    }
+
+    // ********************************************************************** //
+
+    public string GetAnswer(int trial) 
+    {
+        return trialAnswers[trial];
+    }
+
+    // ********************************************************************** //
+
+    public string GetQuestion(int trial)
+    {
+        return trialQuestions[trial];
+    }
+
+    // ********************************************************************** //
+
+    public string[] GetPossibleAnswers(int trial)
+    {
+        return possibleTrialAnswers[trial];
     }
 
     // ********************************************************************** //

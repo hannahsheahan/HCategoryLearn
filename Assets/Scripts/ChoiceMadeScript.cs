@@ -1,28 +1,57 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ChoiceMadeScript : MonoBehaviour
 {
-    private DataController dataController;
-
     public AudioClip buttonClickSound;
     private AudioSource source;
 
+    public Outline outlineRed;
+    public Outline outlineGreen;
     public string choice;
+
 
     // ********************************************************************** //
 
     private void Awake()
     {
         source = GetComponent<AudioSource>();
+        outlineGreen.enabled = false;
+        outlineRed.enabled = false;
     }
 
     // ********************************************************************** //
 
-    private void Start()
+    private void Update()
     {
-        dataController = FindObjectOfType<DataController>(); // Fetch our single DataController
+        // flash the outline colour around the button depending on whether it was the correct selection or not
+
+        if (GameController.control.State == GameController.STATE_FEEDBACK) 
+        {
+            if (GameController.control.whichChoiceMade == choice) // this button was the chosen one
+            { 
+                if (GameController.control.flashColourFeedback) 
+                { 
+                    if (GameController.control.correctChoiceMade)     // turn on the colour feedback
+                    {
+                        outlineRed.enabled = false;
+                        outlineGreen.enabled = true;
+                    }
+                    else 
+                    {
+                        outlineRed.enabled = true;
+                        outlineGreen.enabled = false;
+                    }
+                }
+                else 
+                {
+                    outlineRed.enabled = false;
+                    outlineGreen.enabled = false;
+                }
+            }
+        }
     }
 
     // ********************************************************************** //

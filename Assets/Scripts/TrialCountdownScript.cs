@@ -4,7 +4,6 @@ using UnityEngine.UI;
 public class TrialCountdownScript : MonoBehaviour {
    
     public Text CountdownTime;
-    public Text FrozenCountdownTime;
     private float timeLeft;
     private int secondsLeft;
 
@@ -12,7 +11,7 @@ public class TrialCountdownScript : MonoBehaviour {
 
     void Update () {
 
-        timeLeft = GameController.control.maxMovementTime - GameController.control.currentMovementTime;
+        timeLeft = GameController.control.maxResponseTime - GameController.control.currentTickingTrialTime;
         secondsLeft = (int)Mathf.Round(timeLeft);
         if (GameController.control.displayTimeLeft) 
         {
@@ -21,7 +20,6 @@ public class TrialCountdownScript : MonoBehaviour {
                 CountdownTime.text = (secondsLeft).ToString();
             }
         }
-        FrozenCountdownTime.text = "";  //  not currently used in the asset package
     }
     // ********************************************************************** //
 

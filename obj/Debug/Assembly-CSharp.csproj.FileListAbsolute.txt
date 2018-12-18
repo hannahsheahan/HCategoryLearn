@@ -1,0 +1,2 @@
+/Users/hannahsheahan/Documents/Postdoc/Unity/HCategoryLearning/obj/Debug/Assembly-CSharp.csprojAssemblyReference.cache
+/Users/hannahsheahan/Documents/Postdoc/Unity/HCategoryLearning/obj/Debug/Assembly-CSharp.csproj.CoreCompileInputs.cache

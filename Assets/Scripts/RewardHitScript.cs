@@ -40,12 +40,14 @@ public class RewardHitScript : MonoBehaviour
 
     void Update()
     {
+        /*
         if ((starTimer.ElapsedSeconds() > GameController.control.minDwellAtReward) && (starHit))
         {
             GameController.control.StarFound();
             starHit = false;
             GameController.control.DisableRewardByIndex(rewardIndex);
         }
+        */
     }
     // ********************************************************************** //
 

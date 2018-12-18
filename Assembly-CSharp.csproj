@@ -83,15 +83,16 @@
     <Compile Include="Assets\Scripts\RewardHitScript.cs" />
     <Compile Include="Assets\Scripts\rotate.cs" />
     <Compile Include="Assets\Scripts\ScreenMessageScript.cs" />
-    <Compile Include="Assets\Scripts\SpawnRewardLocation.cs" />
     <Compile Include="Assets\Scripts\SubmitFeedbackButtonScript.cs" />
     <Compile Include="Assets\Scripts\Timer.cs" />
     <Compile Include="Assets\Scripts\TotalScoreUpdateScript.cs" />
     <Compile Include="Assets\Scripts\TrialCountdownScript.cs" />
     <Compile Include="Assets\Scripts\TrialData.cs" />
     <Compile Include="Assets\Simple UI\Samples\IconPreview.cs" />
+    <None Include="Assets\Fonts\Jupiter\LICENSE.txt" />
     <None Include="Assets\Simple UI\Fonts\OFL.txt" />
     <None Include="Assets\Textures and Sprites\SF UI\Background\LICENSE.txt" />
+    <None Include="Assets\Reward Packages\Food Pack\Shaders\Food.shader" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>/Users/hannahsheahan/Documents/Postdoc/Unity/HCategoryLearning/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>

@@ -96,15 +96,15 @@ public class DataController : MonoBehaviour {
         webData.AddField("fileName", fileName);
 
         // v1.0 - local file saving
-        //File.WriteAllText(filePath, dataAsJson);
+        File.WriteAllText(filePath, dataAsJson);
         //-----------
         // v2.0 - local server testing (using MAMP)
         //WWW www = new WWW("http://localhost:8888/fromunity.php", webData);
         //-----------
 
         // v2.1 - web server (Summerfield lab one)
-        WWW www = new WWW("http://185.47.61.11/sandbox/tasks/hannahs/martinitask/lib/php/fromunity.php", webData);
-        StartCoroutine(WaitForRequest(www));
+        //WWW www = new WWW("http://185.47.61.11/sandbox/tasks/hannahs/martinitask/lib/php/fromunity.php", webData);
+        //StartCoroutine(WaitForRequest(www));
     }
 
     // ********************************************************************** //
@@ -155,14 +155,14 @@ public class DataController : MonoBehaviour {
             trialList.Add(trial); 
             gameData.allTrialData[trial].mapName = config.GetTrialMaze(trial);
 
-            // Positions and orientations
-            gameData.allTrialData[trial].starLocation = config.GetStarStartPosition(trial);
-
             // Rewards
             gameData.allTrialData[trial].rewardType = config.GetRewardType(trial);
 
+            // Questions and Answers
+            gameData.allTrialData[trial].trialAnswer = config.GetAnswer(trial);
+
             // Timer variables (can change these for each trial later e.g. with jitter)
-            gameData.allTrialData[trial].maxMovementTime = config.maxMovementTime;
+            gameData.allTrialData[trial].maxResponseTime = config.maxResponseTime;
             gameData.allTrialData[trial].goalHitPauseTime = config.goalHitPauseTime;
             gameData.allTrialData[trial].finalGoalHitPauseTime = config.finalGoalHitPauseTime;
             gameData.allTrialData[trial].preDisplayCueTime = config.preDisplayCueTime;
@@ -171,6 +171,8 @@ public class DataController : MonoBehaviour {
             gameData.allTrialData[trial].minDwellAtReward  = config.minDwellAtReward;
             gameData.allTrialData[trial].displayMessageTime = config.displayMessageTime;
             gameData.allTrialData[trial].errorDwellTime  = config.errorDwellTime;
+            gameData.allTrialData[trial].pausePriorFeedbackTime = config.pausePriorFeedbackTime;
+            gameData.allTrialData[trial].feedbackFlashDuration = config.feedbackFlashDuration;
         }
         SaveData();   // Note: Important to keep this here. It seems unimportant, but without it the timing of object initialisation changes somehow(?) and errors emerge. Make sure this isn't too sensitive or figure out a better way to resolve this issue
     }
@@ -189,6 +191,9 @@ public class DataController : MonoBehaviour {
 
     public void ReinsertErrorTrial()
     {
+        // In response to an error trial, this function reinserts the scheduled (error)
+        // trial to be performed again later in the sequence.
+
         AssembleTrialData();                                         // store the error data for that attempt
 
         // Determine where to integrate another trial attempt
@@ -231,8 +236,8 @@ public class DataController : MonoBehaviour {
         // Treat these as list elements so that on trials in which we have multiple attempts we save all the data within that trial
         gameData.allTrialData[currentTrialNumber].FLAG_trialTimeout.Add(GameController.control.FLAG_trialTimeout);
         gameData.allTrialData[currentTrialNumber].FLAG_trialError.Add(GameController.control.FLAG_trialError);
-        gameData.allTrialData[currentTrialNumber].firstMovementTime.Add(GameController.control.firstMovementTime);
-        gameData.allTrialData[currentTrialNumber].totalMovementTime.Add(GameController.control.totalMovementTime);
+        gameData.allTrialData[currentTrialNumber].responseTime.Add(GameController.control.responseTime);
+        gameData.allTrialData[currentTrialNumber].responseChoice.Add(GameController.control.whichChoiceMade);
         gameData.allTrialData[currentTrialNumber].trialListIndex.Add(trialListIndex);
 
 
@@ -240,7 +245,10 @@ public class DataController : MonoBehaviour {
         gameData.allTrialData[currentTrialNumber].trialScore = GameController.control.trialScore;
 
         // Add in the frame-by-frame data (these should be synchronized)
+        // Note: FSM states are important to save for continuous interactive experiments e.g. navigation, motor control etc
+        // but are overkill for basic decision-making experiments that can be summarised by a single action and its RX time
 
+        /*
         // Add in the state transition data
         List<string> trackedStateData = new List<string>(); // We stop collecting data here, just it case it keeps incrementing with another timestep
         trackedStateData = GameController.control.stateTransitions;
@@ -251,6 +259,7 @@ public class DataController : MonoBehaviour {
         {
             gameData.allTrialData[currentTrialNumber].stateTransitions.Add(trackedStateData[i]);
         }
+        */
     }
 
     // ********************************************************************** //
