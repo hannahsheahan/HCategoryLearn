@@ -19,9 +19,11 @@ or
 ```diff
 + github.com/hannahsheahan/UniturkNav
 ```
-### 
+
 and fork it to your account. 
+
 4. Open the Unity project on your computer. 
+
 5. Add all Scenes to the build settings:   _File_ > _Build Settings_ > Drag and drop all scenes into the _Scenes in Build_ box > _Close_ the Build Settings.
 
 ## Setting a data save path
