@@ -1,10 +1,10 @@
 # UniturkDM
 This is one of two Uniturk projects developed for creating behavioural experiments in Unity and deploying them online.
 
-1. UniturkDM contains project files for creating a basic decision making experiment in which the participant makes one response per trial
+-  UniturkDM contains project files for creating a basic decision making experiment in which the participant makes one response per trial
 e.g. a visual stimulus appears on the screen and the participant chooses 1/n button responses per trial.
 
-If you are planning to run an experiment involving more continuous online interaction with the environment 
+-  If you are planning to run an experiment involving more continuous online interaction with the environment 
 e.g. online foraging, navigation, motor control, or other sequential decision-making, you will probably find the repo _UniturkNav_ a better place to start.
 
 
