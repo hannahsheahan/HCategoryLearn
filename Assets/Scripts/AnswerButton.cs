@@ -10,8 +10,6 @@ public class AnswerButton : MonoBehaviour
 
     public Outline outlineRed;
     public Outline outlineGreen;
-
-    public AnswerData answerData;
     public Text answerText;
 
     // ********************************************************************** //
@@ -38,7 +36,7 @@ public class AnswerButton : MonoBehaviour
 
         if (GameController.control.State == GameController.STATE_FEEDBACK) 
         {
-            if (GameController.control.whichChoiceMade == answerData.answerText) // this button was the chosen one
+            if (GameController.control.whichChoiceMade == answerText.text) // this button was the chosen one
             { 
                 if (GameController.control.flashColourFeedback) 
                 { 
@@ -67,6 +65,6 @@ public class AnswerButton : MonoBehaviour
     public void SubmitChoiceOnClick()
     {
         source.PlayOneShot(buttonClickSound, 1F);
-        GameController.control.SubmitChoice(answerData.answerText); // Continue to the before starting page 
+        GameController.control.SubmitChoice(answerText.text); // Continue to the before starting page 
     }
 }
