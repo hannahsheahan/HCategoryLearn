@@ -12,7 +12,8 @@ public class ExperimentConfig
     /// This script contains all the experiment configuration details
     /// e.g. experiment type, trial numbers, ordering and randomisation, trial start and end locations. 
     /// This is a simplified, general purpose version for creating different behavioural experiments in Unity.
-    /// Notes:  variables should eventually be turned private. Some currently public for ease of communication with DataController.
+    /// Notes:  - Variables should eventually be turned private. Some currently public for ease of communication with DataController.
+    ///         - Note that eventually the menu scenes could be assembled into a single scene, which would require small alterations to this script. Unimportant development not on immediate horizon.
     /// Author: Hannah Sheahan, sheahan.hannah@gmail.com
     /// Date: 08/11/2018
     /// </summary>
@@ -28,11 +29,11 @@ public class ExperimentConfig
     private int restFrequency;
     private int nbreaks;
     private string[] trialMazes;
-    private string[] possibleMazes;                // the existing mazes/scenes that can be selected from
+    private string[] possibleMazes;               
     private int sceneCount;
     private int blockLength;
 
-    // Timer variables (public since fewer things go wrong if these are changed externally, since this will be tracked in the data, but please don't...)
+    // Timer variables (currently public since few things go wrong if these are changed externally, since these are tracked in the data, but please don't change these externally...)
     public float maxResponseTime;
     public float preDisplayCueTime;
     public float finalGoalHitPauseTime;
@@ -112,20 +113,20 @@ public class ExperimentConfig
 
         // Timer variables (measured in seconds) - these can later be changed to be different per trial for jitter etc
         dataRecordFrequency = 0.04f;
-        getReadyDuration = 5.0f;         // how long do we have to 'get ready' after the practice, before main experiment begins?
+        getReadyDuration = 5.0f;                      // how long we have to 'get ready' after the practice, before main experiment begins
 
-        // Note that when used, jitters ADD to these values - hence they are minimums
-        maxResponseTime = 5.0f;         // time allowed to collect both rewards, incl. wait after hitting first one
-        preDisplayCueTime = 1.5f;        // will take a TR during this period
-        displayCueTime = 2.0f;
-        goCueDelay = 1.5f;               // will take a TR during this period
-        finalGoalHitPauseTime = 2.0f;    // we will take a TR during this period (but should be independent of first goal hit time in case we want to jitter)
-        displayMessageTime = 1.5f;
-        errorDwellTime = 1.5f;                // Note: should be at least as long as displayMessageTime
+        // Note that when used, jitters ADD to these values - hence they are minimums. See GameController for the usage/meaning of these variables.
+        maxResponseTime   = 5.0f;                 
+        preDisplayCueTime = 1.5f;               
+        displayCueTime    = 2.0f;
+        goCueDelay        = 1.5f;                      
+        finalGoalHitPauseTime  = 2.0f;           
+        displayMessageTime     = 1.5f;
+        errorDwellTime         = 1.5f;                // Note: should be at least as long as displayMessageTime
         pausePriorFeedbackTime = 0.3f;
-        feedbackFlashDuration = 1.2f;         // duration that colour button feedback is shown for
+        feedbackFlashDuration  = 1.2f;                // duration that colour button feedback is shown for
 
-        // Define space for the ordered questions, answers and associated stimuli
+        // Allocate space for the ordered questions, answers and associated stimuli
         trialMazes = new string[totalTrials];
         trialQuestionData = new QuestionData[totalTrials];
         for (int i=0; i < totalTrials; i++) 
@@ -146,7 +147,7 @@ public class ExperimentConfig
         trialMazes[setupTrials + practiceTrials - 1] = "GetReady";
         trialMazes[totalTrials - 1] = "Exit";
 
-        // Add in the practice trials in an open arena with little fog and no colour
+        // Add in the practice trials
         AddPracticeTrials();
 
         // Generate the trial randomisation/list that we want.   Note: Ensure this is aligned with the total number of trials
@@ -208,11 +209,11 @@ public class ExperimentConfig
 
     private void AddPracticeTrials()
     {
-        // Add in the practice/familiarisation trials in an open arena
+        // Add in the practice/familiarisation trials
         for (int trial = setupTrials; trial < setupTrials + practiceTrials - 1; trial++)
         {
-            SetTrial(trial, allQuestions[rand.Next(allQuestions.Count)]);
-            trialMazes[trial] = "Practice";         // reset the maze for a practice trial
+            SetTrial(trial, allQuestions[rand.Next(allQuestions.Count)]);      // for now just give a random trial for practice
+            trialMazes[trial] = "Practice";                                    // reset the maze for a practice trial
         }
     }
 
@@ -244,7 +245,7 @@ public class ExperimentConfig
 
     private int AddTrainingBlock(int nextTrial, int numberOfTrials)
     {
-        // can use the below function which shuffles over all bracketed trials, to shuffle subsets of trials, or shuffle within a context etc
+        // Note that we can use the below function (which shuffles over all bracketed trials), to shuffle subsets of trials, or shuffle within a context etc
         nextTrial = ShuffleTrialOrderAndStoreBlock(nextTrial, numberOfTrials);
         return nextTrial;
     }
@@ -258,7 +259,7 @@ public class ExperimentConfig
         // Check that we've inputted a valid trial number
         if ((trial < setupTrials - 1) || (trial == setupTrials - 1))
         {
-            Debug.Log("Trial randomisation failed: invalid trial number input writing to.");
+            Debug.Log("Trial randomisation failed: cannot write to invalid trial number.");
         }
         else
         {
@@ -274,13 +275,13 @@ public class ExperimentConfig
     {
         // This function creates a list of possible questions (and answers) from which to generate trials.
         // Each possible question comes with several options for selectable answers, as well as a correct answer. 
-        // Create lists of (Q,PA,A) for all questions, later loop through to allocate in sequence
+        // This creates a list of (Q,PA,A) for all questions. This list is later shuffled appropriately to allocate trials to a sequence.
 
-        // Note: add as many questions here as you like. 
-        // Randomisation will reorder these and offer repeats if you haven't specified enough unique trials.
+        // Notes: - add as many questions here as you like. 
+        //        - Randomisation will reorder these and offer repeats if you haven't specified enough unique trials.
 
         // ---- Question ---
-        QuestionData questiondata = new QuestionData(3);
+        QuestionData questiondata = new QuestionData(3);  // Note: input specifies number of possible answers (buttons) for this Q
 
         questiondata.questionText = "Is this new game really awesome?";
         questiondata.stimulus = "questionIcon";
@@ -291,7 +292,7 @@ public class ExperimentConfig
         allQuestions.Add(questiondata);
 
         // ---- Question ---
-        questiondata = new QuestionData(2);  // input specifies number of possible answers
+        questiondata = new QuestionData(2); 
 
         questiondata.questionText = "Is this a bird?";
         questiondata.stimulus = "icecream";
@@ -313,14 +314,13 @@ public class ExperimentConfig
         // ---- Question ---
         questiondata = new QuestionData(3);
 
-        questiondata.questionText = "Is this a pineapple?";
+        questiondata.questionText = "Is consuming this a good life choice?";
         questiondata.stimulus = "wine";
-        questiondata.answers[0].answerText = "Perhaps";
+        questiondata.answers[0].answerText = "Unclear";
         questiondata.answers[1].answerText = "No";
         questiondata.answers[2].answerText = "Totally";
-        questiondata.answers[1].isCorrect = true;
+        questiondata.answers[0].isCorrect = true;
         allQuestions.Add(questiondata);
-
 
     }
 
@@ -329,7 +329,6 @@ public class ExperimentConfig
     public int ShuffleTrialOrderAndStoreBlock(int firstTrial, int blockLength)
     {
         // This function shuffles the prospective trials from firstTrial to firstTrial+blockLength and stores them.
-        // This has been checked and works correctly :)
 
         bool randomiseOrder = true;
         int n = allQuestions.Count;
@@ -376,6 +375,7 @@ public class ExperimentConfig
 
     public float JitterTime(float time)
     {
+        // Note: currently unused and untested
         // jitter uniform-randomly from the min value, to 50% higher than the min value
         return time + (0.5f*time)* (float)rand.NextDouble();
     }
@@ -430,7 +430,6 @@ public class ExperimentConfig
     {
         int nPossibleAnswers;
         string answer = "";
-
         nPossibleAnswers = trialQuestionData[trial].answers.Length;
 
         for (int i = 0; i < nPossibleAnswers; i++) 
@@ -440,7 +439,6 @@ public class ExperimentConfig
                 answer = trialQuestionData[trial].answers[i].answerText;
             }
         }
-
         return answer;
     }
 

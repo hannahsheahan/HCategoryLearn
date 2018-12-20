@@ -1330,11 +1330,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1422105403}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1bcca04864a446d5bd7818a473fe8b2, type: 3}
+  m_Script: {fileID: 11500000, guid: ed8718ea3c8004db0a14bbba3991a3b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reward: {fileID: 338087942}
-  rewardIndex: 1
+  stimulus3D: {fileID: 338087942}
+  objectIndex: 0
 --- !u!4 &1422105405
 Transform:
   m_ObjectHideFlags: 0

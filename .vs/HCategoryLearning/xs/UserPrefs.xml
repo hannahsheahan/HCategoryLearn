@@ -1,9 +1,5 @@
 ﻿<Properties StartupConfiguration="{F2F92C27-44C6-0DD3-B10C-C6DD9164687D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/TrialData.cs">
-    <Files>
-      <File FileName="Assets/Scripts/TrialData.cs" Line="11" Column="44" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="Unity.Editor" />

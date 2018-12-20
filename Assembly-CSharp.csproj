@@ -77,7 +77,7 @@
     <Compile Include="Assets\Scripts\filepath.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\GameData.cs" />
-    <Compile Include="Assets\Scripts\HideOrDisplayReward.cs" />
+    <Compile Include="Assets\Scripts\HideOrDisplay3DObject.cs" />
     <Compile Include="Assets\Scripts\QuestionData.cs" />
     <Compile Include="Assets\Scripts\RestBreakProgress.cs" />
     <Compile Include="Assets\Scripts\RewardAnimationScript.cs" />

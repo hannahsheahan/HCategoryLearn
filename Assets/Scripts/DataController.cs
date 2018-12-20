@@ -15,6 +15,7 @@ public class DataController : MonoBehaviour {
     /// The DataController script is a persistent object which controls all the 
     /// data I/O (e.g. trial loading/sequencing and saving) for the experiment.
     /// This is a simplified, general purpose version for creating different behavioural experiments in Unity.
+    /// Notes:  some of these Get() and Set() methods are unneccessary at the moment since gameData is public. Can change gameData to private later for better practice.
     /// Author: Hannah Sheahan, sheahan.hannah@gmail.com
     /// Date: 30/11/2018
     /// </summary>
@@ -76,7 +77,7 @@ public class DataController : MonoBehaviour {
         stringDateTime = stringDateTime.Replace(":", "-");   // make sure you don't have conflicting characters for writing to web server
 
         fileName = "dataFile_" + stringDateTime + ".json";
-        filePath = baseFilePath + fileName;  // later add a timestamp number to this so files arent overwritten
+        filePath = baseFilePath + fileName; 
         if (File.Exists(filePath))
         {
             Debug.Log("Warning: writing over existing datafile.");
@@ -169,7 +170,7 @@ public class DataController : MonoBehaviour {
             gameData.allTrialData[trial].pausePriorFeedbackTime = config.pausePriorFeedbackTime;
             gameData.allTrialData[trial].feedbackFlashDuration = config.feedbackFlashDuration;
         }
-        SaveData();   // Note: Important to keep this here. It seems unimportant, but without it the timing of object initialisation changes somehow(?) and errors emerge. Make sure this isn't too sensitive or figure out a better way to resolve this issue
+        SaveData();   // Note: Important to keep this here. It seems unimportant, but without it the timing of object initialisation changes somehow(?) and errors emerge. ***HRS to make sure this isn't too sensitive or figure out a better way to resolve this issue later
     }
 
     // ********************************************************************** //
@@ -178,7 +179,7 @@ public class DataController : MonoBehaviour {
     {
         AssembleTrialData();
 
-        currentTrialNumber = trialList[trialListIndex + 1];  // This is incorrect I think. We want the trial List and current trial number to be essentially independnt
+        currentTrialNumber = trialList[trialListIndex + 1]; 
         trialListIndex++;
     }
 
@@ -186,8 +187,7 @@ public class DataController : MonoBehaviour {
 
     public void ReinsertErrorTrial()
     {
-        // In response to an error trial, this function reinserts the scheduled (error)
-        // trial to be performed again later in the sequence.
+        // In response to an error trial, this function reinserts the scheduled (error) trial to be performed again later in the sequence.
 
         AssembleTrialData();                                         // store the error data for that attempt
 
@@ -195,12 +195,12 @@ public class DataController : MonoBehaviour {
         int trialInsertIndex = trialListIndex + 1;                   // default to repeating trial immediately (if code below is ever deprecated)
         int trialInsertNumber;
 
-        // find the next trial in the trial list that is of a different context to the current (error trial) context
+        // find the next trial in the trial list that is of a different context/scene to the current (error trial) context
         int trial = currentTrialNumber;
         while (gameData.allTrialData[trial].mapName == gameData.allTrialData[currentTrialNumber].mapName)
         {
             trial++;
-            if (trial == totalTrials)                                // we need an out for this loop, and don't want to access trials that dont exist
+            if (trial == totalTrials)                                // we don't want to access trials that dont exist
             {
                 break;
             }
@@ -264,8 +264,7 @@ public class DataController : MonoBehaviour {
 
     public GameData GetGameData()
     {
-        // Supply the trial data to the GameController
-        return gameData; // for now this is a placeholder. Will eventually return which trial we are on etc
+        return gameData;
     }
     // ********************************************************************** //
 
@@ -277,7 +276,6 @@ public class DataController : MonoBehaviour {
 
     public TrialData GetCurrentTrialData()
     {
-        // Supply the trial data to the GameController
         return gameData.allTrialData[currentTrialNumber]; // for now this is a placeholder. Will eventually return which trial we are on etc
     }
 
@@ -285,7 +283,7 @@ public class DataController : MonoBehaviour {
 
     public void SetParticipantID(string ID)
     {
-        if (ID != "")  // you're not allowed to give a fake ID
+        if (ID != "")        // you must provide an ID (even if its a fake one)
         {
             participantIDSet = true;
             gameData.participantID = ID;
@@ -320,7 +318,7 @@ public class DataController : MonoBehaviour {
 
     public void SetParticipantAge(string age)
     {
-        if (age != "")  // you're not allowed to give a fake age  ***HRS can add check for numbers later
+        if (age != "")      // you must provide an age  ***HRS can add check for numbers later
         {
             participantAgeSet = true;
             gameData.participantAge = age;
@@ -331,7 +329,7 @@ public class DataController : MonoBehaviour {
 
     public void SetParticipantGender(int gender)
     {
-        if (gender != 0) // must make a selection
+        if (gender != 0)    // must make a selection
         {
             participantGenderSet = true;
             gameData.participantGender = gender;
@@ -346,17 +344,9 @@ public class DataController : MonoBehaviour {
     }
 
     // ********************************************************************** //
-    // This is obsolete since filePath is public
-    public string GetFilePath()
-    {
-        return filePath;
-    }
-
-    // ********************************************************************** //
 
     public float GetRestBreakDuration()
     {
-        // Supply trial-invariant participant information data
         return gameData.restbreakDuration;
     }
 
@@ -364,7 +354,6 @@ public class DataController : MonoBehaviour {
 
     public float GetGetReadyDuration()
     {
-        // Supply trial-invariant participant information data
         return gameData.getReadyDuration;
     }
 }
