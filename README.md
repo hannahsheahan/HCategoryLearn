@@ -1,11 +1,11 @@
 # UniturkDM
 This is one of two Uniturk projects developed for creating behavioural experiments in Unity and deploying them online.
 
--  UniturkDM contains project files for creating a basic decision making experiment in which the participant makes one response per trial
+-  **UniturkDM** contains project files for creating a basic decision making experiment in which the participant makes one response per trial
 e.g. a visual stimulus appears on the screen and the participant chooses 1/n button responses per trial.
 
 -  If you are planning to run an experiment involving more continuous online interaction with the environment 
-e.g. online foraging, navigation, motor control, or other sequential decision-making, you will probably find the repo _UniturkNav_ a better place to start.
+e.g. online foraging, navigation, motor control, or other sequential decision-making, you will probably find the repo **UniturkNav** a better place to start.
 
 
 ## Downloading and installing
@@ -19,7 +19,7 @@ e.g. online foraging, navigation, motor control, or other sequential decision-ma
 1. Edit the script filepath.cs, and replace the path string with  path to your local project folder.
 2. Create a folder called ‘data’ within the project folder on your local machine. 
 3. Open the script DataController.cs and edit the variable ‘baseFilePath’,  to change the local file saving path to the newly created folder ‘data’ in your project folder.
-4. If you want to save data online, upload the data writing script ‘fromunity.php’ to a local server location under sandbox/tasks/YOURUSERNAME/YOURTASK/lib/php/ and run 'chmod ugo+rw FOLDERNAME' from this directory in the terminal to sort out file permissions. Where FOLDERNAME corresponds to the place on the server where you want to store data.
+4. If you want to save data online, upload the data writing script ‘fromunity.php’ to the server (for Summerfield lab members, this should be under sandbox/tasks/YOURUSERNAME/YOURTASK/lib/php/ ). Run 'chmod ugo+rw FOLDERNAME' from this directory in the terminal to sort out file permissions, where FOLDERNAME corresponds to the place on the server where you want to store data (thanks Timo!).
 5. In the DataController.cs script, find the function ‘SaveData()’ and either: A) uncomment the line under ‘v1.0’ if you want to save data to your local machine, OR  B) if you want to save data on the web server (necessary for deploying this online),  uncomment the line under ‘v2.1’ and edit the web server file path for where you want to store the .php writing script, i.e. sandbox/tasks/YOURUSERNAME/YOURTASK/lib/php/fromunity.php. Best to start by trying local file saving to check everything is working smoothly first.
 
 ## Running the experiment
