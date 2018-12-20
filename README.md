@@ -9,7 +9,7 @@ e.g. online foraging, navigation, motor control, or other sequential decision-ma
 
 
 ## Downloading and installing
-1. Download and install the FREE version of Unity.
+1. Download and install the _free_ version of Unity.
 2. Download and install Visual Studio (it’s a nice text editor for C#, but feel free to use any other text editor you like e.g. Atom, Xcode…).
 3. If you have a Github account, select which package you want here: 
 ```diff
@@ -19,7 +19,8 @@ or
 ```diff
 + github.com/hannahsheahan/UniturkNav
 ```
-, and fork it to your account. 
+### 
+and fork it to your account. 
 4. Open the Unity project on your computer. 
 5. Add all Scenes to the build settings:   _File_ > _Build Settings_ > Drag and drop all scenes into the _Scenes in Build_ box > _Close_ the Build Settings.
 
