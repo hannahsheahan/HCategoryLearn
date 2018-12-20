@@ -14,11 +14,11 @@ public class HideOrDisplayReward : MonoBehaviour {
         {
             case 1:
                 // this can be reward-specific, but a better way to do this is to pass the rewardIndex into the GameController reveal function
-                reward.SetActive(GameController.control.rewardVisible);
+                reward.SetActive(GameController.control.cueVisible);
                 break;
 
             default:
-                reward.SetActive(GameController.control.rewardVisible);
+                reward.SetActive(GameController.control.cueVisible);
                 break;
         }
     }

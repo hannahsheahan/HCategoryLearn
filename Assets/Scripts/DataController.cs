@@ -136,9 +136,6 @@ public class DataController : MonoBehaviour {
         // Create the gameData object where we will store all the data
         gameData = new GameData(totalTrials);
 
-        // Specify the number of presents/gifts per room for tracking their state in the GameController
-        numberPresentsPerRoom = config.numberPresentsPerRoom;
-
         // Data that is consistent across trials
         gameData.confirmationCode = confirmationCode;
         gameData.experimentVersion = config.experimentVersion;
@@ -155,20 +152,17 @@ public class DataController : MonoBehaviour {
             trialList.Add(trial); 
             gameData.allTrialData[trial].mapName = config.GetTrialMaze(trial);
 
-            // Rewards
-            gameData.allTrialData[trial].rewardType = config.GetRewardType(trial);
-
             // Questions and Answers
+            gameData.allTrialData[trial].trialQuestion = config.GetQuestion(trial);
             gameData.allTrialData[trial].trialAnswer = config.GetAnswer(trial);
+            gameData.allTrialData[trial].trialStimulus = config.GetStimulus(trial);
 
             // Timer variables (can change these for each trial later e.g. with jitter)
             gameData.allTrialData[trial].maxResponseTime = config.maxResponseTime;
-            gameData.allTrialData[trial].goalHitPauseTime = config.goalHitPauseTime;
             gameData.allTrialData[trial].finalGoalHitPauseTime = config.finalGoalHitPauseTime;
             gameData.allTrialData[trial].preDisplayCueTime = config.preDisplayCueTime;
             gameData.allTrialData[trial].displayCueTime = config.displayCueTime;
             gameData.allTrialData[trial].goCueDelay      = config.goCueDelay;
-            gameData.allTrialData[trial].minDwellAtReward  = config.minDwellAtReward;
             gameData.allTrialData[trial].displayMessageTime = config.displayMessageTime;
             gameData.allTrialData[trial].errorDwellTime  = config.errorDwellTime;
             gameData.allTrialData[trial].pausePriorFeedbackTime = config.pausePriorFeedbackTime;
@@ -238,6 +232,7 @@ public class DataController : MonoBehaviour {
         gameData.allTrialData[currentTrialNumber].FLAG_trialError.Add(GameController.control.FLAG_trialError);
         gameData.allTrialData[currentTrialNumber].responseTime.Add(GameController.control.responseTime);
         gameData.allTrialData[currentTrialNumber].responseChoice.Add(GameController.control.whichChoiceMade);
+        gameData.allTrialData[currentTrialNumber].choiceCorrect.Add(GameController.control.correctChoiceMade);
         gameData.allTrialData[currentTrialNumber].trialListIndex.Add(trialListIndex);
 
 

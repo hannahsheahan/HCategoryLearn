@@ -123,8 +123,9 @@ GameObject:
   - component: {fileID: 241966161}
   - component: {fileID: 241966163}
   - component: {fileID: 241966162}
+  - component: {fileID: 241966164}
   m_Layer: 5
-  m_Name: WelcomeText
+  m_Name: QuestionText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -180,7 +181,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Choose a button to press or something
+  m_Text: 
 --- !u!222 &241966163
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -188,6 +189,18 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 241966160}
   m_CullTransparentMesh: 0
+--- !u!114 &241966164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 241966160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7952f9bdac78f475e9785bc37d259fd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  QuestionText: {fileID: 241966162}
 --- !u!1 &338087942
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,7 +213,6 @@ GameObject:
   - component: {fileID: 338087947}
   - component: {fileID: 338087946}
   - component: {fileID: 338087945}
-  - component: {fileID: 338087944}
   - component: {fileID: 338087943}
   m_Layer: 0
   m_Name: Cheese
@@ -233,19 +245,6 @@ MonoBehaviour:
   endScale: {x: 26, y: 26, z: 26}
   scaleSpeed: 1
   scaleRate: 0.5
---- !u!114 &338087944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 114224405491236918, guid: f36698460e11b491c91a66fb3e44c776,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 338087942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15baae9b61099420782699443fc3cd9d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rewardIndex: 0
 --- !u!135 &338087945
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -534,13 +533,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 432037817}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3819b8abca9642b5a7fff0dd0ea54a8, type: 3}
+  m_Script: {fileID: 11500000, guid: cf6d0781a45024cb48a7c16bf7358762, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rewardImage: {fileID: 432037820}
-  wineImage: {fileID: 21300000, guid: 8d540639cfc1040d0a8300206a9a7ad6, type: 3}
-  cheeseImage: {fileID: 21300000, guid: 8d540639cfc1040d0a8300206a9a7ad6, type: 3}
-  martiniImage: {fileID: 21300000, guid: 8d540639cfc1040d0a8300206a9a7ad6, type: 3}
+  cueImage: {fileID: 432037820}
+  isBackground: 1
+  backgroundCircle: {fileID: 21300000, guid: 8d540639cfc1040d0a8300206a9a7ad6, type: 3}
+  wineImage: {fileID: 0}
+  cheeseImage: {fileID: 0}
+  martiniImage: {fileID: 0}
+  avocadoImage: {fileID: 0}
+  icecreamImage: {fileID: 0}
 --- !u!114 &432037820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -560,7 +563,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 8d540639cfc1040d0a8300206a9a7ad6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1715,13 +1718,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1416484923}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3819b8abca9642b5a7fff0dd0ea54a8, type: 3}
+  m_Script: {fileID: 11500000, guid: cf6d0781a45024cb48a7c16bf7358762, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rewardImage: {fileID: 1416484926}
-  wineImage: {fileID: 21300000, guid: 8d540639cfc1040d0a8300206a9a7ad6, type: 3}
-  cheeseImage: {fileID: 21300000, guid: 8d540639cfc1040d0a8300206a9a7ad6, type: 3}
-  martiniImage: {fileID: 21300000, guid: 8d540639cfc1040d0a8300206a9a7ad6, type: 3}
+  cueImage: {fileID: 1416484926}
+  isBackground: 1
+  backgroundCircle: {fileID: 21300000, guid: 8d540639cfc1040d0a8300206a9a7ad6, type: 3}
+  wineImage: {fileID: 0}
+  cheeseImage: {fileID: 0}
+  martiniImage: {fileID: 0}
+  avocadoImage: {fileID: 0}
+  icecreamImage: {fileID: 0}
 --- !u!114 &1416484926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1741,7 +1748,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 8d540639cfc1040d0a8300206a9a7ad6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1843,13 +1850,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1473921736}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3819b8abca9642b5a7fff0dd0ea54a8, type: 3}
+  m_Script: {fileID: 11500000, guid: cf6d0781a45024cb48a7c16bf7358762, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rewardImage: {fileID: 1473921739}
+  cueImage: {fileID: 1473921739}
+  isBackground: 0
+  backgroundCircle: {fileID: 21300000, guid: 8d540639cfc1040d0a8300206a9a7ad6, type: 3}
   wineImage: {fileID: 21300058, guid: 37607ec1aab56e349af84a980f685a4b, type: 3}
   cheeseImage: {fileID: 21300084, guid: 37607ec1aab56e349af84a980f685a4b, type: 3}
-  martiniImage: {fileID: 21300000, guid: 99b912834d59747fc9f5a033c0200e4b, type: 3}
+  martiniImage: {fileID: 21300010, guid: 37607ec1aab56e349af84a980f685a4b, type: 3}
+  avocadoImage: {fileID: 21300042, guid: 37607ec1aab56e349af84a980f685a4b, type: 3}
+  icecreamImage: {fileID: 21300024, guid: 37607ec1aab56e349af84a980f685a4b, type: 3}
 --- !u!114 &1473921739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1869,7 +1880,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 8d540639cfc1040d0a8300206a9a7ad6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
