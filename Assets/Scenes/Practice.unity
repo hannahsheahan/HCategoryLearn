@@ -523,7 +523,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 172, y: 172}
+  m_SizeDelta: {x: 180, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &432037819
 MonoBehaviour:
@@ -544,6 +544,7 @@ MonoBehaviour:
   martiniImage: {fileID: 0}
   avocadoImage: {fileID: 0}
   icecreamImage: {fileID: 0}
+  questionIconImage: {fileID: 0}
 --- !u!114 &432037820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1090,7 +1091,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -85}
-  m_SizeDelta: {x: 120, y: -250}
+  m_SizeDelta: {x: 100, y: -250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1266797384
 MonoBehaviour:
@@ -1249,7 +1250,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 185, y: 185}
+  m_SizeDelta: {x: 190, y: 190}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1416484925
 MonoBehaviour:
@@ -1270,6 +1271,7 @@ MonoBehaviour:
   martiniImage: {fileID: 0}
   avocadoImage: {fileID: 0}
   icecreamImage: {fileID: 0}
+  questionIconImage: {fileID: 0}
 --- !u!114 &1416484926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1402,6 +1404,7 @@ MonoBehaviour:
   martiniImage: {fileID: 21300010, guid: 37607ec1aab56e349af84a980f685a4b, type: 3}
   avocadoImage: {fileID: 21300042, guid: 37607ec1aab56e349af84a980f685a4b, type: 3}
   icecreamImage: {fileID: 21300024, guid: 37607ec1aab56e349af84a980f685a4b, type: 3}
+  questionIconImage: {fileID: 21300000, guid: 1182605a67e89c34996a4dff4126aa0c, type: 3}
 --- !u!114 &1473921739
 MonoBehaviour:
   m_ObjectHideFlags: 0

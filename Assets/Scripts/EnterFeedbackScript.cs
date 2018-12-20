@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class EnterFeedbackScript : MonoBehaviour {
 
+    /// <summary>
+    /// This script handles the input of user feedback in the Exit scene.
+    /// This is a simplified, general purpose codebase for creating different behavioural experiments in Unity.
+    /// Author: Hannah Sheahan, sheahan.hannah@gmail.com
+    /// Date: December 2018
+    /// </summary>
+
+
     private DataController dataController;
     public AudioClip buttonClickSound;
     private AudioSource source;

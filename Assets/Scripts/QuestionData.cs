@@ -7,7 +7,7 @@ public class QuestionData
 {
     /// <summary>
     /// This class is for holding data pertaining to a particular question to be asked
-    /// Author: Hannah Sheahan
+    /// Author: Hannah Sheahan, sheahan.hannah@gmail.com
     /// Date: 19/12/2018
     /// </summary>
 

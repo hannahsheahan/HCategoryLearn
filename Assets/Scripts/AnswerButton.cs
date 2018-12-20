@@ -5,6 +5,13 @@ using UnityEngine.UI;
 
 public class AnswerButton : MonoBehaviour
 {
+    /// <summary>
+    /// This script handles the answer button clicks which select an answer, and tell the button to flash green or red.
+    /// This is a simplified, general purpose codebase for creating different behavioural experiments in Unity.
+    /// Author: Hannah Sheahan, sheahan.hannah@gmail.com
+    /// Date: December 2018
+    /// </summary>
+     
     public AudioClip buttonClickSound;
     private AudioSource source;
 

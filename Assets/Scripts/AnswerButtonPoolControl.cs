@@ -36,8 +36,8 @@ public class AnswerButtonPoolControl : MonoBehaviour {
     {
         currentState = GameController.control.State;
 
-        // As soon as we transition into STATE_STARTTRIAL, populate the buttons. TrialSetup() will have loaded the trial data.
-        if ((currentState != mostRecentState) && currentState == GameController.STATE_STARTTRIAL)
+        // As soon as we transition into STATE_CUEAPPEAR, populate the buttons.
+        if ((currentState != mostRecentState) && currentState == GameController.STATE_CUEAPPEAR)
         {
             SetupAnswerButtons();   // Note: this should happen just once per trial attempt
         }

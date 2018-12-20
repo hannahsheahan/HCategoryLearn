@@ -4,6 +4,12 @@ using System.Collections;
 
 public class TotalScoreUpdateScript : MonoBehaviour {
 
+    /// <summary>
+    /// This is a simplified, general purpose codebase for creating different behavioural experiments in Unity.
+    /// Author: Hannah Sheahan, sheahan.hannah@gmail.com
+    /// Date: November 2018
+    /// </summary>
+
     public Text TotalScore;
     public Text ScoreUpdate;
     private int currentTotalScore;
@@ -44,7 +50,6 @@ public class TotalScoreUpdateScript : MonoBehaviour {
                 TotalScore.color = colr;  // flash red since -ve update
                 TotalScore.fontSize = 34;
             }
-
         }
         else
         {

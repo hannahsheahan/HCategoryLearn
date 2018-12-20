@@ -320,7 +320,7 @@ public class DataController : MonoBehaviour {
 
     public void SetParticipantAge(string age)
     {
-        if (age != "")  // you're not allowed to give a fake age  ***HRS can add check for numbers
+        if (age != "")  // you're not allowed to give a fake age  ***HRS can add check for numbers later
         {
             participantAgeSet = true;
             gameData.participantAge = age;

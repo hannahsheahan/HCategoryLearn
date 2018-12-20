@@ -5,6 +5,14 @@ using UnityEngine.UI;
 
 public class DropdownGenderScript : MonoBehaviour {
 
+    /// <summary>
+    /// This script handles the dropdown menu in the startscreen scene.
+    /// This is a simplified, general purpose codebase for creating different behavioural experiments in Unity.
+    /// Author: Hannah Sheahan, sheahan.hannah@gmail.com
+    /// Date: November 2018
+    /// </summary>
+
+
     private DataController dataController;
     List<string> genders = new List<string>() { "Select gender . . .", "Female", "Male", "Other" };
     public Dropdown dropdown;

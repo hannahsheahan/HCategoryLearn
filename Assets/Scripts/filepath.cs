@@ -3,5 +3,5 @@ using System.Collections;
 
 public class filepath
 {
-    public static string path = "/Users/hannahsheahan/Documents/Postdoc/Unity/Tartarus/Tartarus-Maze-2";
+    public static string path = "/Users/hannahsheahan/Documents/Postdoc/Unity/HCategoryLearning";
 }

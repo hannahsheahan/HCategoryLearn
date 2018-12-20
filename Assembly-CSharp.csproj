@@ -78,11 +78,9 @@
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\GameData.cs" />
     <Compile Include="Assets\Scripts\HideOrDisplayReward.cs" />
-    <Compile Include="Assets\Scripts\PracticeHelperMessageScript.cs" />
     <Compile Include="Assets\Scripts\QuestionData.cs" />
     <Compile Include="Assets\Scripts\RestBreakProgress.cs" />
     <Compile Include="Assets\Scripts\RewardAnimationScript.cs" />
-    <Compile Include="Assets\Scripts\rotate.cs" />
     <Compile Include="Assets\Scripts\ScreenMessageScript.cs" />
     <Compile Include="Assets\Scripts\SimpleObjectPool.cs" />
     <Compile Include="Assets\Scripts\StimulusCueManager.cs" />

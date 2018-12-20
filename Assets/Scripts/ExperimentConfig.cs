@@ -273,20 +273,31 @@ public class ExperimentConfig
     private void SetPossibleQuestions()
     {
         // This function creates a list of possible questions (and answers) from which to generate trials.
-        // Each possible question comes with several 'possible' option answers, as well as a correct answer. 
-        // Each question-possible answers-actual answer tuple is associated through the same index.
-
+        // Each possible question comes with several options for selectable answers, as well as a correct answer. 
         // Create lists of (Q,PA,A) for all questions, later loop through to allocate in sequence
 
+        // Note: add as many questions here as you like. 
+        // Randomisation will reorder these and offer repeats if you haven't specified enough unique trials.
+
         // ---- Question ---
-        QuestionData questiondata = new QuestionData(2);  // input specifies number of possible answers
+        QuestionData questiondata = new QuestionData(3);
+
+        questiondata.questionText = "Is this new game really awesome?";
+        questiondata.stimulus = "questionIcon";
+        questiondata.answers[0].answerText = "Na it sucks";
+        questiondata.answers[1].answerText = "It's ok";
+        questiondata.answers[2].answerText = "Yes!";
+        questiondata.answers[2].isCorrect = true;
+        allQuestions.Add(questiondata);
+
+        // ---- Question ---
+        questiondata = new QuestionData(2);  // input specifies number of possible answers
 
         questiondata.questionText = "Is this a bird?";
         questiondata.stimulus = "icecream";
         questiondata.answers[0].answerText = "Yes";
         questiondata.answers[1].answerText = "No";
         questiondata.answers[1].isCorrect = true;
-
         allQuestions.Add(questiondata);
 
         // ---- Question ---
@@ -297,7 +308,6 @@ public class ExperimentConfig
         questiondata.answers[0].answerText = "Yes";
         questiondata.answers[1].answerText = "No";
         questiondata.answers[0].isCorrect = true;
-
         allQuestions.Add(questiondata);
 
         // ---- Question ---
@@ -309,8 +319,9 @@ public class ExperimentConfig
         questiondata.answers[1].answerText = "No";
         questiondata.answers[2].answerText = "Totally";
         questiondata.answers[1].isCorrect = true;
-
         allQuestions.Add(questiondata);
+
+
     }
 
     // ********************************************************************** //

@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class SubmitFeedbackButtonScript : MonoBehaviour
 {
+    /// <summary>
+    /// This script handles submission of participant feedback to the saved data structure gameData.
+    /// This is a simplified, general purpose codebase for creating different behavioural experiments in Unity.
+    /// Author: Hannah Sheahan, sheahan.hannah@gmail.com
+    /// Date: December 2018
+    /// </summary>
+
+
     private DataController dataController;
 
     public AudioClip buttonClickSound;

@@ -5,6 +5,14 @@ using UnityEngine.UI;
 
 public class ExitExperimentDurationScript : MonoBehaviour {
 
+    /// <summary>
+    /// This script writes out the experiment duration to screen at the end of the experiment.
+    /// This is a simplified, general purpose codebase for creating different behavioural experiments in Unity.
+    /// Author: Hannah Sheahan, sheahan.hannah@gmail.com
+    /// Date: December 2018
+    /// </summary>
+
+
     private DataController dataController;
     private string code;
 

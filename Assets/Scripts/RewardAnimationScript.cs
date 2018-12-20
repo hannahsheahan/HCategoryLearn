@@ -3,8 +3,13 @@ using System.Collections;
 
 public class RewardAnimationScript : MonoBehaviour {
 
-    public bool isAnimated = false;
+    /// <summary>
+    /// This script is downloaded as part of the FREE Food Asset Pack from the Unity Asset Store.
+    /// This is a simplified, general purpose codebase for creating different behavioural experiments in Unity.
+    /// </summary>
 
+
+    public bool isAnimated = false;
     public bool isRotating = false;
     public bool isFloating = false;
     public bool isScaling = false;
@@ -33,8 +38,6 @@ public class RewardAnimationScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-       
-        
         if(isAnimated)
         {
             if(isRotating)

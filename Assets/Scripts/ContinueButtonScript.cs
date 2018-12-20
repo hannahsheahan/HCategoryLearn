@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class ContinueButtonScript : MonoBehaviour
 {
+    /// <summary>
+    /// This script handles the generic 'continue' buttons in the start menu to transition between scenes.
+    /// This is a simplified, general purpose codebase for creating different behavioural experiments in Unity.
+    /// Author: Hannah Sheahan, sheahan.hannah@gmail.com
+    /// Date: December 2018
+    /// </summary>
+
+
     private DataController dataController;
 
     public AudioClip buttonClickSound;

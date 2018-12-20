@@ -5,6 +5,14 @@ using UnityEngine.UI;
 
 public class ScreenMessageScript : MonoBehaviour {
 
+    /// <summary>
+    /// This script just writes the text specified by the GameController to the centre of the screen.
+    /// This is a simplified, general purpose codebase for creating different behavioural experiments in Unity.
+    /// Author: Hannah Sheahan, sheahan.hannah@gmail.com
+    /// Date: November 2018
+    /// </summary>
+
+
     public Text screenMessage;
 	
 	void Update () 
