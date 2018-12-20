@@ -61,9 +61,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\AnswerButton.cs" />
+    <Compile Include="Assets\Scripts\AnswerButtonPoolControl.cs" />
     <Compile Include="Assets\Scripts\AnswerData.cs" />
     <Compile Include="Assets\Scripts\AskQuestionScript.cs" />
-    <Compile Include="Assets\Scripts\ChoiceMadeScript.cs" />
     <Compile Include="Assets\Scripts\ContinueButtonScript.cs" />
     <Compile Include="Assets\Scripts\DataController.cs" />
     <Compile Include="Assets\Scripts\DropdownGenderScript.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Assets\Scripts\RewardAnimationScript.cs" />
     <Compile Include="Assets\Scripts\rotate.cs" />
     <Compile Include="Assets\Scripts\ScreenMessageScript.cs" />
+    <Compile Include="Assets\Scripts\SimpleObjectPool.cs" />
     <Compile Include="Assets\Scripts\StimulusCueManager.cs" />
     <Compile Include="Assets\Scripts\SubmitFeedbackButtonScript.cs" />
     <Compile Include="Assets\Scripts\Timer.cs" />

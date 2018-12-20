@@ -156,6 +156,7 @@ public class DataController : MonoBehaviour {
             gameData.allTrialData[trial].trialQuestion = config.GetQuestion(trial);
             gameData.allTrialData[trial].trialAnswer = config.GetAnswer(trial);
             gameData.allTrialData[trial].trialStimulus = config.GetStimulus(trial);
+            gameData.allTrialData[trial].trialPossibleAnswers = config.GetPossibleAnswers(trial);
 
             // Timer variables (can change these for each trial later e.g. with jitter)
             gameData.allTrialData[trial].maxResponseTime = config.maxResponseTime;

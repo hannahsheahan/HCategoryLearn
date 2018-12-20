@@ -141,8 +141,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9b9a6fb1a1ab42b89c3aa27eda738e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  starSpawnLocation: {x: 0, y: 0, z: 0}
-  activeStarSpawnLocation: {x: 0, y: 0, z: 0}
+  answerButtonObjectPool: {fileID: 0}
+  answerButtonParent: {fileID: 0}
+  whichChoiceMade: 
+  correctChoiceMade: 0
+  trialQuestion: 
+  trialStimulus: 
+  trialPossibleAnswers: []
   choiceMadeSound: {fileID: 0}
   goCueSound: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
   errorSound: {fileID: 8300000, guid: 4b4dd7245f6104c8c8eb07ccf6b386ed, type: 3}
@@ -151,23 +156,21 @@ MonoBehaviour:
   openBoxSound: {fileID: 8300000, guid: fe0b1f9aeb45b41b089175aeeabd5d95, type: 3}
   textMessage: 
   displayCue: 0
-  rewardType: 
-  rewardVisible: 0
+  cueVisible: 0
   trialScore: 0
   totalScore: 0
   nextScore: 0
   flashTotalScore: 0
   scoreUpdated: 0
   pauseClock: 0
-  flashCongratulations: 0
   congratulated: 0
-  firstMovementTime: 0
-  totalMovementTime: 0
+  audioFeedbackSounded: 0
+  flashColourFeedback: 0
+  responseTime: 0
   totalExperimentTime: 0
-  currentMovementTime: 0
+  currentTickingTrialTime: 0
   displayTimeLeft: 0
-  maxMovementTime: 30
-  minDwellAtReward: 0
+  maxResponseTime: 0
   displayMessageTime: 1.5
   errorDwellTime: 1
   restbreakDuration: 0
