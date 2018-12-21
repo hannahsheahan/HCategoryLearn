@@ -283,10 +283,10 @@ public class ExperimentConfig
         // ---- Question ---
         QuestionData questiondata = new QuestionData(3);  // Note: input specifies number of possible answers (buttons) for this Q
 
-        questiondata.questionText = "Is this new game really awesome?";
+        questiondata.questionText = "Is this experiment really cool and fun and all things good?";
         questiondata.stimulus = "questionIcon";
         questiondata.answers[0].answerText = "Na it sucks";
-        questiondata.answers[1].answerText = "It's ok";
+        questiondata.answers[1].answerText = "It's ok, I guess";
         questiondata.answers[2].answerText = "Yes!";
         questiondata.answers[2].isCorrect = true;
         allQuestions.Add(questiondata);
@@ -314,12 +314,25 @@ public class ExperimentConfig
         // ---- Question ---
         questiondata = new QuestionData(3);
 
-        questiondata.questionText = "Is consuming this a good life choice?";
+        questiondata.questionText = "Is drinking this a good life choice?";
         questiondata.stimulus = "wine";
         questiondata.answers[0].answerText = "Unclear";
         questiondata.answers[1].answerText = "No";
-        questiondata.answers[2].answerText = "Totally";
+        questiondata.answers[2].answerText = "Yes";
         questiondata.answers[0].isCorrect = true;
+        allQuestions.Add(questiondata);
+
+        // ---- Question ---
+        questiondata = new QuestionData(5);
+
+        questiondata.questionText = "How many avocado-toasts does a house cost?";
+        questiondata.stimulus = "avocado";
+        questiondata.answers[0].answerText = "1";
+        questiondata.answers[1].answerText = "10";
+        questiondata.answers[2].answerText = "100";
+        questiondata.answers[3].answerText = "1000";
+        questiondata.answers[4].answerText = "Nope";
+        questiondata.answers[4].isCorrect = true;
         allQuestions.Add(questiondata);
 
     }

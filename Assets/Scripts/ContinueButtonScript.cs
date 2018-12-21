@@ -36,6 +36,7 @@ public class ContinueButtonScript : MonoBehaviour
     public void FullScreenOnTriggerDown()
     {
         // make the game fullscreen (should work even in web browser, if using Chrome or Firefox)
+        Debug.Log("Attempting to make application full-screen.");
         Screen.fullScreen = true;
     }
 

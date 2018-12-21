@@ -18,7 +18,7 @@ public class ScreenMessageScript : MonoBehaviour {
 	void Update () 
     {
         // update the text gameobject's message in-line with the FSM
-        screenMessage.fontSize = 36;
+        screenMessage.fontSize = 20;
         screenMessage.text = GameController.control.textMessage;
     }
 }

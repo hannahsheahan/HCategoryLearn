@@ -1,4 +1,4 @@
-﻿<?php 
+<?php 
 
 // This php script recieves posted data from the Unity WebGL build and sends it to a JSON file on the server
 // Author: Hannah Sheahan, sheahan.hannah@gmail.com
@@ -8,7 +8,7 @@
 $data = $_POST["gameData"];
 $fileName = $_POST["fileName"];
 
-$serverDataPath = __DIR__ . "/../../pilot/data/";
+$serverDataPath = __DIR__ . "/../../data/";
 $filePath = $serverDataPath . $fileName;
 
 //$filePath = $fileName;   // for writing to local file instead

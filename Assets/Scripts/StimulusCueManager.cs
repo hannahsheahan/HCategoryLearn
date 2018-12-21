@@ -25,6 +25,7 @@ public class StimulusCueManager : MonoBehaviour
     public Sprite martiniImage;
     public Sprite avocadoImage;
     public Sprite icecreamImage;
+    public Sprite bananaImage;
     public Sprite questionIconImage;
     private string cue;
 
@@ -67,6 +68,9 @@ public class StimulusCueManager : MonoBehaviour
                         break;
                     case "icecream":
                         cueImage.sprite = icecreamImage;
+                        break;
+                    case "banana":
+                        cueImage.sprite = bananaImage;
                         break;
                     case "questionIcon":
                         cueImage.sprite = questionIconImage;

@@ -48,15 +48,14 @@ public class AnswerButtonPoolControl : MonoBehaviour {
 
     private void SetupAnswerButtons() 
     { 
-
         // Remove old buttons and load new answer buttons
         RemoveAnswerButtons();                              // send old answer button objects back to object pool
 
         // This will create an extra button for each possible answer
-        for (int i =0; i < GameController.control.trialPossibleAnswers.Length; i++) 
+        for (int i = 0; i < GameController.control.trialPossibleAnswers.Length; i++) 
         {
             GameObject answerButtonGameObject = answerButtonObjectPool.GetObject();
-            answerButtonGameObject.transform.SetParent(answerButtonParent);
+            answerButtonGameObject.transform.SetParent(answerButtonParent, false);
             answerButtonGameObjects.Add(answerButtonGameObject);
 
             AnswerButton answerButton = answerButtonGameObject.GetComponent<AnswerButton>();
