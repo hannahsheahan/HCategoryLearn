@@ -283,7 +283,7 @@ public class ExperimentConfig
         // ---- Question ---
         QuestionData questiondata = new QuestionData(3);  // Note: input specifies number of possible answers (buttons) for this Q
 
-        questiondata.questionText = "Is this experiment really cool and fun and all things good?";
+        questiondata.questionText = "Is this game fun and all things good?";
         questiondata.stimulus = "questionIcon";
         questiondata.answers[0].answerText = "Na it sucks";
         questiondata.answers[1].answerText = "It's ok, I guess";
@@ -312,14 +312,13 @@ public class ExperimentConfig
         allQuestions.Add(questiondata);
 
         // ---- Question ---
-        questiondata = new QuestionData(3);
+        questiondata = new QuestionData(2);
 
-        questiondata.questionText = "Is drinking this a good life choice?";
-        questiondata.stimulus = "wine";
-        questiondata.answers[0].answerText = "Unclear";
-        questiondata.answers[1].answerText = "No";
-        questiondata.answers[2].answerText = "Yes";
-        questiondata.answers[0].isCorrect = true;
+        questiondata.questionText = "Are you thinking what I'm thinking, B1?";
+        questiondata.stimulus = "banana";
+        questiondata.answers[0].answerText = "No";
+        questiondata.answers[1].answerText = "I think I am, B2";
+        questiondata.answers[1].isCorrect = true;
         allQuestions.Add(questiondata);
 
         // ---- Question ---
@@ -331,7 +330,7 @@ public class ExperimentConfig
         questiondata.answers[1].answerText = "10";
         questiondata.answers[2].answerText = "100";
         questiondata.answers[3].answerText = "1000";
-        questiondata.answers[4].answerText = "Nope";
+        questiondata.answers[4].answerText = ": (";
         questiondata.answers[4].isCorrect = true;
         allQuestions.Add(questiondata);
 

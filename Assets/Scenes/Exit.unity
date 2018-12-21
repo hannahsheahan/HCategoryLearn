@@ -675,7 +675,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Any last feedback (debreifing question goes here)?
+  m_Text: Any last feedback?
 --- !u!222 &630905305
 CanvasRenderer:
   m_ObjectHideFlags: 0
