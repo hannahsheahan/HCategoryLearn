@@ -1,4 +1,6 @@
 # UniturkDM
+##### Unity Editor Version: 2018.1.7f1
+
 This is one of two Uniturk projects developed for creating behavioural experiments in Unity and deploying them online.
 
 -  **UniturkDM** contains project files for creating a basic decision making experiment in which the participant makes one response per trial
