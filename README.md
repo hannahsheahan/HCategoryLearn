@@ -30,8 +30,10 @@ and fork it to your account.
 1. Edit the script _filepath.cs_, and replace the path string with path to your local project folder.
 2. Create a folder called _‘data’_ within the project folder on your local machine. 
 3. Open the script _DataController.cs_ and edit the variable _‘baseFilePath’_,  to change the local file saving path to the newly created folder _‘data’_ in your project folder.
-4. If you want to save data online, upload the data writing script _fromunity.php_ (located under _Assets_ > _php_ ) to the server (for Summerfield lab members, this should be under _sandbox/tasks/YOURUSERNAME/YOURTASK/lib/php/_ ). Run 'chmod ugo+rw FOLDERNAME' from this directory in the terminal to sort out file permissions, where FOLDERNAME corresponds to the place on the server where you want to store data (thanks Timo!).
-5. In the _DataController.cs_ script, find the function _‘SaveData()’_ and either: A) uncomment the line under ‘v1.0’ if you want to save data to your local machine, OR  B) if you want to save data on the web server (necessary for deploying this online),  uncomment the line under ‘v2.1’ and edit the web server file path for where you want to store the .php writing script, i.e. _sandbox/tasks/YOURUSERNAME/YOURTASK/lib/php/fromunity.php_ . Best to start by trying local file saving to check everything is working smoothly first.
+4. If you want to save data online, upload the data writing script _fromunity.php_ (located under _Assets_ > _php_ ) to the server (for Summerfield lab members, this should be under _/www/sandbox/tasks/YOURUSERNAME/YOURTASK/lib/php/_ ). Run 'chmod ugo+rw FOLDERNAME' from this directory in the terminal to sort out file permissions, where FOLDERNAME corresponds to the place on the server where you want to store data (thanks Timo!).
+5. If you want to save data online, edit the _fromunity.php_ script so that the path to your data folder on the server is correct.
+6. In the _DataController.cs_ script, find the function _‘SaveData()’_ and either: A) uncomment the line under ‘v1.0’ if you want to save data to your local machine, OR  B) if you want to save data on the web server (necessary for deploying this online),  uncomment the line under ‘v2.1’ and edit the web server file path for where you want to store the .php writing script, i.e. _sandbox/tasks/YOURUSERNAME/YOURTASK/lib/php/fromunity.php_ . Best to start by trying local file saving to check everything is working smoothly first.
+
 
 ## Running the experiment
 1. Open (double-click) the scene _‘Persistent’_ in the Project menu. 
