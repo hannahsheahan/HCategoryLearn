@@ -72,6 +72,6 @@ public class AnswerButton : MonoBehaviour
     public void SubmitChoiceOnClick()
     {
         source.PlayOneShot(buttonClickSound, 1F);
-        GameController.control.SubmitChoice(answerText.text); // Continue to the before starting page 
+        GameController.control.SubmitChoice(answerText.text); // Submit the selected answer 
     }
 }
