@@ -127,7 +127,7 @@ public class DataController : MonoBehaviour {
     }
 
     // ********************************************************************** //
-
+ 
     public void LoadTrialSequence()
     {
         // Load in the trial sequence to the data controller and save it
