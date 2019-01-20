@@ -1,5 +1,5 @@
 # UniturkDM
-##### Unity Editor Version: 2018.1.7f1
+##### Unity Editor Version: 2018.3.1
 
 This is one of two Uniturk projects developed for creating behavioural experiments in Unity and deploying them online.
 
