@@ -146,8 +146,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -350}
-  m_SizeDelta: {x: 600, y: 970}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 600, y: 990}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &12510467
 CanvasRenderer:
@@ -251,7 +251,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 4506bf6ca285b494ab0993e12703d5e6, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 22
     m_FontStyle: 0
     m_BestFit: 0
@@ -398,7 +398,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 600, y: 970}
+  m_SizeDelta: {x: 600, y: 990}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &876221825
 MonoBehaviour:
@@ -433,51 +433,78 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "Thank you for being willing to participate in our experiment. Your contribution
-    to our research is very valuable and we appreciate your help.\n\nYou have freely
+  m_Text: 'Thank you for being willing to participate in our experiment. Your contribution
+    to our research is very valuable and we appreciate your help. You have freely
     elected to participate in the study after viewing its availability on Amazon Mechanical
     Turk (https://www.mturk.com/mturk/welcome). Only participants over 18 years old
-    are eligible to take part in this study.\n\nYou do not have to take part. If you
-    do agree to participate, you may withdraw yourself and all data associated with
-    your participation from the study at any time, without giving reason and without
-    penalty, by simply exiting the task.\n\nIf you are happy to take part in the study,
-    you will perform computerised tasks that involve the presentation of scientific
-    studies. During the task you are requested to press buttons to make decisions
-    about what you think the likely outcome of that study is. \n\nYou will recieve
-    feedback about your performance at the end of each trial, for example, by seeing
-    your total score increase if you respond within the allocated time, or by observing
-    a feedback message on the screen.\n\nThe study should take between 10 and 20 minutes,
-    although if you repeat many trials during the study, it may take longer. You will
-    be reimbursed for your participation at an hourly rate of approximately $8, depending
-    on how long the task takes you to complete and your total score.\n\nThere are
-    no risks involved in taking part other than those posed by everyday life, however
-    some people may experience temporary motion sickness. If you do feel nauseated,
-    please stop the experiment. You are also free to withdraw at any time.\n\nThere
-    will be no direct benefit to you from taking part in this research, aside from
-    financial compensation.\n\nThe research data (button presses and details of your
-    reported age and gender) will be stored confidentially on the researcher's computers.
-    The researchers in this study have no access to personal information about you,
-    or to other information (e.g. your browsing history).\n\nResearch data will be
-    stored confidentially in password-protected documents, on designated computers.
-    Only the research team and authorized personnel will have access to research data.
-    All research data and records will be stored for a minimum retention period of
-    3 years after publication or public release of the work of the research.\n\nThe
-    research may be published in international peer-reviewed journals and presented
+    are eligible to take part in this study.
+
+
+    You do not have to take part. If you do agree to participate, you may withdraw
+    yourself and all data associated with your participation from the study at any
+    time, without giving reason and without penalty, by simply exiting the task.
+
+
+    If you are happy to take part in the study, you will perform computerised tasks
+    that involve the presentation of scientific studies. During the task you are requested
+    to press buttons to make decisions about what you think the likely outcome of
+    that study is. You will recieve feedback about your performance at the end of
+    each trial, for example, by seeing your total score increase if you respond within
+    the allocated time, or by observing a feedback message on the screen.
+
+
+    The study should take between 10 and 20 minutes, although if you repeat many trials
+    during the study, it may take longer. You will be reimbursed for your participation
+    at an hourly rate of approximately $8, depending on how long the task takes you
+    to complete and your total score.
+
+
+    There are no risks involved in taking part other than those posed by everyday
+    life, however some people may experience temporary motion sickness. If you do
+    feel nauseated, please stop the experiment. You are also free to withdraw at any
+    time. There will be no direct benefit to you from taking part in this research,
+    aside from financial compensation.
+
+
+    The research data (button presses and details of your reported age and gender)
+    will be stored confidentially on the researcher''s computers. The researchers
+    in this study have no access to personal information about you, or to other information
+    (e.g. your browsing history).
+
+
+    Research data will be stored confidentially in password-protected documents, on
+    designated computers. Only the research team and authorized personnel will have
+    access to research data. All research data and records will be stored for a minimum
+    retention period of 3 years after publication or public release of the work of
+    the research.
+
+
+    The research may be published in international peer-reviewed journals and presented
     at national and international conferences. We make every effort to make our publications
-    open-access, but this is not always possible and depends on the journal's publication
-    policy.\n\nIn addition, the research may be written up as part of a student thesis.
-    On successful submission of the thesis, it will be deposited both in print and
-    online in the University archives, to facilitate its use in future research. The
-    thesis will be published open access.\n\nThe University of Oxford is committed
-    to the dissemination of its research for the benefit of society and the economy
-    and, in support of this commitment, has established an online archive of research
-    materials. This archive includes digital copies of student theses successfully
-    submitted as part of a University of Oxford postgraduate degree programme. Holding
-    the archive online gives easy access for researchers to the full text of freely
-    available theses, thereby increasing the likely impact and use of that research.\n\nThis
-    study has been reviewed by, and received ethics clearance through, the University
-    of Oxford Central University Research Ethics Committee (reference number: R50750/RE001).\n\nIf
-    you have a concern about any aspect of this study, please speak to the relevant
+    open-access, but this is not always possible and depends on the journal''s publication
+    policy.
+
+
+    In addition, the research may be written up as part of a student thesis. On successful
+    submission of the thesis, it will be deposited both in print and online in the
+    University archives, to facilitate its use in future research. The thesis will
+    be published open access.
+
+
+    The University of Oxford is committed to the dissemination of its research for
+    the benefit of society and the economy and, in support of this commitment, has
+    established an online archive of research materials. This archive includes digital
+    copies of student theses successfully submitted as part of a University of Oxford
+    postgraduate degree programme. Holding the archive online gives easy access for
+    researchers to the full text of freely available theses, thereby increasing the
+    likely impact and use of that research.
+
+
+    This study has been reviewed by, and received ethics clearance through, the University
+    of Oxford Central University Research Ethics Committee (reference number: R50750/RE001).
+
+
+    If you have a concern about any aspect of this study, please speak to the relevant
     researcher (tel: 01865-271321; e-mail: hiplab@psy.ox.ac.uk), who will do their
     best to answer your query. The researcher should acknowledge your concern within
     10 working days and give you an indication of how they intend to deal with it.
@@ -485,10 +512,25 @@ MonoBehaviour:
     chair of the Research Ethics Committee at the University of Oxford who will seek
     to resolve the matter in a reasonably expeditious manner: Chair, Medical Sciences
     Inter-Divisional Research Ethics Committee; Email: ethics@medsci.ox.ac.uk; Address:
-    Research Services, University of Oxford, Wellington Square, Oxford OX1 2JD\n\nContact
-    Details\nIf you would like to discuss the research with someone beforehand (or
-    if you have questions afterwards), please contact:\n\nProf. Dr. Christopher Summerfield\n\nDepartment
-    of Experimental Psychology\n\nTel: 01865 - 271321\n\nEmail: Christopher.summerfield@psy.ox.ac.uk"
+    Research Services, University of Oxford, Wellington Square, Oxford OX1 2JD
+
+
+    Contact Details
+
+    If you would like to discuss the research with someone beforehand (or if you have
+    questions afterwards), please contact:
+
+
+    Prof. Dr. Christopher Summerfield
+
+
+    Department of Experimental Psychology
+
+
+    Tel: 01865 - 271321
+
+
+    Email: christopher.summerfield@psy.ox.ac.uk'
 --- !u!222 &876221826
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -839,7 +881,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 4506bf6ca285b494ab0993e12703d5e6, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 18
     m_FontStyle: 0
     m_BestFit: 0
@@ -1254,8 +1296,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2134484723}
   m_HandleRect: {fileID: 2134484722}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 0.2783505
+  m_Value: 0.5
+  m_Size: 0.27272728
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

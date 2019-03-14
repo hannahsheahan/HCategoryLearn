@@ -116,10 +116,10 @@ public class ExperimentConfig
         getReadyDuration = 5.0f;                      // how long we have to 'get ready' after the practice, before main experiment begins
 
         // Note that when used, jitters ADD to these values - hence they are minimums. See GameController for the usage/meaning of these variables.
-        maxResponseTime   = 15.0f;                 
+        maxResponseTime   = 10.0f;                 
         preDisplayCueTime = 1.0f;               
-        displayCueTime    = 2.0f;
-        goCueDelay        = 1.5f;                      
+        displayCueTime    = 0.0f;
+        goCueDelay        = 5.0f;                      
         finalGoalHitPauseTime  = 0.2f;           
         displayMessageTime     = 1.5f;
         errorDwellTime         = 1.5f;                // Note: should be at least as long as displayMessageTime

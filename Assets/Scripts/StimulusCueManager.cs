@@ -42,6 +42,9 @@ public class StimulusCueManager : MonoBehaviour
 
     void Update()
     {
+        // dont display a visual cue
+
+        /*
         if ( GameController.control.displayCue )
         {
             cue = GameController.control.trialStimulus;
@@ -83,6 +86,7 @@ public class StimulusCueManager : MonoBehaviour
         {
             cueImage.enabled = false;
         }
+        */
     }
 
     // ********************************************************************** //
