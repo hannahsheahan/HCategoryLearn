@@ -1,7 +1,7 @@
 # grandMotherTurkerTest
 ##### Unity Editor Version: 2018.3.1
 
-This repo has been developed from UniturkDM for the Summerfield Lab to execute a mturk-based test of the predictability of psychology literature, using 'the grandmother test'.
+This repo has been developed from UniturkDM for the Summerfield Lab to execute a mturk-based test of the predictability of psychology literature, i.e. an mturk implementation of 'the grandmother test'.
 
 
 ## Downloading and installing
