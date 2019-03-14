@@ -1,7 +1,7 @@
 ﻿<Properties StartupConfiguration="{04A06AB3-FAEE-812E-7193-FF90F702CD30}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/AskQuestionScript.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameController.cs">
     <Files>
-      <File FileName="Assets/Scripts/GameController.cs" Line="270" Column="61" />
+      <File FileName="Assets/Scripts/GameController.cs" Line="192" Column="19" />
       <File FileName="Assets/Scripts/ExperimentConfig.cs" Line="119" Column="31" />
       <File FileName="Assets/Scripts/AskQuestionScript.cs" Line="25" Column="46" />
     </Files>

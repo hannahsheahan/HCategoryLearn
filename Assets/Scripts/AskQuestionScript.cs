@@ -23,13 +23,16 @@ public class AskQuestionScript : MonoBehaviour {
         //if (GameController.control.State >= GameController.STATE_STARTTRIAL)  // display the Q the whole trial
         // display question while stimulus is visible
         if (GameController.control.displayCue)
-        {
-            QuestionText.text = GameController.control.trialQuestion;
-        }
-        else 
-        {
-            QuestionText.text = "";
-         }
+            if ((GameController.control.State != GameController.STATE_ERROR) && (GameController.control.State != GameController.STATE_PAUSE))
+            {
+                {
+                    QuestionText.text = GameController.control.trialQuestion;
+                }
+            }
+            else
+            {
+                QuestionText.text = "";
+            }
     }
 
     // ********************************************************************** //
