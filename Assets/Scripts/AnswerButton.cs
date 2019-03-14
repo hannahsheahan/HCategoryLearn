@@ -41,13 +41,16 @@ public class AnswerButton : MonoBehaviour
     {
         // flash the outline colour around the button depending on whether it was the correct selection or not
 
+
+        // give no feedback about the correctness of their response
+        /*
         if (GameController.control.State == GameController.STATE_FEEDBACK) 
         {
             if (GameController.control.whichChoiceMade == answerText.text) // this button was the chosen one
             { 
                 if (GameController.control.flashColourFeedback) 
                 { 
-                    if (GameController.control.correctChoiceMade)     // turn on the colour feedback
+                     if (GameController.control.correctChoiceMade)     // turn on the colour feedback
                     {
                         outlineRed.enabled = false;
                         outlineGreen.enabled = true;
@@ -65,6 +68,7 @@ public class AnswerButton : MonoBehaviour
                 }
             }
         }
+        */
     }
 
     // ********************************************************************** //

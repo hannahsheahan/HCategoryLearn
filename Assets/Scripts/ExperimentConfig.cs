@@ -112,19 +112,19 @@ public class ExperimentConfig
         totalTrials = totalTrials + nbreaks;
 
         // Timer variables (measured in seconds) - these can later be changed to be different per trial for jitter etc
-        dataRecordFrequency = 0.04f;
+        dataRecordFrequency = 0.06f;
         getReadyDuration = 5.0f;                      // how long we have to 'get ready' after the practice, before main experiment begins
 
         // Note that when used, jitters ADD to these values - hence they are minimums. See GameController for the usage/meaning of these variables.
-        maxResponseTime   = 5.0f;                 
-        preDisplayCueTime = 1.5f;               
+        maxResponseTime   = 15.0f;                 
+        preDisplayCueTime = 1.0f;               
         displayCueTime    = 2.0f;
         goCueDelay        = 1.5f;                      
-        finalGoalHitPauseTime  = 2.0f;           
+        finalGoalHitPauseTime  = 0.2f;           
         displayMessageTime     = 1.5f;
         errorDwellTime         = 1.5f;                // Note: should be at least as long as displayMessageTime
-        pausePriorFeedbackTime = 0.3f;
-        feedbackFlashDuration  = 1.2f;                // duration that colour button feedback is shown for
+        pausePriorFeedbackTime = 0.0f;
+        feedbackFlashDuration  = 0.2f;                // duration that colour button feedback is shown for
 
         // Allocate space for the ordered questions, answers and associated stimuli
         trialMazes = new string[totalTrials];
