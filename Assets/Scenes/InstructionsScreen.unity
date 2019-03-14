@@ -458,40 +458,27 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: '1.  Here is some bullet pointed information about what to do.
+  m_Text: '1.  On each trial, you will read the description of a psychology experiment.
+    Consider the description of each experiment carefully.
 
 
-    2.  More information ...
+    2.  After the ''beep'' sound, use the mouse button to select the outcome of the
+    experiment that you think is most likely.
 
 
-    3.  Earn points by ....
+    3.  Answer each question before the question timer runs out.
 
 
-    4.  An image of an item will appear at the start of each trial to show ...
+    4.  The more questions you answer, the more points you earn.
 
 
-    5.  Your task is to do X ...
+    5.   You will be paid a bonus $0.001 for each point in your final score.
 
 
-    6.  Use your mouse to select the best answer.
-
-
-    7.  You must wait for the ''beep'' sound on each trial before you making your
-    choice.
-
-
-    8.  Make your choice before the timer runs out! ... X will happen if you don''t...
-
-
-    9.   You will be paid a bonus $0.001 for each point in your final score (this
-    could be up to $X if you do well).
-
-
-    10.  You will start with 2 practice trials. These won''t count towards your total
+    6.  You will start with 2 practice trials. These won''t count towards your total
     score.
 
-
-    11.  Make sure the sound on your computer is turned up, and get ready to start!'
+'
 --- !u!222 &354247045
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -744,7 +731,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 465109793}
   m_Direction: 0
   m_Value: 1
-  m_Size: 0.5723953
+  m_Size: 0.57441854
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
