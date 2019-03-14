@@ -1,27 +1,16 @@
-# UniturkDM
+# grandMotherTurkerTest
 ##### Unity Editor Version: 2018.3.1
 
-This is one of two Uniturk projects developed for creating behavioural experiments in Unity and deploying them online.
-
--  **UniturkDM** contains project files for creating a basic decision making experiment in which the participant makes one response per trial
-e.g. a visual stimulus appears on the screen and the participant chooses 1/n button responses per trial.
-
--  If you are planning to run an experiment involving more continuous online interaction with the environment 
-e.g. online foraging, navigation, motor control, or other sequential decision-making, you will probably find the repo **UniturkNav** a better place to start.
+This repo has been developed from UniturkDM for the Summerfield Lab to execute a mturk-based test of the predictability of psychology literature, using 'the grandmother test'.
 
 
 ## Downloading and installing
 1. Download and install the _free_ version of Unity.
 2. Download and install Visual Studio (it’s a nice text editor for C#, but feel free to use any other text editor you like e.g. Atom, Xcode…).
-3. If you have a Github account, select which package you want here: 
+3. If you have a Github account, select: 
 ```diff
-+ gitHub.com/hannahsheahan/UniturkFM
++ gitHub.com/hannahsheahan/grandMotherTurkerTest
 ```
-or
-```diff
-+ github.com/hannahsheahan/UniturkNav
-```
-
 and fork it to your account. 
 
 4. Open the Unity project on your computer. 
