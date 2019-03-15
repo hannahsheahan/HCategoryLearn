@@ -449,21 +449,19 @@ MonoBehaviour:
     that involve the presentation of scientific studies. During the task you are requested
     to press buttons to make decisions about what you think the likely outcome of
     that study is. You will recieve feedback about your performance at the end of
-    each trial, for example, by seeing your total score increase if you respond within
-    the allocated time, or by observing a feedback message on the screen.
+    each trial, for example, by seeing your total number of answered questions increase
+    if you respond within the allocated time.
 
 
-    The study should take between 10 and 20 minutes, although if you repeat many trials
+    The study should take between 20 and 30 minutes, although if you repeat many trials
     during the study, it may take longer. You will be reimbursed for your participation
     at an hourly rate of approximately $8, depending on how long the task takes you
     to complete and your total score.
 
 
     There are no risks involved in taking part other than those posed by everyday
-    life, however some people may experience temporary motion sickness. If you do
-    feel nauseated, please stop the experiment. You are also free to withdraw at any
-    time. There will be no direct benefit to you from taking part in this research,
-    aside from financial compensation.
+    life. You are free to withdraw at any time. There will be no direct benefit to
+    you from taking part in this research, aside from financial compensation.
 
 
     The research data (button presses and details of your reported age and gender)
@@ -1297,7 +1295,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2134484722}
   m_Direction: 0
   m_Value: 1
-  m_Size: 0.13131313
+  m_Size: 0.27272728
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
