@@ -62,7 +62,7 @@ public class ExperimentConfig
     // Use a constructor to set this up
     public ExperimentConfig()
     {
-        //experimentVersion = "mturk_learnpilot";
+        //experimentVersion = "mturk_pilot";
         experimentVersion = "micro_debug";
         //experimentVersion = "singleblock_labpilot";
 
@@ -70,7 +70,7 @@ public class ExperimentConfig
         // Set these variables to define your experiment:
         switch (experimentVersion)
         {
-            case "mturk_learnpilot":       // ----Full 4 block learning experiment-----
+            case "mturk_pilot":       // ----Full 4 block learning experiment-----
                 practiceTrials = 2 + getReadyTrial;
                 nExecutedTrials = 16 * 4;
                 totalTrials = nExecutedTrials + setupAndCloseTrials + practiceTrials;        // accounts for the Persistent, StartScreen and Exit 'trials'
@@ -119,7 +119,7 @@ public class ExperimentConfig
         maxResponseTime   = 10.0f;                 
         preDisplayCueTime = 1.0f;               
         displayCueTime    = 0.0f;
-        goCueDelay        = 5.0f;                      
+        goCueDelay        = 20.0f;                    // they have to spend at least this much time reading before they can respond                 
         finalGoalHitPauseTime  = 0.2f;           
         displayMessageTime     = 1.5f;
         errorDwellTime         = 1.5f;                // Note: should be at least as long as displayMessageTime
@@ -156,7 +156,7 @@ public class ExperimentConfig
         // Define the full trial sequence
         switch (experimentVersion)
         {
-            case "mturk_learnpilot":       // ----Full 4 block learning experiment-----
+            case "mturk_pilot":       // ----Full 4 block learning experiment-----
 
                 //---- training block 1
                 nextTrial = AddTrainingBlock(nextTrial, blockLength);
@@ -279,6 +279,10 @@ public class ExperimentConfig
 
         // Notes: - add as many questions here as you like. 
         //        - Randomisation will reorder these and offer repeats if you haven't specified enough unique trials.
+        //        - answerOrder will randomise which of the two answers appears on the left vs right (but only works for two answers)
+
+        int answerOrder;
+        int nPossibleAnswers;
 
         // ---- Question ---
         /*
@@ -290,36 +294,6 @@ public class ExperimentConfig
         questiondata.answers[1].answerText = "It's ok, I guess";
         questiondata.answers[2].answerText = "Yes!";
         questiondata.answers[2].isCorrect = true;
-        allQuestions.Add(questiondata);
-
-        // ---- Question ---
-        questiondata = new QuestionData(2); 
-
-        questiondata.questionText = "Is this a bird?";
-        questiondata.stimulus = "icecream";
-        questiondata.answers[0].answerText = "Yes";
-        questiondata.answers[1].answerText = "No";
-        questiondata.answers[1].isCorrect = true;
-        allQuestions.Add(questiondata);
-
-        // ---- Question ---
-        questiondata = new QuestionData(2); 
-
-        questiondata.questionText = "Is this a cheese?";
-        questiondata.stimulus = "cheese";
-        questiondata.answers[0].answerText = "Yes";
-        questiondata.answers[1].answerText = "No";
-        questiondata.answers[0].isCorrect = true;
-        allQuestions.Add(questiondata);
-
-        // ---- Question ---
-        questiondata = new QuestionData(2);
-
-        questiondata.questionText = "Are you thinking what I'm thinking, B1?";
-        questiondata.stimulus = "banana";
-        questiondata.answers[0].answerText = "No";
-        questiondata.answers[1].answerText = "I think I am, B2";
-        questiondata.answers[1].isCorrect = true;
         allQuestions.Add(questiondata);
 
         // ---- Question ---
@@ -337,13 +311,26 @@ public class ExperimentConfig
         */
 
         // ---- Question ---
-        QuestionData questiondata = new QuestionData(2);
+        nPossibleAnswers = 2;
+        QuestionData questiondata = new QuestionData(nPossibleAnswers);
 
+        answerOrder = rand.Next(nPossibleAnswers);
         questiondata.questionText = "Participants are told a price for a product with a given feature (eg next day delivery), and then asked how much they would pay for the product with a different feature (eg 1 week delivery). They are  allowed to adjust the initial price by a fixed amount (the \"maximum allowable\") that varies between participants. \n The participants' decisions about how much to pay will...";
         questiondata.stimulus = "";
-        questiondata.answers[0].answerText = "depend on the maximum allowable adjustment";
-        questiondata.answers[1].answerText = "be independent of the maximum allowable adjustment";
-        questiondata.answers[1].isCorrect = true;
+        questiondata.answers[answerOrder].answerText = "depend on the maximum allowable adjustment";
+        questiondata.answers[1 - answerOrder].answerText = "be independent of the maximum allowable adjustment";
+        questiondata.answers[answerOrder].isCorrect = true;
+        allQuestions.Add(questiondata);
+
+        // ---- Question ---
+        questiondata = new QuestionData(nPossibleAnswers);
+
+        answerOrder = rand.Next(nPossibleAnswers);
+        questiondata.questionText = "Participants' attitudes to race, sexual orientation and body weight are measured from an online test of implicit attitudes. Data were aggregated over the past 13 years. Attitudes are classified as being close to neutral (e.g. indifference to an individual's sexual orientation) or far from neutral (e.g. displaying a negative attitude towards groups with a particular sexual orientation). Over the past 13 years, participants' attitudes about race have become...";
+        questiondata.stimulus = "";
+        questiondata.answers[answerOrder].answerText = "closer to neutral, but those about body weight have changed to be further from neutral";
+        questiondata.answers[1 - answerOrder].answerText = "closer to neutral, but those about race have changed to be further from neutral";
+        questiondata.answers[answerOrder].isCorrect = true;
         allQuestions.Add(questiondata);
 
 
