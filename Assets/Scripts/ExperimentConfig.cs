@@ -53,6 +53,7 @@ public class ExperimentConfig
     // Question and answer data
     public QuestionData[] trialQuestionData;                              // final order of questions we WILL include
     public List<QuestionData> allQuestions = new List<QuestionData>();    // all possible questions that we could include
+    public List<QuestionData> practiceQuestions = new List<QuestionData>();    // all possible questions that we could include
 
     // Preset experiments
     public string experimentVersion;
@@ -89,8 +90,8 @@ public class ExperimentConfig
                 break;
 
             case "micro_debug":            // ----Mini debugging test experiment-----
-                practiceTrials = 1 + getReadyTrial;
-                nExecutedTrials = 5;                                         // note that this is only used for the micro_debug version
+                practiceTrials = 2 + getReadyTrial;
+                nExecutedTrials = 3;                                         // note that this is only used for the micro_debug version
                 totalTrials = nExecutedTrials + setupAndCloseTrials + practiceTrials;        // accounts for the Persistent, StartScreen and Exit 'trials'
                 restFrequency = 5 + restbreakOffset;                            // Take a rest after this many normal trials
                 restbreakDuration = 5.0f;                                       // how long are the imposed rest breaks?
@@ -116,7 +117,7 @@ public class ExperimentConfig
         getReadyDuration = 5.0f;                      // how long we have to 'get ready' after the practice, before main experiment begins
 
         // Note that when used, jitters ADD to these values - hence they are minimums. See GameController for the usage/meaning of these variables.
-        maxResponseTime   = 5.0f;                    // 20f
+        maxResponseTime   = 10.0f;                    // 20f
         preDisplayCueTime = 1.0f;               
         displayCueTime    = 0.0f;
         goCueDelay        = 5.0f;                    // 20f they have to spend at least this much time reading before they can respond                 
@@ -212,7 +213,7 @@ public class ExperimentConfig
         // Add in the practice/familiarisation trials
         for (int trial = setupTrials; trial < setupTrials + practiceTrials - 1; trial++)
         {
-            SetTrial(trial, allQuestions[rand.Next(allQuestions.Count)]);      // for now just give a random trial for practice
+            SetTrial(trial, practiceQuestions[rand.Next(practiceQuestions.Count)]);      // for now just give a random trial for practice
             trialMazes[trial] = "Practice";                                    // reset the maze for a practice trial
         }
     }
@@ -284,6 +285,34 @@ public class ExperimentConfig
         int answerOrder;
         int nPossibleAnswers;
 
+        // Set up two practice questions
+
+        // ---- Practice Question ---
+        nPossibleAnswers = 2;
+        QuestionData questiondata = new QuestionData(nPossibleAnswers);
+
+        answerOrder = rand.Next(nPossibleAnswers);
+        questiondata.questionText = "This is a practice question. Do you understand how to submit your confidence level in your response?";
+        questiondata.stimulus = "";
+        questiondata.answers[answerOrder].answerText = "yes";  //H1
+        questiondata.answers[1 - answerOrder].answerText = "no";  //H0
+        questiondata.answers[answerOrder].isCorrect = true;
+        practiceQuestions.Add(questiondata);
+
+
+        // ---- Practice Question ---
+        questiondata = new QuestionData(nPossibleAnswers);
+
+        answerOrder = rand.Next(nPossibleAnswers);
+        questiondata.questionText = "This is a practice question. Do you think this 3am code is probably filled with bugs?";
+        questiondata.stimulus = "";
+        questiondata.answers[answerOrder].answerText = "yes";  //H1
+        questiondata.answers[1 - answerOrder].answerText = "no";  //H0
+        questiondata.answers[answerOrder].isCorrect = true;
+        practiceQuestions.Add(questiondata);
+
+
+
         // ---- Question ---
         /*
         QuestionData questiondata = new QuestionData(3);  // Note: input specifies number of possible answers (buttons) for this Q
@@ -311,8 +340,7 @@ public class ExperimentConfig
         */
 
         // ---- Question ---
-        nPossibleAnswers = 2;
-        QuestionData questiondata = new QuestionData(nPossibleAnswers);
+        questiondata = new QuestionData(nPossibleAnswers);
 
         answerOrder = rand.Next(nPossibleAnswers);
         questiondata.questionText = "Participants are told a price for a product with a given feature (eg next day delivery), and then asked how much they would pay for the product with a different feature (eg 1 week delivery). They are  allowed to adjust the initial price by a fixed amount (the \"maximum allowable\") that varies between participants. \n The participants' decisions about how much to pay will...";
@@ -326,14 +354,23 @@ public class ExperimentConfig
         questiondata = new QuestionData(nPossibleAnswers);
 
         answerOrder = rand.Next(nPossibleAnswers);
-        questiondata.questionText = "Participants' attitudes to race, sexual orientation and body weight are measured from an online test of implicit attitudes. Data were aggregated over the past 13 years. Attitudes are classified as being close to neutral (e.g. indifference to an individual's sexual orientation) or far from neutral (e.g. displaying a negative attitude towards groups with a particular sexual orientation). Over the past 13 years, participants' attitudes about race have become...";
+        questiondata.questionText = "Participants' attitudes to race, sexual orientation and body weight are measured from an online test of implicit attitudes. Data were aggregated over the past 13 years. Attitudes are classified as being close to neutral (e.g. indifference to an individual's sexual orientation) or far from neutral (e.g. displaying a negative attitude towards groups with a particular sexual orientation). \nOver the past 13 years, participants' attitudes about race have become...";
         questiondata.stimulus = "";
         questiondata.answers[answerOrder].answerText = "closer to neutral, but those about body weight have changed to be further from neutral"; //H1
         questiondata.answers[1 - answerOrder].answerText = "closer to neutral, but those about race have changed to be further from neutral";  //H0
         questiondata.answers[answerOrder].isCorrect = true;
         allQuestions.Add(questiondata);
 
+        // ---- Question ---
+        questiondata = new QuestionData(nPossibleAnswers);
 
+        answerOrder = rand.Next(nPossibleAnswers);
+        questiondata.questionText = "Participants are shown a container in the shape of a cup which is wider at the base than at the opening. \nParticipants perceive the container as being more volumnious (i.e. able to hold more liquid) when it is...";
+        questiondata.stimulus = "";
+        questiondata.answers[answerOrder].answerText = "the right way up"; //H1
+        questiondata.answers[1 - answerOrder].answerText = "upside down";  //H0
+        questiondata.answers[answerOrder].isCorrect = true;
+        allQuestions.Add(questiondata);
 
     }
 
