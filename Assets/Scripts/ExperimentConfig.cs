@@ -281,6 +281,7 @@ public class ExperimentConfig
         //        - Randomisation will reorder these and offer repeats if you haven't specified enough unique trials.
 
         // ---- Question ---
+        /*
         QuestionData questiondata = new QuestionData(3);  // Note: input specifies number of possible answers (buttons) for this Q
 
         questiondata.questionText = "Is this game fun and all things good?";
@@ -333,6 +334,19 @@ public class ExperimentConfig
         questiondata.answers[4].answerText = ": (";
         questiondata.answers[4].isCorrect = true;
         allQuestions.Add(questiondata);
+        */
+
+        // ---- Question ---
+        QuestionData questiondata = new QuestionData(2);
+
+        questiondata.questionText = "Participants are told a price for a product with a given feature (eg next day delivery), and then asked how much they would pay for the product with a different feature (eg 1 week delivery). They are  allowed to adjust the initial price by a fixed amount (the \"maximum allowable\") that varies between participants. \n The participants' decisions about how much to pay will...";
+        questiondata.stimulus = "";
+        questiondata.answers[0].answerText = "depend on the maximum allowable adjustment";
+        questiondata.answers[1].answerText = "be independent of the maximum allowable adjustment";
+        questiondata.answers[1].isCorrect = true;
+        allQuestions.Add(questiondata);
+
+
 
     }
 
