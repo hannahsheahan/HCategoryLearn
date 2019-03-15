@@ -231,6 +231,10 @@ public class DataController : MonoBehaviour {
         // Treat these as list elements so that on trials in which we have multiple attempts we save all the data within that trial
         gameData.allTrialData[currentTrialNumber].FLAG_trialTimeout.Add(GameController.control.FLAG_trialTimeout);
         gameData.allTrialData[currentTrialNumber].FLAG_trialError.Add(GameController.control.FLAG_trialError);
+        gameData.allTrialData[currentTrialNumber].FLAG_dataWritingError.Add(GameController.control.FLAG_dataWritingError);
+        gameData.allTrialData[currentTrialNumber].FLAG_fullScreenModeError.Add(GameController.control.FLAG_fullScreenModeError);
+        gameData.allTrialData[currentTrialNumber].FLAG_questionNotUnderstood.Add(GameController.control.FLAG_questionNotUnderstood);
+
         gameData.allTrialData[currentTrialNumber].responseTime.Add(GameController.control.responseTime);
         gameData.allTrialData[currentTrialNumber].responseChoice.Add(GameController.control.whichChoiceMade);
         gameData.allTrialData[currentTrialNumber].choiceCorrect.Add(GameController.control.correctChoiceMade);

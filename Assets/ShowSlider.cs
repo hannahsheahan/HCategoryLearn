@@ -18,6 +18,7 @@ public class ShowSlider : MonoBehaviour
     public Text highConfText;
     public Text lowConfText;
     public Button nextQuestionButton;
+    public Button dontUnderstandButton;
 
     // ********************************************************************** //
     private void Start()
@@ -28,6 +29,10 @@ public class ShowSlider : MonoBehaviour
         nextQuestionButton = GameObject.Find("nextQuestionButton").GetComponent<Button>();
         nextQuestionButton.gameObject.SetActive(false);
         nextQuestionButton.interactable = false;
+
+        dontUnderstandButton = GameObject.Find("dontUnderstandButton").GetComponent<Button>();
+        dontUnderstandButton.gameObject.SetActive(false);
+        dontUnderstandButton.interactable = false;
     }
 
     // ********************************************************************** //
@@ -47,6 +52,14 @@ public class ShowSlider : MonoBehaviour
                 ConfidenceText.text = "Confidence";
                 highConfText.text = "Very high";
                 lowConfText.text = "Very low";
+                dontUnderstandButton.gameObject.SetActive(true);
+
+                // only enable the skip button once they've actually read the Q
+                if (GameController.control.State >= GameController.STATE_GO)
+                {
+                    dontUnderstandButton.interactable = true;
+                }
+
                 // make it so you can only click the nextQuestionButton once the slider and choice have been chosen
                 if (GameController.control.sliderChoiceMade & GameController.control.choiceRecorded)
                 {
@@ -67,6 +80,7 @@ public class ShowSlider : MonoBehaviour
                 highConfText.text = "";
                 lowConfText.text = "";
                 nextQuestionButton.gameObject.SetActive(false);
+                dontUnderstandButton.gameObject.SetActive(false);
             }
 
 

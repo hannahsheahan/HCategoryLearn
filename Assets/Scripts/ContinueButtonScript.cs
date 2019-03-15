@@ -72,7 +72,15 @@ public class ContinueButtonScript : MonoBehaviour
     public void SubmitChoiceOnClick()
     {
         source.PlayOneShot(buttonClickSound, 1F);
-        GameController.control.SubmitChoice(); // Submit the selected answer 
+        GameController.control.SubmitChoice(true); // Submit the selected answer 
+    }
+
+    // ********************************************************************** //
+
+    public void DontUnderstandOnClick()
+    {
+        source.PlayOneShot(buttonClickSound, 1F);
+        GameController.control.SubmitChoice(false); // They skipped the Q because they didnt understand it
     }
 
 }

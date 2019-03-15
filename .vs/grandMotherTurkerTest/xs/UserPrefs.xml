@@ -1,9 +1,12 @@
 ﻿<Properties StartupConfiguration="{04A06AB3-FAEE-812E-7193-FF90F702CD30}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/DataController.cs">
     <Files>
-      <File FileName="Assets/Scripts/GameController.cs" Line="311" Column="69" />
-      <File FileName="Assets/Scripts/ExperimentConfig.cs" Line="306" Column="51" />
-      <File FileName="Assets/Scripts/DataController.cs" Line="234" Column="63" />
+      <File FileName="Assets/Scripts/GameController.cs" Line="118" Column="41" />
+      <File FileName="Assets/Scripts/DataController.cs" Line="236" Column="77" />
+      <File FileName="Assets/Scripts/ExperimentConfig.cs" Line="214" Column="105" />
+      <File FileName="Assets/Scripts/ContinueButtonScript.cs" Line="83" Column="107" />
+      <File FileName="Assets/ShowSlider.cs" Line="76" Column="37" />
+      <File FileName="Assets/Scripts/TrialData.cs" Line="53" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
