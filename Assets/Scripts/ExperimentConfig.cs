@@ -63,8 +63,8 @@ public class ExperimentConfig
     // Use a constructor to set this up
     public ExperimentConfig()
     {
-        //experimentVersion = "mturk_pilot";
-        experimentVersion = "micro_debug";
+        experimentVersion = "mturk_pilot";
+        //experimentVersion = "micro_debug";
         //experimentVersion = "singleblock_labpilot";
 
 
@@ -73,11 +73,11 @@ public class ExperimentConfig
         {
             case "mturk_pilot":       // ----Full 4 block learning experiment-----
                 practiceTrials = 2 + getReadyTrial;
-                nExecutedTrials = 16 * 4;
+                nExecutedTrials = 22;
                 totalTrials = nExecutedTrials + setupAndCloseTrials + practiceTrials;        // accounts for the Persistent, StartScreen and Exit 'trials'
-                restFrequency = 16 + restbreakOffset;                               // Take a rest after this many normal trials
+                restFrequency = 11 + restbreakOffset;                               // Take a rest after this many normal trials
                 restbreakDuration = 30.0f;                                          // how long are the imposed rest breaks?
-                blockLength = 16;
+                blockLength = 11;
                 break;
 
             case "singleblock_labpilot":   // ----Mini 1 block test experiment-----
@@ -117,10 +117,10 @@ public class ExperimentConfig
         getReadyDuration = 5.0f;                      // how long we have to 'get ready' after the practice, before main experiment begins
 
         // Note that when used, jitters ADD to these values - hence they are minimums. See GameController for the usage/meaning of these variables.
-        maxResponseTime   = 10.0f;                    // 20f
+        maxResponseTime   = 60.0f;                    // 60f
         preDisplayCueTime = 1.0f;               
         displayCueTime    = 0.0f;
-        goCueDelay        = 5.0f;                    // 20f they have to spend at least this much time reading before they can respond                 
+        goCueDelay        = 5.0f;                     // 5f they have to spend at least this much time reading before they can respond                 
         finalGoalHitPauseTime  = 0.2f;           
         displayMessageTime     = 1.5f;
         errorDwellTime         = 1.5f;                // Note: should be at least as long as displayMessageTime
@@ -157,21 +157,13 @@ public class ExperimentConfig
         // Define the full trial sequence
         switch (experimentVersion)
         {
-            case "mturk_pilot":       // ----Full 4 block learning experiment-----
+            case "mturk_pilot":       // ----Pilot 2 block question-answering experiment-----
 
-                //---- training block 1
+                //---- block 1
                 nextTrial = AddTrainingBlock(nextTrial, blockLength);
                 nextTrial = RestBreakHere(nextTrial);
 
-                //---- training block 2
-                nextTrial = AddTrainingBlock(nextTrial, blockLength);
-                nextTrial = RestBreakHere(nextTrial);
-
-                //---- training block 3
-                nextTrial = AddTrainingBlock(nextTrial, blockLength);
-                nextTrial = RestBreakHere(nextTrial);
-
-                //---- training block 4
+                //---- block 2
                 nextTrial = AddTrainingBlock(nextTrial, blockLength);
 
                 break;
@@ -211,11 +203,21 @@ public class ExperimentConfig
     private void AddPracticeTrials()
     {
         // Add in the practice/familiarisation trials
+        /*
         for (int trial = setupTrials; trial < setupTrials + practiceTrials - 1; trial++)
         {
             SetTrial(trial, practiceQuestions[rand.Next(practiceQuestions.Count)]);      // for now just give a random trial for practice
             trialMazes[trial] = "Practice";                                    // reset the maze for a practice trial
         }
+        */
+
+        // this is a hack for the away day in which the ordering of practice trials can be fixed ***HRS (15/03/2019)
+        for (int trial = setupTrials; trial < setupTrials + practiceTrials - 1; trial++)
+        {
+            SetTrial(trial, practiceQuestions[trial - setupTrials]);      // for now just give a random trial for practice
+            trialMazes[trial] = "Practice";                                    // reset the maze for a practice trial
+        }
+
     }
 
     // ********************************************************************** //
@@ -310,34 +312,6 @@ public class ExperimentConfig
         questiondata.answers[1 - answerOrder].answerText = "no";  //H0
         questiondata.answers[answerOrder].isCorrect = true;
         practiceQuestions.Add(questiondata);
-
-
-
-        // ---- Question ---
-        /*
-        QuestionData questiondata = new QuestionData(3);  // Note: input specifies number of possible answers (buttons) for this Q
-
-        questiondata.questionText = "Is this game fun and all things good?";
-        questiondata.stimulus = "questionIcon";
-        questiondata.answers[0].answerText = "Na it sucks";
-        questiondata.answers[1].answerText = "It's ok, I guess";
-        questiondata.answers[2].answerText = "Yes!";
-        questiondata.answers[2].isCorrect = true;
-        allQuestions.Add(questiondata);
-
-        // ---- Question ---
-        questiondata = new QuestionData(5);
-
-        questiondata.questionText = "How many avocado-toasts does a house cost?";
-        questiondata.stimulus = "avocado";
-        questiondata.answers[0].answerText = "1";
-        questiondata.answers[1].answerText = "10";
-        questiondata.answers[2].answerText = "100";
-        questiondata.answers[3].answerText = "1000";
-        questiondata.answers[4].answerText = ": (";
-        questiondata.answers[4].isCorrect = true;
-        allQuestions.Add(questiondata);
-        */
 
         // ---- Question ---
         questiondata = new QuestionData(nPossibleAnswers);
