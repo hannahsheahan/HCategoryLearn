@@ -121,7 +121,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114024617270033478}
-        m_MethodName: SubmitChoiceOnClick
+        m_MethodName: RecordChoiceOnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

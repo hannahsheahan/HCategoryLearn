@@ -234,6 +234,7 @@ public class DataController : MonoBehaviour {
         gameData.allTrialData[currentTrialNumber].responseTime.Add(GameController.control.responseTime);
         gameData.allTrialData[currentTrialNumber].responseChoice.Add(GameController.control.whichChoiceMade);
         gameData.allTrialData[currentTrialNumber].choiceCorrect.Add(GameController.control.correctChoiceMade);
+        gameData.allTrialData[currentTrialNumber].responseConfidence.Add(GameController.control.confidence);
         gameData.allTrialData[currentTrialNumber].trialListIndex.Add(trialListIndex);
 
 

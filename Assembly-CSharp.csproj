@@ -90,6 +90,7 @@
     <Compile Include="Assets\Scripts\TotalScoreUpdateScript.cs" />
     <Compile Include="Assets\Scripts\TrialCountdownScript.cs" />
     <Compile Include="Assets\Scripts\TrialData.cs" />
+    <Compile Include="Assets\ShowSlider.cs" />
     <Compile Include="Assets\Simple UI\Samples\IconPreview.cs" />
     <None Include="Assets\Fonts\Jupiter\LICENSE.txt" />
     <None Include="Assets\Simple UI\Fonts\OFL.txt" />

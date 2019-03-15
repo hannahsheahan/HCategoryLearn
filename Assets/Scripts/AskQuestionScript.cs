@@ -16,24 +16,23 @@ public class AskQuestionScript : MonoBehaviour {
 
     // ********************************************************************** //
 
-    void Update () 
+    void Update()
     {
         // Note: can modulate when this is visible using a GameController.cs controlled flag if you want
 
         //if (GameController.control.State >= GameController.STATE_STARTTRIAL)  // display the Q the whole trial
         // display question while stimulus is visible
         if (GameController.control.displayCue)
+        {
             if ((GameController.control.State != GameController.STATE_ERROR) && (GameController.control.State != GameController.STATE_PAUSE))
             {
-                {
-                    QuestionText.text = GameController.control.trialQuestion;
-                }
+                QuestionText.text = GameController.control.trialQuestion;
             }
             else
             {
                 QuestionText.text = "";
             }
+        }
     }
-
     // ********************************************************************** //
 }

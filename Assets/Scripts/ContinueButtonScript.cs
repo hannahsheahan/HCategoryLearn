@@ -66,4 +66,13 @@ public class ContinueButtonScript : MonoBehaviour
         source.PlayOneShot(buttonClickSound, 1F);
         GameController.control.StartGame();   // Launch first real trial
     }
+
+    // ********************************************************************** //
+
+    public void SubmitChoiceOnClick()
+    {
+        source.PlayOneShot(buttonClickSound, 1F);
+        GameController.control.SubmitChoice(); // Submit the selected answer 
+    }
+
 }

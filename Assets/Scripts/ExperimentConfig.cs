@@ -116,10 +116,10 @@ public class ExperimentConfig
         getReadyDuration = 5.0f;                      // how long we have to 'get ready' after the practice, before main experiment begins
 
         // Note that when used, jitters ADD to these values - hence they are minimums. See GameController for the usage/meaning of these variables.
-        maxResponseTime   = 10.0f;                 
+        maxResponseTime   = 5.0f;                    // 20f
         preDisplayCueTime = 1.0f;               
         displayCueTime    = 0.0f;
-        goCueDelay        = 20.0f;                    // they have to spend at least this much time reading before they can respond                 
+        goCueDelay        = 5.0f;                    // 20f they have to spend at least this much time reading before they can respond                 
         finalGoalHitPauseTime  = 0.2f;           
         displayMessageTime     = 1.5f;
         errorDwellTime         = 1.5f;                // Note: should be at least as long as displayMessageTime
@@ -317,8 +317,8 @@ public class ExperimentConfig
         answerOrder = rand.Next(nPossibleAnswers);
         questiondata.questionText = "Participants are told a price for a product with a given feature (eg next day delivery), and then asked how much they would pay for the product with a different feature (eg 1 week delivery). They are  allowed to adjust the initial price by a fixed amount (the \"maximum allowable\") that varies between participants. \n The participants' decisions about how much to pay will...";
         questiondata.stimulus = "";
-        questiondata.answers[answerOrder].answerText = "depend on the maximum allowable adjustment";
-        questiondata.answers[1 - answerOrder].answerText = "be independent of the maximum allowable adjustment";
+        questiondata.answers[answerOrder].answerText = "depend on the maximum allowable adjustment";  //H1
+        questiondata.answers[1 - answerOrder].answerText = "be independent of the maximum allowable adjustment";  //H0
         questiondata.answers[answerOrder].isCorrect = true;
         allQuestions.Add(questiondata);
 
@@ -328,8 +328,8 @@ public class ExperimentConfig
         answerOrder = rand.Next(nPossibleAnswers);
         questiondata.questionText = "Participants' attitudes to race, sexual orientation and body weight are measured from an online test of implicit attitudes. Data were aggregated over the past 13 years. Attitudes are classified as being close to neutral (e.g. indifference to an individual's sexual orientation) or far from neutral (e.g. displaying a negative attitude towards groups with a particular sexual orientation). Over the past 13 years, participants' attitudes about race have become...";
         questiondata.stimulus = "";
-        questiondata.answers[answerOrder].answerText = "closer to neutral, but those about body weight have changed to be further from neutral";
-        questiondata.answers[1 - answerOrder].answerText = "closer to neutral, but those about race have changed to be further from neutral";
+        questiondata.answers[answerOrder].answerText = "closer to neutral, but those about body weight have changed to be further from neutral"; //H1
+        questiondata.answers[1 - answerOrder].answerText = "closer to neutral, but those about race have changed to be further from neutral";  //H0
         questiondata.answers[answerOrder].isCorrect = true;
         allQuestions.Add(questiondata);
 
