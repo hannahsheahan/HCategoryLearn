@@ -38,4 +38,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Exit.unity
     guid: 3c1070ac5047c476b902a1f9acc7addb
+  - enabled: 1
+    path: Assets/Scenes/PlanetTest.unity
+    guid: e38e61231575e4f54ae26574013dc647
   m_configObjects: {}

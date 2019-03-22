@@ -10,7 +10,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace>
     </RootNamespace>
-    <ProjectGuid>{04A06AB3-FAEE-812E-7193-FF90F702CD30}</ProjectGuid>
+    <ProjectGuid>{3AA75DEF-55CE-8BAC-CD50-72FBA250C50B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\AnswerButtonPoolControl.cs" />
     <Compile Include="Assets\Scripts\AnswerData.cs" />
     <Compile Include="Assets\Scripts\AskQuestionScript.cs" />
+    <Compile Include="Assets\Scripts\ColourSettings.cs" />
     <Compile Include="Assets\Scripts\ContinueButtonScript.cs" />
     <Compile Include="Assets\Scripts\DataController.cs" />
     <Compile Include="Assets\Scripts\DropdownGenderScript.cs" />
@@ -79,13 +80,17 @@
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\GameData.cs" />
     <Compile Include="Assets\Scripts\HideOrDisplay3DObject.cs" />
+    <Compile Include="Assets\Scripts\Planet.cs" />
     <Compile Include="Assets\Scripts\QuestionData.cs" />
     <Compile Include="Assets\Scripts\RestBreakProgress.cs" />
     <Compile Include="Assets\Scripts\RewardAnimationScript.cs" />
     <Compile Include="Assets\Scripts\ScreenMessageScript.cs" />
+    <Compile Include="Assets\Scripts\ShapeGenerator.cs" />
+    <Compile Include="Assets\Scripts\ShapeSettings.cs" />
     <Compile Include="Assets\Scripts\SimpleObjectPool.cs" />
     <Compile Include="Assets\Scripts\StimulusCueManager.cs" />
     <Compile Include="Assets\Scripts\SubmitFeedbackButtonScript.cs" />
+    <Compile Include="Assets\Scripts\TerrainFace.cs" />
     <Compile Include="Assets\Scripts\Timer.cs" />
     <Compile Include="Assets\Scripts\TotalScoreUpdateScript.cs" />
     <Compile Include="Assets\Scripts\TrialCountdownScript.cs" />
@@ -97,19 +102,19 @@
     <None Include="Assets\Textures and Sprites\SF UI\Background\LICENSE.txt" />
     <None Include="Assets\Reward Packages\Food Pack\Shaders\Food.shader" />
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>/Users/hannahsheahan/Documents/Postdoc/Unity/grandMotherTurkerTest/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>/Users/hannahsheahan/Documents/Postdoc/Unity/HCategoryLearn/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>/Users/hannahsheahan/Documents/Postdoc/Unity/grandMotherTurkerTest/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>/Users/hannahsheahan/Documents/Postdoc/Unity/HCategoryLearn/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>/Users/hannahsheahan/Documents/Postdoc/Unity/grandMotherTurkerTest/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>/Users/hannahsheahan/Documents/Postdoc/Unity/HCategoryLearn/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>/Users/hannahsheahan/Documents/Postdoc/Unity/grandMotherTurkerTest/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>/Users/hannahsheahan/Documents/Postdoc/Unity/HCategoryLearn/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
-      <HintPath>/Users/hannahsheahan/Documents/Postdoc/Unity/grandMotherTurkerTest/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+      <HintPath>/Users/hannahsheahan/Documents/Postdoc/Unity/HCategoryLearn/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -313,13 +318,13 @@
       <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
-      <HintPath>/Users/hannahsheahan/Documents/Postdoc/Unity/grandMotherTurkerTest/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+      <HintPath>/Users/hannahsheahan/Documents/Postdoc/Unity/HCategoryLearn/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Editor">
-      <HintPath>/Users/hannahsheahan/Documents/Postdoc/Unity/grandMotherTurkerTest/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
+      <HintPath>/Users/hannahsheahan/Documents/Postdoc/Unity/HCategoryLearn/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>/Users/hannahsheahan/Documents/Postdoc/Unity/grandMotherTurkerTest/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
+      <HintPath>/Users/hannahsheahan/Documents/Postdoc/Unity/HCategoryLearn/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>/Applications/Unity/Unity.app/Contents/MonoBleedingEdge/lib/mono/unity/mscorlib.dll</HintPath>
@@ -351,7 +356,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{BE963250-E764-4663-13AB-03978D5C1008}</Project>
+      <Project>{348F76B9-6D79-23F4-5C8E-3806661155A6}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
   </ItemGroup>
