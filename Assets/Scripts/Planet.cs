@@ -19,6 +19,10 @@ public class Planet : MonoBehaviour
     public ShapeSettings shapeSettings;
     public ColourSettings colourSettings;
 
+    // Note: I'm not bothering with the FaceRenderMask which just renders one of
+    // the faces at a time for playing around with settings, because we dont need it.
+
+
     [HideInInspector]
     public bool shapeSettingsFoldout;
     [HideInInspector]
