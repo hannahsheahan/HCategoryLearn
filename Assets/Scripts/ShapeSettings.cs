@@ -13,7 +13,14 @@ public class ShapeSettings : ScriptableObject
     /// </summary>
 
     public float planetRadius = 1;
+    public NoiseLayer[] noiseLayers;
 
-
+    [System.Serializable]
+    public class NoiseLayer
+    {
+        public bool enabled = true;
+        public bool useFirstLayerAsMask;   // determines whether spikey mountains can appear in seas or have to come out of lower level noise 
+        public NoiseSettings noiseSettings;
+    }
 
 }

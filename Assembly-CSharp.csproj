@@ -80,6 +80,9 @@
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\GameData.cs" />
     <Compile Include="Assets\Scripts\HideOrDisplay3DObject.cs" />
+    <Compile Include="Assets\Scripts\Noise.cs" />
+    <Compile Include="Assets\Scripts\NoiseFilter.cs" />
+    <Compile Include="Assets\Scripts\NoiseSettings.cs" />
     <Compile Include="Assets\Scripts\Planet.cs" />
     <Compile Include="Assets\Scripts\QuestionData.cs" />
     <Compile Include="Assets\Scripts\RestBreakProgress.cs" />
@@ -87,6 +90,7 @@
     <Compile Include="Assets\Scripts\ScreenMessageScript.cs" />
     <Compile Include="Assets\Scripts\ShapeGenerator.cs" />
     <Compile Include="Assets\Scripts\ShapeSettings.cs" />
+    <Compile Include="Assets\Scripts\ShowSlider.cs" />
     <Compile Include="Assets\Scripts\SimpleObjectPool.cs" />
     <Compile Include="Assets\Scripts\StimulusCueManager.cs" />
     <Compile Include="Assets\Scripts\SubmitFeedbackButtonScript.cs" />
@@ -95,7 +99,6 @@
     <Compile Include="Assets\Scripts\TotalScoreUpdateScript.cs" />
     <Compile Include="Assets\Scripts\TrialCountdownScript.cs" />
     <Compile Include="Assets\Scripts\TrialData.cs" />
-    <Compile Include="Assets\ShowSlider.cs" />
     <Compile Include="Assets\Simple UI\Samples\IconPreview.cs" />
     <None Include="Assets\Fonts\Jupiter\LICENSE.txt" />
     <None Include="Assets\Simple UI\Fonts\OFL.txt" />
