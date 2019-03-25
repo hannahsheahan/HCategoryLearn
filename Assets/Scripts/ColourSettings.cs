@@ -12,12 +12,7 @@ public class ColourSettings : ScriptableObject
     /// Date: 21/03/2019
     /// </summary>
 
-    public Color planetColour;
-
-
-
-
-
-
+    public Gradient gradient;
+    public Material planetMaterial;
 
 }
