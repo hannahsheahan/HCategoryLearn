@@ -42,7 +42,7 @@ public class TerrainFace
         Vector3[] vertices = new Vector3[resolution * resolution];
         int[] triangles = new int[(resolution - 1) * (resolution - 1) * 6];  // this many triangles as a function of number of vertices on each dimension (i.e. resolution).
         int triIndex = 0;
-        Vector2[] uv = mesh.uv;
+        Vector2[] uv = (mesh.uv.Length == vertices.Length) ? mesh.uv : new Vector2[vertices.Length];  // if uv is correct length then all good, otherwise make a new one
 
         for (int y = 0; y < resolution; y++)
         {
@@ -55,7 +55,11 @@ public class TerrainFace
 
                 // Turn the cube into a sphere
                 Vector3 pointOnUnitSphere = pointOnUnitCube.normalized;
-                vertices[i] = shapeGenerator.CalculatePointOnPlanet(pointOnUnitSphere);
+                float unscaledElevation = shapeGenerator.CalculateUnscaledElevation(pointOnUnitSphere);
+                vertices[i] = pointOnUnitSphere * shapeGenerator.GetScaledElevation(unscaledElevation);
+                uv[i].y = unscaledElevation;
+
+                //vertices[i] = shapeGenerator.CalculatePointOnPlanet(pointOnUnitSphere);
 
 
                 // Note that vertices are labelled as: e.g. 0  1  2 
@@ -92,7 +96,7 @@ public class TerrainFace
     {
         // keep everything that generates colours separate from mesh generation. This way we dont have to wait for mesh to regenerate when we update colours
 
-        Vector2[] uv = new Vector2[resolution * resolution];
+        Vector2[] uv = mesh.uv;
 
         for (int y = 0; y < resolution; y++)
         {
@@ -103,7 +107,7 @@ public class TerrainFace
                 Vector3 pointOnUnitCube = localUp + (percent.x - 0.5f) * 2 * axisA + (percent.y - 0.5f) * 2 * axisB;  // geometry magic from youtube tutorial
                 Vector3 pointOnUnitSphere = pointOnUnitCube.normalized;
 
-                uv[i] = new Vector2(colourGenerator.BiomePercentFromPoint(pointOnUnitSphere), 0);
+                uv[i].x = colourGenerator.BiomePercentFromPoint(pointOnUnitSphere);
             }
         }
         mesh.uv = uv;

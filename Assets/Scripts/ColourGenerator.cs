@@ -16,7 +16,7 @@ public class ColourGenerator
         this.settings = settings;
         if (texture == null || texture.height != settings.biomeColourSettings.biomes.Length)
         { 
-            texture = new Texture2D(textureResolution, settings.biomeColourSettings.biomes.Length);
+            texture = new Texture2D(textureResolution*2, settings.biomeColourSettings.biomes.Length, TextureFormat.RGBA32, false);  // first half of this is the ocean, second half is the biomes/icy north pole etc
         }
         biomeNoiseFilter = NoiseFilterFactory.CreateNoiseFilter(settings.biomeColourSettings.noise);
     }
@@ -59,9 +59,20 @@ public class ColourGenerator
         int colourIndex = 0;
         foreach (var biome in settings.biomeColourSettings.biomes) 
         { 
-            for (int i = 0; i < textureResolution; i++) 
+            for (int i = 0; i < textureResolution * 2; i++) 
             {
-                Color gradientCol = biome.gradient.Evaluate(i / (textureResolution - 1f));
+                Color gradientCol;
+
+                // this sets the first half of the texture to the gradient for the ocean depth, and the second half for the biome/icy poles
+                if (i < textureResolution) 
+                {
+                    gradientCol = settings.oceanColour.Evaluate(i / (textureResolution - 1f));
+                }
+                else 
+                {
+                    gradientCol = biome.gradient.Evaluate((i - textureResolution) / (textureResolution - 1f));
+                }
+
                 Color tintCol = biome.tint;
                 colours[colourIndex] = gradientCol * (1 - biome.tintPercent) + tintCol * biome.tintPercent;  // take the tint colour if the tint percent is high
                 colourIndex++;

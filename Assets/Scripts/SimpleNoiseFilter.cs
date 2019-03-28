@@ -33,7 +33,7 @@ public class SimpleNoiseFilter : INoiseFilter
             amplitude *= settings.persistence;  // amplitude will decrease when persistence is <1
         }
 
-        noiseValue = Mathf.Max(0, noiseValue - settings.minValue);  // this line enables us to have noise recede into sphere so only some parts of noise are visible i.e. creates mountains
+        noiseValue = noiseValue - settings.minValue;  // this line enables us to have noise recede into sphere so only some parts of noise are visible i.e. creates mountains
         return noiseValue * settings.strength;
     }
 
