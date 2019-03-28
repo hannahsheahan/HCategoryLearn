@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class ColourGenerator
 {
+    /// <summary>
+    /// This script has been built from an online youtube tutorial on procedural
+    /// planet generation, provided by Sebastian Lague: https://github.com/SebLague/Procedural-Planets 
+    /// Edited: Hannah Sheahan, sheahan.hannah@gmail.com
+    /// Date: 21/03/2019
+    /// </summary>
+
     ColourSettings settings;
     Texture2D texture;
     const int textureResolution = 50;

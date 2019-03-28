@@ -44,9 +44,9 @@ MonoBehaviour:
         m_Mode: 0
         m_NumColorKeys: 5
         m_NumAlphaKeys: 2
-      tint: {r: 1, g: 0, b: 0.74639654, a: 0}
+      tint: {r: 1, g: 0, b: 0.10132599, a: 0}
       startHeight: 1
-      tintPercent: 0
+      tintPercent: 0.27
     - gradient:
         serializedVersion: 2
         key0: {r: 0.016019935, g: 0.069473855, b: 0.6792453, a: 0}

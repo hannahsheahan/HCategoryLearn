@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class MinMax
 {
-   public float Min { get; private set; }
-   public float Max { get; private set; }
+    /// <summary>
+    /// This script has been built from an online youtube tutorial on procedural
+    /// planet generation, provided by Sebastian Lague: https://github.com/SebLague/Procedural-Planets 
+    /// Edited: Hannah Sheahan, sheahan.hannah@gmail.com
+    /// Date: 21/03/2019
+    /// </summary>
+
+    public float Min { get; private set; }
+    public float Max { get; private set; }
 
     public MinMax()
     {

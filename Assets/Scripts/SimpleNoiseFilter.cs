@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class SimpleNoiseFilter : INoiseFilter
 {
+    /// <summary>
+    /// This script has been built from an online youtube tutorial on procedural
+    /// planet generation, provided by Sebastian Lague: https://github.com/SebLague/Procedural-Planets 
+    /// Edited: Hannah Sheahan, sheahan.hannah@gmail.com
+    /// Date: 21/03/2019
+    /// </summary>
+     
     NoiseSettings.SimpleNoiseSettings settings; 
     Noise noise = new Noise();    // this is a class which creates n-D simplex noise (3D in our case)
 
