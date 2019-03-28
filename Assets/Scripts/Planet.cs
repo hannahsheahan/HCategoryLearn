@@ -119,6 +119,12 @@ public class Planet : MonoBehaviour
     void GenerateColours() 
     {
         colourGenerator.UpdateColours();
+
+        // recolour the biomes
+        foreach (TerrainFace face in terrainFaces)
+        {
+            face.UpdateUVs(colourGenerator);
+        }
     }
 
     // ********************************************************************** //

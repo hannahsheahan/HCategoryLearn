@@ -70,4 +70,4 @@ Material:
     - _Color: {r: 0.99215686, g: 0.36265922, b: 0.31372547, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _elevationMinMax: {r: 2.72, g: 3.0296774, b: 0, a: 0}
+    - _elevationMinMax: {r: 2.72, g: 2.969961, b: 0, a: 0}

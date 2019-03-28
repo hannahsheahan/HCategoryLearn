@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TerrainFace 
+public class TerrainFace
 {
     /// <summary>
     /// This script has been built from an online youtube tutorial on procedural
@@ -35,21 +35,22 @@ public class TerrainFace
 
     // ********************************************************************** //
 
-    public void ConstructMesh ( )     
+    public void ConstructMesh()
     {
         // Make a mesh out of lots of small triangles defined over a grid of resolution size 'resolution'
 
         Vector3[] vertices = new Vector3[resolution * resolution];
         int[] triangles = new int[(resolution - 1) * (resolution - 1) * 6];  // this many triangles as a function of number of vertices on each dimension (i.e. resolution).
         int triIndex = 0;
+        Vector2[] uv = mesh.uv;
 
-        for (int y = 0; y < resolution; y++) 
-        { 
-            for (int x = 0; x < resolution; x++) 
+        for (int y = 0; y < resolution; y++)
+        {
+            for (int x = 0; x < resolution; x++)
             {
                 int i = x + y * resolution;   // this is a counter, same as setting int i=0 outside y loop and incrementing on inner loop
-                Vector2 percent = new Vector2(x, y) / (resolution-1);
-                Vector3 pointOnUnitCube = localUp + (percent.x - 0.5f)*2*axisA + (percent.y - 0.5f)*2*axisB;  // geometry magic from youtube tutorial
+                Vector2 percent = new Vector2(x, y) / (resolution - 1);
+                Vector3 pointOnUnitCube = localUp + (percent.x - 0.5f) * 2 * axisA + (percent.y - 0.5f) * 2 * axisB;  // geometry magic from youtube tutorial
                 //vertices[i] = pointOnUnitCube; // if you want a cube use this
 
                 // Turn the cube into a sphere
@@ -66,8 +67,8 @@ public class TerrainFace
                 {
                     // first triangle
                     triangles[triIndex] = i;
-                    triangles[triIndex + 1] = i+resolution+1;
-                    triangles[triIndex + 2] = i+resolution;
+                    triangles[triIndex + 1] = i + resolution + 1;
+                    triangles[triIndex + 2] = i + resolution;
 
                     triangles[triIndex + 3] = i;
                     triangles[triIndex + 4] = i + 1;
@@ -80,12 +81,31 @@ public class TerrainFace
         mesh.vertices = vertices;
         mesh.triangles = triangles;
         mesh.RecalculateNormals();
+        mesh.uv = uv;
 
 
     }
 
     // ********************************************************************** //
 
+    public void UpdateUVs(ColourGenerator colourGenerator)
+    {
+        // keep everything that generates colours separate from mesh generation. This way we dont have to wait for mesh to regenerate when we update colours
 
+        Vector2[] uv = new Vector2[resolution * resolution];
 
+        for (int y = 0; y < resolution; y++)
+        {
+            for (int x = 0; x < resolution; x++)
+            {
+                int i = x + y * resolution;   // this is a counter, same as setting int i=0 outside y loop and incrementing on inner loop
+                Vector2 percent = new Vector2(x, y) / (resolution - 1);
+                Vector3 pointOnUnitCube = localUp + (percent.x - 0.5f) * 2 * axisA + (percent.y - 0.5f) * 2 * axisB;  // geometry magic from youtube tutorial
+                Vector3 pointOnUnitSphere = pointOnUnitCube.normalized;
+
+                uv[i] = new Vector2(colourGenerator.BiomePercentFromPoint(pointOnUnitSphere), 0);
+            }
+        }
+        mesh.uv = uv;
+    }
 }

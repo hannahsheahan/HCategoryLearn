@@ -12,7 +12,32 @@ public class ColourSettings : ScriptableObject
     /// Date: 21/03/2019
     /// </summary>
 
-    public Gradient gradient;
     public Material planetMaterial;
+    public BiomeColourSettings biomeColourSettings;
+
+    [System.Serializable]
+    public class BiomeColourSettings 
+    {
+        // this will create a gradient of colour on the planet itself
+        public Biome[] biomes;
+        public NoiseSettings noise;
+        public float noiseOffset;
+        public float noiseStrength;
+        [Range(0, 1)]
+        public float blendAmount;
+
+        [System.Serializable]
+        public class Biome 
+        {
+            public Gradient gradient;
+            public Color tint; // this will produce an overall tint for the planet is what we will edit in the random planet generation
+            [Range(0,1)]
+            public float startHeight;
+            [Range(0,1)]
+            public float tintPercent;   // how much the overall colour affects the colour. We should probs keep this fixed or we could in theory use this to modify saturation of colour
+        
+        }
+
+    }
 
 }
