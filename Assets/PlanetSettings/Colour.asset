@@ -103,19 +103,19 @@ MonoBehaviour:
     blendAmount: 0.652
   oceanColour:
     serializedVersion: 2
-    key0: {r: 0.030081892, g: 0.046826754, b: 0.49056602, a: 1}
-    key1: {r: 0.05833925, g: 0.17251056, b: 0.6509434, a: 1}
-    key2: {r: 0.10524208, g: 0.3092975, b: 0.5188679, a: 0}
-    key3: {r: 0.1735938, g: 0.49788442, b: 0.7830189, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
+    key0: {r: 0.0017799971, g: 0.014620287, b: 0.3773585, a: 1}
+    key1: {r: 0.032959018, g: 0.05962371, b: 0.5068954, a: 1}
+    key2: {r: 0.123398006, g: 0.20659661, b: 0.5566038, a: 0}
+    key3: {r: 0.04049486, g: 0.27758333, b: 0.6603774, a: 0}
+    key4: {r: 0.0110804355, g: 0.41897967, b: 0.7830189, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
-    ctime1: 18311
+    ctime1: 26021
     ctime2: 54741
-    ctime3: 65535
-    ctime4: 0
+    ctime3: 63608
+    ctime4: 65535
     ctime5: 0
     ctime6: 0
     ctime7: 0
@@ -128,5 +128,5 @@ MonoBehaviour:
     atime6: 0
     atime7: 0
     m_Mode: 0
-    m_NumColorKeys: 4
+    m_NumColorKeys: 5
     m_NumAlphaKeys: 2
