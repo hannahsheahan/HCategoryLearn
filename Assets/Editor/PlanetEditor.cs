@@ -37,6 +37,13 @@ public class PlanetEditor : Editor
             planet.GeneratePlanet();
         }
 
+        // Create a button for resetting the settings of the planet
+        if (GUILayout.Button("Reset Planet Settings"))
+        {
+            // ***HRS make note that we may actually need to change the settings in the settings panels too when we reset and regenerate...
+            planet.GeneratePlanet(true);
+        }
+
         DrawSettingsEditor(planet.shapeSettings, planet.OnShapeSettingsUpdated, ref planet.shapeSettingsFoldout, ref shapeEditor);
         DrawSettingsEditor(planet.colourSettings, planet.OnColourSettingsUpdated, ref planet.colourSettingsFoldout, ref colourEditor);
     }
@@ -49,15 +56,15 @@ public class PlanetEditor : Editor
 
         if (settings != null) 
         { 
-            foldout = EditorGUILayout.InspectorTitlebar(foldout, settings);
+            foldout = EditorGUILayout.InspectorTitlebar(foldout, settings);  // this just shows where each settings menu starts and finishes
 
-            using (var check = new EditorGUI.ChangeCheckScope()) 
+            using (var check = new EditorGUI.ChangeCheckScope())        // this means we will only update the planet settings if something is changed in the shape or colour GUI editor 
             {
                 if (foldout) 
                 {
                     // only update the gameObject if the editor parameter menu is 'unfolded'/opened up
                     CreateCachedEditor(settings, null, ref editor);    // with this method, the editor we pass in is saved as the variable shapeEditor or colourEditor and cached so it isnt remade every time
-                    editor.OnInspectorGUI();
+                    editor.OnInspectorGUI();                           // displays the editor menu
 
                     if (check.changed) 
                     { 
@@ -69,7 +76,6 @@ public class PlanetEditor : Editor
                 }
             }
         }
-
     }
 
     // ********************************************************************** //

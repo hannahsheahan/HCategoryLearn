@@ -13,7 +13,7 @@ public class Planet : MonoBehaviour
     /// 
 
     [Range(2,256)]    // constrains the size of 'resolution' in the GUI
-    public int resolution = 10;
+    public int resolution = 100;
     public bool autoUpdate = true;
 
     public ShapeSettings shapeSettings;
@@ -38,10 +38,10 @@ public class Planet : MonoBehaviour
 
     // ********************************************************************** //
 
-    void Initialize()
+    void Initialize(bool reset=false)
     {
-        shapeGenerator.UpdateSettings(shapeSettings);
-        colourGenerator.UpdateSettings(colourSettings);
+        shapeGenerator.UpdateSettings(shapeSettings, reset);
+        colourGenerator.UpdateSettings(colourSettings, reset);
 
         // only create new meshFilters when you need them
         if (meshFilters == null || meshFilters.Length == 0) 
@@ -72,12 +72,13 @@ public class Planet : MonoBehaviour
 
     // ********************************************************************** //
 
-    public void GeneratePlanet() 
+    public void GeneratePlanet(bool reset=false) 
     {
-        Initialize();
+        Initialize(reset);
         GenerateMesh();
         GenerateColours();
     }
+
     // ********************************************************************** //
 
     public void OnShapeSettingsUpdated() 

@@ -59,9 +59,6 @@ public class TerrainFace
                 vertices[i] = pointOnUnitSphere * shapeGenerator.GetScaledElevation(unscaledElevation);
                 uv[i].y = unscaledElevation;
 
-                //vertices[i] = shapeGenerator.CalculatePointOnPlanet(pointOnUnitSphere);
-
-
                 // Note that vertices are labelled as: e.g. 0  1  2 
                 //                                          3  4  5 
                 //                                          6  7  8 

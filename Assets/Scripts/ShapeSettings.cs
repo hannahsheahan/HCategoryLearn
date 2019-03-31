@@ -12,7 +12,7 @@ public class ShapeSettings : ScriptableObject
     /// Date: 21/03/2019
     /// </summary>
 
-    public float planetRadius = 1;
+    public float planetRadius = 2;
     public NoiseLayer[] noiseLayers;
 
     [System.Serializable]

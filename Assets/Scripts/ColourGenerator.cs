@@ -18,9 +18,17 @@ public class ColourGenerator
 
     // ********************************************************************** //
 
-    public void UpdateSettings(ColourSettings settings)
+    public void UpdateSettings(ColourSettings settings, bool reset)
     {
-        this.settings = settings;
+        // ***HRS to be coded (eventually once this works put in one line)
+        if (reset)
+        {
+            this.settings = settings;
+        }
+        else
+        {
+            this.settings = settings;
+        }
         if (texture == null || texture.height != settings.biomeColourSettings.biomes.Length)
         { 
             texture = new Texture2D(textureResolution*2, settings.biomeColourSettings.biomes.Length, TextureFormat.RGBA32, false);  // first half of this is the ocean, second half is the biomes/icy north pole etc

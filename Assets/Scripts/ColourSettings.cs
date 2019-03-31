@@ -14,7 +14,7 @@ public class ColourSettings : ScriptableObject
 
     public Material planetMaterial;
     public BiomeColourSettings biomeColourSettings;
-    public Gradient oceanColour;
+    public Gradient oceanColour;            // I'm surprised that the oceanColour saves when its not serializable?
 
     [System.Serializable]
     public class BiomeColourSettings 
@@ -36,9 +36,6 @@ public class ColourSettings : ScriptableObject
             public float startHeight;
             [Range(0,1)]
             public float tintPercent;   // how much the overall colour affects the colour. We should probs keep this fixed or we could in theory use this to modify saturation of colour
-        
         }
-
     }
-
 }
