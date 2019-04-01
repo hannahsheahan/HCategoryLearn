@@ -14,7 +14,7 @@ public class ColourSettings : ScriptableObject
 
     public Material planetMaterial;
     public BiomeColourSettings biomeColourSettings;
-    public Gradient oceanColour;            // I'm surprised that the oceanColour saves when its not serializable?
+    public Gradient oceanColour;            // Note: I'm surprised that the oceanColour saves when its not serializable?
 
     [System.Serializable]
     public class BiomeColourSettings 
