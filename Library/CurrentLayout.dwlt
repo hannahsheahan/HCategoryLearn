@@ -73,7 +73,7 @@ MonoBehaviour:
   m_MinSize: {x: 234, y: 498}
   m_MaxSize: {x: 10004, y: 14048}
   vertical: 1
-  controlID: 23
+  controlID: 72
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -145,7 +145,7 @@ MonoBehaviour:
   m_MinSize: {x: 713, y: 498}
   m_MaxSize: {x: 18008, y: 14048}
   vertical: 0
-  controlID: 10
+  controlID: 12
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -411,24 +411,24 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_AssetTreeState:
-    scrollPos: {x: 0, y: 452.00256}
+    scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
     m_ExpandedIDs: ffffffff00000000062e0000722e00001e2f0000402f0000c0320000e23200001c340000b6350000ba350000be350000323600002e3700005c37000072370000a6370000403900004a390000323a0000043b00003a3b0000dc3c0000103d0000b0400000b2400000b4400000b6400000b8400000ba400000bc400000be400000c0400000c2400000c4400000c6400000c8400000ca400000cc400000ce400000d0400000d2400000d4400000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Planet
-      m_OriginalName: Planet
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 11464
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 2}
     m_SearchString: 
@@ -603,21 +603,21 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
     yGrid:
-      m_Target: 0
+      m_Target: 1
       speed: 2
-      m_Value: 0
+      m_Value: 1
     zGrid:
       m_Target: 0
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: -0.04336527, y: 0.2658464, z: -0.011960162, w: -0.9629653}
+    m_Target: {x: 0.09482104, y: -0.68755186, z: 0.09127918, w: 0.7141075}
     speed: 2
-    m_Value: {x: -0.04336527, y: 0.2658464, z: -0.011960162, w: -0.9629653}
+    m_Value: {x: 0.09482104, y: -0.68755186, z: 0.09127918, w: 0.7141075}
   m_Size:
-    m_Target: 5.1680717
+    m_Target: 2.8899782
     speed: 2
-    m_Value: 5.1680717
+    m_Value: 2.8899782
   m_Ortho:
     m_Target: 1
     speed: 2

@@ -24,20 +24,7 @@ public class ShapeGenerator
 
     public void UpdateSettings(ShapeSettings settings, bool reset) 
     {
-        // ***HRS to be coded (eventually once this works put in one line)
-        if (reset)
-        {
-            // note that when we use ShapeSettings in the shapeGenerator we actually always modify the scriptable objects single set of settings, not an instance of those settings. So it modifies the whole thing.
-            // What does this mean then? Basically that the GUI values overwrite the code defaults. How about we create a script that has a set of values and they get set here.
-
-            this.settings = RandomizeShapeSettings(settings);
-            //this.settings.planetRadius = 2f;  // oh shit it works.
-        }
-        else 
-        { 
-            this.settings = settings;
-        }
-
+        this.settings = reset ? RandomizeShapeSettings(settings) : settings;       // generate a new random planet
         noiseFilters = new INoiseFilter[settings.noiseLayers.Length];
         Debug.Log("there are " + settings.noiseLayers.Length + " noiseLayers");
 
@@ -89,18 +76,54 @@ public class ShapeGenerator
 
     public ShapeSettings RandomizeShapeSettings(ShapeSettings settings) 
     {
-        settings.planetRadius = RandomNumberInRange(0.5f,2f);
-        /*
-        public NoiseLayer[] noiseLayers;
+        settings.planetRadius = 1f; 
 
-        [System.Serializable]
-        public class NoiseLayer
+        for (int i = 0; i < settings.noiseLayers.Length; i++)
         {
-            public bool enabled = true;
-            public bool useFirstLayerAsMask;   // determines whether spikey mountains can appear in seas or have to come out of lower level noise 
-            public NoiseSettings noiseSettings;
+            ShapeSettings.NoiseLayer noiseLayer = settings.noiseLayers[i];
+            noiseLayer.enabled = true;
+            noiseLayer.useFirstLayerAsMask = true;
+
+            // ***HRS these are for playing with so that we are modifying values in reasonable-looking ranges across the features that we want
+            switch (noiseLayer.noiseSettings.filterType) 
+            {
+                case NoiseSettings.FilterType.Simple: // simple noise filter
+
+                    // constant feature values
+                    noiseLayer.noiseSettings.simpleNoiseSettings.persistence = 0.6f;                              //  keep this fixed around .5f
+                    noiseLayer.noiseSettings.simpleNoiseSettings.minValue = 0.95f;                                //  keep this fixed around .95f, because the height-based colours start fucking up
+                    noiseLayer.noiseSettings.simpleNoiseSettings.numLayers = 4;                                    
+
+                    // variable feature values
+                    noiseLayer.noiseSettings.simpleNoiseSettings.strength = RandomNumberInRange(0.05f, 0.4f) * (i+1);
+                    noiseLayer.noiseSettings.simpleNoiseSettings.baseRoughness = RandomNumberInRange(0.8f, 1.5f) * (i+1); // we may want to keep this one fixed around 1f
+                    noiseLayer.noiseSettings.simpleNoiseSettings.roughness = RandomNumberInRange(1f, 3.0f);       // looks nice around 2.2f
+
+                    // change the position of the noise on the planet (almost the same as creating new noise object, if we do this for each layer independently its fine
+                    noiseLayer.noiseSettings.simpleNoiseSettings.centre.x = RandomNumberInRange(-.5f, .5f);
+                    noiseLayer.noiseSettings.simpleNoiseSettings.centre.y = RandomNumberInRange(-.5f, .5f);
+                    noiseLayer.noiseSettings.simpleNoiseSettings.centre.z = RandomNumberInRange(-.5f, .5f);
+                    break;
+
+                case NoiseSettings.FilterType.Rigid: // rigid noise filter
+
+                    // constant feature values
+                    noiseLayer.noiseSettings.rigidNoiseSettings.persistence = 0.5f;                              //  keep this fixed around .5f
+                    noiseLayer.noiseSettings.rigidNoiseSettings.minValue = 0.95f;                                //  keep this fixed around .95f, because the height-based colours start fucking up
+                    noiseLayer.noiseSettings.rigidNoiseSettings.numLayers = 4;  
+
+                    // variable feature values
+                    noiseLayer.noiseSettings.rigidNoiseSettings.strength = RandomNumberInRange(0.05f, 0.4f) * (i + 1);
+                    noiseLayer.noiseSettings.rigidNoiseSettings.baseRoughness = RandomNumberInRange(0.8f, 1.5f) * (i + 1); // we may want to keep this one fixed around 1f
+                    noiseLayer.noiseSettings.rigidNoiseSettings.roughness = RandomNumberInRange(1f, 3.0f);       // looks nice around 2.2f
+
+                    // change the position of the noise on the planet (almost the same as creating new noise object, if we do this for each layer independently its fine
+                    noiseLayer.noiseSettings.rigidNoiseSettings.centre.x = RandomNumberInRange(-.5f, .5f);
+                    noiseLayer.noiseSettings.rigidNoiseSettings.centre.y = RandomNumberInRange(-.5f, .5f);
+                    noiseLayer.noiseSettings.rigidNoiseSettings.centre.z = RandomNumberInRange(-.5f, .5f);
+                    break;
+            }
         }
-        */
 
         return settings;
     }
