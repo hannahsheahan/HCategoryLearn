@@ -2,24 +2,25 @@
 ##### Unity Editor Version: 2018.3.1
 
 This repo has been developed from UniturkDM for an experiment testing the learning and representation of hierarchically structured stimuli.
+The planets stimuli have been heavily based on Sebastian Lague's brilliant tutorial on procedural object generation in Unity (https://github.com/SebLague/Procedural-Planets).
 
 
 ## Downloading and installing
 1. Download and install the _free_ version of Unity.
 2. Download and install Visual Studio (it’s a nice text editor for C#, but feel free to use any other text editor you like e.g. Atom, Xcode…).
-3. If you have a Github account, select: 
+3. If you have a Github account, select:
 ```diff
 + gitHub.com/hannahsheahan/grandMotherTurkerTest
 ```
-and fork it to your account. 
+and fork it to your account.
 
-4. Open the Unity project on your computer. 
+4. Open the Unity project on your computer.
 
 5. Add all Scenes to the build settings:   _File_ > _Build Settings_ > Drag and drop all scenes into the _Scenes in Build_ box > _Close_ the Build Settings.
 
 ## Setting a data save path
 1. Edit the script _filepath.cs_, and replace the path string with path to your local project folder.
-2. Create a folder called _‘data’_ within the project folder on your local machine. 
+2. Create a folder called _‘data’_ within the project folder on your local machine.
 3. Open the script _DataController.cs_ and edit the variable _‘baseFilePath’_,  to change the local file saving path to the newly created folder _‘data’_ in your project folder.
 4. If you want to save data online, upload the data writing script _fromunity.php_ (located under _Assets_ > _php_ ) to the server (for Summerfield lab members, this should be under _/www/sandbox/tasks/YOURUSERNAME/YOURTASK/lib/php/_ ). Run 'chmod ugo+rw FOLDERNAME' from this directory in the terminal to sort out file permissions, where FOLDERNAME corresponds to the place on the server where you want to store data (thanks Timo!).
 5. If you want to save data online, edit the _fromunity.php_ script so that the path to your data folder on the server is correct.
@@ -27,7 +28,7 @@ and fork it to your account.
 
 
 ## Running the experiment
-1. Open (double-click) the scene _‘Persistent’_ in the Project menu. 
+1. Open (double-click) the scene _‘Persistent’_ in the Project menu.
 2. Run the scene from within Unity (either press the play button at top of Unity, or press cmd+P ). To quit running the scene press cmd+P again. Experiments must always be run from within the Persistent scene.
 3. The previous step should have created a datafile either locally in your ‘data’ folder or on the web server, based on your previous data save path choices. Go and check it out to make sure that this happened and take a look at what’s inside it.
 4. You should now have a basic functioning experiment! To understand how these projects are structured architecturally and how to develop from here, I will be releasing a flow diagram at some point, or you can just ask me.
