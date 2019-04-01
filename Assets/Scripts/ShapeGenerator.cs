@@ -87,7 +87,7 @@ public class ShapeGenerator
             // ***HRS these are for playing with so that we are modifying values in reasonable-looking ranges across the features that we want
             switch (noiseLayer.noiseSettings.filterType) 
             {
-                case NoiseSettings.FilterType.Simple: // simple noise filter
+                case NoiseSettings.FilterType.Simple: 
 
                     // constant feature values
                     noiseLayer.noiseSettings.simpleNoiseSettings.persistence = 0.6f;                              //  keep this fixed around .5f
@@ -105,7 +105,7 @@ public class ShapeGenerator
                     noiseLayer.noiseSettings.simpleNoiseSettings.centre.z = RandomNumberInRange(-.5f, .5f);
                     break;
 
-                case NoiseSettings.FilterType.Rigid: // rigid noise filter
+                case NoiseSettings.FilterType.Rigid:
 
                     // constant feature values
                     noiseLayer.noiseSettings.rigidNoiseSettings.persistence = 0.5f;                              //  keep this fixed around .5f

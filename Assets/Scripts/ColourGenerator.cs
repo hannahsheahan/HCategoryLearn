@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class ColourGenerator
@@ -16,19 +17,13 @@ public class ColourGenerator
     const int textureResolution = 50;
     INoiseFilter biomeNoiseFilter;
 
+    public System.Random rand = new System.Random();  // Randomisation of planet settings
+
     // ********************************************************************** //
 
     public void UpdateSettings(ColourSettings settings, bool reset)
     {
-        // ***HRS to be coded (eventually once this works put in one line)
-        if (reset)
-        {
-            this.settings = settings;
-        }
-        else
-        {
-            this.settings = settings;
-        }
+        this.settings = reset ? RandomizeColourSettings(settings) : settings;       // generate a new random planet
         if (texture == null || texture.height != settings.biomeColourSettings.biomes.Length)
         { 
             texture = new Texture2D(textureResolution*2, settings.biomeColourSettings.biomes.Length, TextureFormat.RGBA32, false);  // first half of this is the ocean, second half is the biomes/icy north pole etc
@@ -100,5 +95,34 @@ public class ColourGenerator
 
     // ********************************************************************** //
 
+    public ColourSettings RandomizeColourSettings(ColourSettings settings)
+    {
+        //Note: at the moment this is just changing the colour tint strength on the biome tip I think?? check
+
+        Color tintColor = RandomColour();
+        for (int i = 0; i < settings.biomeColourSettings.biomes.Length; i++)
+        {
+            ColourSettings.BiomeColourSettings.Biome biome = settings.biomeColourSettings.biomes[i];
+            biome.tintPercent = RandomNumberInRange(0.1f,0.8f);
+            biome.tint = tintColor;
+        }
+        return settings;
+    }
+
+    // ********************************************************************** //
+
+    public float RandomNumberInRange(double minimum, double maximum)
+    {
+        return (float)(rand.NextDouble() * (maximum - minimum) + minimum);
+    }
+
+    // ********************************************************************** //
+
+    private Color RandomColour()
+    {
+        return new Color(RandomNumberInRange(0f,1f), RandomNumberInRange(0f, 1f), RandomNumberInRange(0f, 1f));  // defaults to alpha=1
+    }
+
+    // ********************************************************************** //
 
 }
