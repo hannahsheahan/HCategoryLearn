@@ -96,7 +96,7 @@ public class ShapeGenerator
 
                     // variable feature values
                     noiseLayer.noiseSettings.simpleNoiseSettings.strength = RandomNumberInRange(0.05f, 0.4f) * (i+1);
-                    noiseLayer.noiseSettings.simpleNoiseSettings.baseRoughness = RandomNumberInRange(0.8f, 1.5f) * (i+1); // we may want to keep this one fixed around 1f
+                    noiseLayer.noiseSettings.simpleNoiseSettings.baseRoughness = RandomNumberInRange(0.7f, 1.1f) * (i+1); // we may want to keep this one fixed around 1f
                     noiseLayer.noiseSettings.simpleNoiseSettings.roughness = RandomNumberInRange(1f, 3.0f);       // looks nice around 2.2f
 
                     // change the position of the noise on the planet (almost the same as creating new noise object, if we do this for each layer independently its fine

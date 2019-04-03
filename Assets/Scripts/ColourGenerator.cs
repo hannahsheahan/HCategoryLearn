@@ -195,7 +195,7 @@ public class ColourGenerator
         oceanColorKey[0].color = darkColor;  // create dark parts in the depths of the sea
         oceanColorKey[0].time = 0.0f;
         oceanColorKey[1].color = tintColor;
-        oceanColorKey[1].time = 0.5f;
+        oceanColorKey[1].time = 0.35f;
         oceanColorKey[2].color = brownColor;
         oceanColorKey[2].time = 0.7f;
         oceanColorKey[3].color = lightColor;

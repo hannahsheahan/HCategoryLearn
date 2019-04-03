@@ -2,7 +2,7 @@
 ##### Unity Editor Version: 2018.3.1
 
 This repo has been developed from UniturkDM for an experiment testing the learning and representation of hierarchically structured stimuli.
-The planets stimuli have been heavily based on Sebastian Lague's brilliant tutorial on procedural object generation in Unity (https://github.com/SebLague/Procedural-Planets).
+The planets stimuli have been based on Sebastian Lague's brilliant tutorial on procedural object generation in Unity (https://github.com/SebLague/Procedural-Planets).
 
 
 ## Downloading and installing
