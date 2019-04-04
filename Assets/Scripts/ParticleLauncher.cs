@@ -40,13 +40,13 @@ public class ParticleLauncher : MonoBehaviour
 
         // clear the current particle systems
         ClearParticles(ringSettings);
-        ClearParticles(atmosphereSettings);
+        //ClearParticles(atmosphereSettings);
 
         ringSettings = SetParticleSettings(colour, ringSettings);
         UpdateParticles(ringSettings); 
 
-        atmosphereSettings = SetAtmosphereSettings(colour, atmosphereSettings);
-        UpdateParticles(atmosphereSettings);
+        //atmosphereSettings = SetAtmosphereSettings(colour, atmosphereSettings);
+        //UpdateParticles(atmosphereSettings);
 
 
     }
