@@ -12,7 +12,8 @@ public class ParticleLauncher : MonoBehaviour
     /// 
     /// </summary>
 
-    public ParticleSettings ringSettings;          // Note: unlike ColorSettings and ShapeSettings, ParticleSettings is a monobehaviour not a scriptable object (so it can take specific particle systems)
+    public ParticleSettings swirlSettings;          // Note: unlike ColorSettings and ShapeSettings, ParticleSettings is a monobehaviour not a scriptable object (so it can take specific particle systems)
+    public ParticleSettings ringSettings;
     public ParticleSettings atmosphereSettings;
 
     GradientColorKey[] colorKey;
@@ -31,21 +32,23 @@ public class ParticleLauncher : MonoBehaviour
         if (reset)
         {
             // loop through all the particleSettings instances we have and set these up (***HRS to do)
-
             ringSettings = RandomizeParticleSettings(colour, ringSettings);       // generate a new random atmosphere and orbitals
-        
         }
 
         // later put this in a loop over different particle systems so it doesn't repeat code (***HRS to do)
 
         // clear the current particle systems
+        ClearParticles(swirlSettings);
         ClearParticles(ringSettings);
         //ClearParticles(atmosphereSettings);
 
-        ringSettings = SetParticleSettings(colour, ringSettings);
-        UpdateParticles(ringSettings); 
+        swirlSettings = SetParticleSettings(colour, "swirl", swirlSettings);
+        UpdateParticles(swirlSettings);
 
-        //atmosphereSettings = SetAtmosphereSettings(colour, atmosphereSettings);
+        ringSettings = SetParticleSettings(colour, "ring", ringSettings);
+        UpdateParticles(ringSettings);
+
+        //atmosphereSettings = SetParticleSettings(colour, "atmosphere", atmosphereSettings);
         //UpdateParticles(atmosphereSettings);
 
 
@@ -53,20 +56,22 @@ public class ParticleLauncher : MonoBehaviour
 
     // ********************************************************************** //
 
-    public ParticleSettings SetParticleSettings(Color colour, ParticleSettings settings)
+    public ParticleSettings SetParticleSettings(Color colour, string type, ParticleSettings settings)
     {
         tintColor = colour;
-        settings.colourGradient = SetColorGradient();
-        
-        return settings;
-    }
 
-    // ********************************************************************** //
-
-    public ParticleSettings SetAtmosphereSettings(Color colour, ParticleSettings settings)
-    {
-        tintColor = colour;
-        settings.colourGradient = SetAtmosphereColor();
+        switch (type) 
+        {
+            case "ring":
+                settings.colourGradient = SetColourSolid(0.3f, 0.9f);
+                break;
+            case "swirl":
+                settings.colourGradient = SetColourGradient();
+                break;
+            case "atmosphere":
+                settings.colourGradient = SetColourSolid(0.2f, 0.2f);
+                break;
+        }
 
         return settings;
     }
@@ -75,9 +80,21 @@ public class ParticleLauncher : MonoBehaviour
 
     public ParticleSettings RandomizeParticleSettings(Color colour, ParticleSettings settings)
     {
+        // choose whether to include a Saturn-like ring or not
+        var shape = settings.particleSystem.shape;
 
-        // not sure what to do with this yet, but ultimately it will modify the number of orbitals etc
+        int planetHasRing = rand.Next(2);
+        float radius;
 
+        if (planetHasRing == 0)
+        {
+            radius = 0;  // no ring
+        }
+        else 
+        {
+            radius = RandomNumberInRange(1.5, 2.4);
+        }
+        shape.radius = radius;
         return settings;
     }
 
@@ -87,6 +104,7 @@ public class ParticleLauncher : MonoBehaviour
     {
         var main = settings.particleSystem.main;
         main.startColor = settings.colourGradient;
+        main.prewarm = true;
         settings.particleSystem.Play();
     }
 
@@ -112,7 +130,7 @@ public class ParticleLauncher : MonoBehaviour
 
     // ********************************************************************** //
 
-    private Gradient SetColorGradient()
+    private Gradient SetColourGradient()
     {
         Gradient gradient;
 
@@ -140,13 +158,13 @@ public class ParticleLauncher : MonoBehaviour
 
     // ********************************************************************** //
 
-    private Gradient SetAtmosphereColor()
+    private Gradient SetColourSolid(float alpha, float damper=0f)
     {
+        // Note: a higher value of damper makes the colour more grey
         Gradient gradient;
         gradient = new Gradient();
-        float alpha = 0.2f;
-        
-        Color color = new Color(tintColor.r, tintColor.g, tintColor.b, alpha);
+
+        Color color = new Color(tintColor.r - (tintColor.r - 0.5f) * damper, tintColor.g - (tintColor.g - 0.5f) * damper, tintColor.b - (tintColor.b - 0.5f) * damper, alpha);
         colorKey = new GradientColorKey[2];
 
         colorKey[0].color = color;
