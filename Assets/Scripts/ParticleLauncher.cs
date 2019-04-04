@@ -27,6 +27,7 @@ public class ParticleLauncher : MonoBehaviour
 
     public void UpdateSettings(Color colour, bool reset) 
     {
+
         if (reset)
         {
             // loop through all the particleSettings instances we have and set these up (***HRS to do)
@@ -36,6 +37,11 @@ public class ParticleLauncher : MonoBehaviour
         }
 
         // later put this in a loop over different particle systems so it doesn't repeat code (***HRS to do)
+
+        // clear the current particle systems
+        ClearParticles(ringSettings);
+        ClearParticles(atmosphereSettings);
+
         ringSettings = SetParticleSettings(colour, ringSettings);
         UpdateParticles(ringSettings); 
 
@@ -79,13 +85,17 @@ public class ParticleLauncher : MonoBehaviour
 
     public void UpdateParticles(ParticleSettings settings)
     {
-        // ***HRS BUG: note that at the moment this doesn't destroy/stop the old particles, it just starts creating new ones.
-        // This is an issue because the lifespan of some particles is super long so we aren't getting instantaneous changes
-
         var main = settings.particleSystem.main;
         main.startColor = settings.colourGradient;
+        settings.particleSystem.Play();
     }
 
+    // ********************************************************************** //
+
+    public void ClearParticles(ParticleSettings settings)
+    {
+        settings.particleSystem.Clear();
+    }
     // ********************************************************************** //
 
     public float RandomNumberInRange(double minimum, double maximum)
