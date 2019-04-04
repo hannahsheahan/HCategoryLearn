@@ -12,7 +12,8 @@ public class ParticleLauncher : MonoBehaviour
     /// 
     /// </summary>
 
-    public ParticleSettings ringSettings;          // Note: unlike colorSettings and shapeSettings, particleSettings is a class not a scriptable object (so it can take specific particle systems)
+    public ParticleSettings ringSettings;          // Note: unlike ColorSettings and ShapeSettings, ParticleSettings is a monobehaviour not a scriptable object (so it can take specific particle systems)
+    public ParticleSettings atmosphereSettings;
 
     GradientColorKey[] colorKey;
     GradientAlphaKey[] alphaKey;
@@ -31,10 +32,17 @@ public class ParticleLauncher : MonoBehaviour
             // loop through all the particleSettings instances we have and set these up (***HRS to do)
 
             ringSettings = RandomizeParticleSettings(colour, ringSettings);       // generate a new random atmosphere and orbitals
+        
         }
 
+        // later put this in a loop over different particle systems so it doesn't repeat code (***HRS to do)
         ringSettings = SetParticleSettings(colour, ringSettings);
-        UpdateParticles(ringSettings);
+        UpdateParticles(ringSettings); 
+
+        atmosphereSettings = SetAtmosphereSettings(colour, atmosphereSettings);
+        UpdateParticles(atmosphereSettings);
+
+
     }
 
     // ********************************************************************** //
@@ -44,6 +52,16 @@ public class ParticleLauncher : MonoBehaviour
         tintColor = colour;
         settings.colourGradient = SetColorGradient();
         
+        return settings;
+    }
+
+    // ********************************************************************** //
+
+    public ParticleSettings SetAtmosphereSettings(Color colour, ParticleSettings settings)
+    {
+        tintColor = colour;
+        settings.colourGradient = SetAtmosphereColor();
+
         return settings;
     }
 
@@ -61,6 +79,9 @@ public class ParticleLauncher : MonoBehaviour
 
     public void UpdateParticles(ParticleSettings settings)
     {
+        // ***HRS BUG: note that at the moment this doesn't destroy/stop the old particles, it just starts creating new ones.
+        // This is an issue because the lifespan of some particles is super long so we aren't getting instantaneous changes
+
         var main = settings.particleSystem.main;
         main.startColor = settings.colourGradient;
     }
@@ -83,7 +104,6 @@ public class ParticleLauncher : MonoBehaviour
 
     private Gradient SetColorGradient()
     {
-        // This will create an ocean colour that is tinted according to the overall planet tint colour
         Gradient gradient;
 
         gradient = new Gradient();  // later try just modifying the original gradient instead of creating new one each time
@@ -91,7 +111,7 @@ public class ParticleLauncher : MonoBehaviour
         // Populate the color keys at the relative time 0 and 1 (0 and 100%)
         colorKey = new GradientColorKey[2];
 
-        colorKey[0].color = tintColor;  // create dark parts in the depths of the sea
+        colorKey[0].color = tintColor;  
         colorKey[0].time = 0.0f;
         colorKey[1].color = tintColor;
         colorKey[1].time = 1.0f;
@@ -106,6 +126,35 @@ public class ParticleLauncher : MonoBehaviour
         gradient.SetKeys(colorKey, alphaKey);
 
         return gradient;
+    }
+
+    // ********************************************************************** //
+
+    private Gradient SetAtmosphereColor()
+    {
+        Gradient gradient;
+        gradient = new Gradient();
+        float alpha = 0.2f;
+        
+        Color color = new Color(tintColor.r, tintColor.g, tintColor.b, alpha);
+        colorKey = new GradientColorKey[2];
+
+        colorKey[0].color = color;
+        colorKey[0].time = 0.0f;
+        colorKey[1].color = color;
+        colorKey[1].time = 1.0f;
+
+        // Populate the alpha  keys at relative time 0 and 1  (0 and 100%)
+        alphaKey = new GradientAlphaKey[2];
+        alphaKey[0].alpha = alpha;
+        alphaKey[0].time = 0.0f;
+        alphaKey[1].alpha = alpha;
+        alphaKey[1].time = 1.0f;
+
+        gradient.SetKeys(colorKey, alphaKey);
+
+        return gradient;
+
     }
     // ********************************************************************** //
 
