@@ -11,7 +11,6 @@ public class ParticleLauncher : MonoBehaviour
     /// Date: 04/04/2019
     /// 
     /// </summary>
-    /// 
 
     public ParticleSettings ringSettings;          // Note: unlike colorSettings and shapeSettings, particleSettings is a class not a scriptable object (so it can take specific particle systems)
 
@@ -27,24 +26,33 @@ public class ParticleLauncher : MonoBehaviour
 
     public void UpdateSettings(Color colour, bool reset) 
     {
-        if (reset) 
+        if (reset)
         {
             // loop through all the particleSettings instances we have and set these up (***HRS to do)
 
             ringSettings = RandomizeParticleSettings(colour, ringSettings);       // generate a new random atmosphere and orbitals
         }
+
+        ringSettings = SetParticleSettings(colour, ringSettings);
         UpdateParticles(ringSettings);
+    }
+
+    // ********************************************************************** //
+
+    public ParticleSettings SetParticleSettings(Color colour, ParticleSettings settings)
+    {
+        tintColor = colour;
+        settings.colourGradient = SetColorGradient();
+        
+        return settings;
     }
 
     // ********************************************************************** //
 
     public ParticleSettings RandomizeParticleSettings(Color colour, ParticleSettings settings)
     {
-        //Note: at the moment this is just changing the colour tint strength on the biome tip I think?? check
 
-        tintColor = colour;
-        settings.colourGradient = SetColorGradient();
-        Debug.Log("Rings settings have been reset.");
+        // not sure what to do with this yet, but ultimately it will modify the number of orbitals etc
 
         return settings;
     }

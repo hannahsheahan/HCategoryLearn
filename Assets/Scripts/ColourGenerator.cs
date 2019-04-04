@@ -103,8 +103,6 @@ public class ColourGenerator
 
     public ColourSettings RandomizeColourSettings(ColourSettings settings)
     {
-        //Note: at the moment this is just changing the colour tint strength on the biome tip I think?? check
-
         tintColor = RandomColour();
         darkColor = new Color(tintColor.r * .5f, tintColor.g * .5f, tintColor.b * .5f);
 

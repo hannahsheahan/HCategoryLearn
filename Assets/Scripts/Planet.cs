@@ -38,6 +38,7 @@ public class Planet : MonoBehaviour
     void Awake() 
     { 
         particleLauncher = gameObject.GetComponent(typeof(ParticleLauncher)) as ParticleLauncher;
+        tintColor = new Color();
     }
 
     // ********************************************************************** //
@@ -46,7 +47,8 @@ public class Planet : MonoBehaviour
     {
         shapeGenerator.UpdateSettings(shapeSettings, reset);
         colourGenerator.UpdateSettings(colourSettings, reset);
-        particleLauncher.UpdateSettings(colourGenerator.GetTintColor(), reset);
+        tintColor = colourGenerator.GetTintColor();
+        particleLauncher.UpdateSettings(tintColor, reset);
 
         // only create new meshFilters when you need them
         if (meshFilters == null || meshFilters.Length == 0) 
