@@ -19,8 +19,8 @@ public class ColourGenerator
 
     GradientColorKey[] oceanColorKey;
     GradientAlphaKey[] oceanAlphaKey;
-    Color tintColor;
-    Color darkColor;
+    public Color tintColor;
+    public Color darkColor;
 
     public System.Random rand = new System.Random();  // Randomisation of planet settings
 
@@ -34,6 +34,7 @@ public class ColourGenerator
             texture = new Texture2D(textureResolution*2, settings.biomeColourSettings.biomes.Length, TextureFormat.RGBA32, false);  // first half of this is the ocean, second half is the biomes/icy north pole etc
         }
         biomeNoiseFilter = NoiseFilterFactory.CreateNoiseFilter(settings.biomeColourSettings.noise);
+        tintColor = settings.biomeColourSettings.biomes[0].tint;
     }
 
     // ********************************************************************** //
@@ -213,6 +214,13 @@ public class ColourGenerator
         gradient.SetKeys(oceanColorKey, oceanAlphaKey);
 
         return gradient;
+    }
+
+    // ********************************************************************** //
+
+    public Color GetTintColor() 
+    {
+        return tintColor;    
     }
 
     // ********************************************************************** //

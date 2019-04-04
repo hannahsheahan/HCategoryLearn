@@ -26,7 +26,6 @@ public class ShapeGenerator
     {
         this.settings = reset ? RandomizeShapeSettings(settings) : settings;       // generate a new random planet
         noiseFilters = new INoiseFilter[settings.noiseLayers.Length];
-        Debug.Log("there are " + settings.noiseLayers.Length + " noiseLayers");
 
         for (int i = 0; i < noiseFilters.Length; i++) 
         {

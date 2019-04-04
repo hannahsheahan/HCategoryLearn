@@ -19,10 +19,6 @@ public class Planet : MonoBehaviour
     public ShapeSettings shapeSettings;
     public ColourSettings colourSettings;
 
-    // Note: I'm not bothering with the FaceRenderMask which just renders one of
-    // the faces at a time for playing around with settings, because we dont need it.
-
-
     [HideInInspector]
     public bool shapeSettingsFoldout;
     [HideInInspector]
@@ -30,11 +26,19 @@ public class Planet : MonoBehaviour
 
     ShapeGenerator shapeGenerator = new ShapeGenerator();
     ColourGenerator colourGenerator = new ColourGenerator();
+    ParticleLauncher particleLauncher;
 
     [SerializeField, HideInInspector]
     MeshFilter[] meshFilters;
     TerrainFace[] terrainFaces;
     private int cubeFaces = 6;
+    private Color tintColor;
+    // ********************************************************************** //
+
+    void Awake() 
+    { 
+        particleLauncher = gameObject.GetComponent(typeof(ParticleLauncher)) as ParticleLauncher;
+    }
 
     // ********************************************************************** //
 
@@ -42,6 +46,7 @@ public class Planet : MonoBehaviour
     {
         shapeGenerator.UpdateSettings(shapeSettings, reset);
         colourGenerator.UpdateSettings(colourSettings, reset);
+        particleLauncher.UpdateSettings(colourGenerator.GetTintColor(), reset);
 
         // only create new meshFilters when you need them
         if (meshFilters == null || meshFilters.Length == 0) 

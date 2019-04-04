@@ -40,7 +40,6 @@ public class PlanetEditor : Editor
         // Create a button for resetting the settings of the planet
         if (GUILayout.Button("Reset Planet Settings"))
         {
-            // ***HRS make note that we may actually need to change the settings in the settings panels too when we reset and regenerate...
             planet.GeneratePlanet(true);
         }
 

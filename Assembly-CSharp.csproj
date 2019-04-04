@@ -88,6 +88,8 @@
     <Compile Include="Assets\Scripts\Noise.cs" />
     <Compile Include="Assets\Scripts\NoiseFilterFactory.cs" />
     <Compile Include="Assets\Scripts\NoiseSettings.cs" />
+    <Compile Include="Assets\Scripts\ParticleLauncher.cs" />
+    <Compile Include="Assets\Scripts\ParticleSettings.cs" />
     <Compile Include="Assets\Scripts\Planet.cs" />
     <Compile Include="Assets\Scripts\QuestionData.cs" />
     <Compile Include="Assets\Scripts\RestBreakProgress.cs" />
