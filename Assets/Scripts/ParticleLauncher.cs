@@ -83,10 +83,10 @@ public class ParticleLauncher : MonoBehaviour
         // choose whether to include a Saturn-like ring or not
         var shape = settings.particleSystem.shape;
 
-        int planetHasRing = rand.Next(2);
+        float planetHasRing = RandomNumberInRange(0.0, 1.0);
         float radius;
 
-        if (planetHasRing == 0)
+        if (planetHasRing < 0.6f)
         {
             radius = 0;  // no ring
         }
