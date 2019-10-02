@@ -15,10 +15,15 @@ public class ParticleLauncher : MonoBehaviour
     public ParticleSettings swirlSettings;          // Note: unlike ColorSettings and ShapeSettings, ParticleSettings is a monobehaviour not a scriptable object (so it can take specific particle systems)
     public ParticleSettings ringSettings;
     public ParticleSettings atmosphereSettings;
+    public ParticleSettings sunSettings;
+    public ParticleSettings sunGlowSettings;
+    public ParticleSettings sunSwirlSettings;
+    public GameObject sunSphere;
 
     GradientColorKey[] colorKey;
     GradientAlphaKey[] alphaKey;
     Color tintColor;
+    float sunRadius;
 
     public System.Random rand = new System.Random();  // Randomisation of planet settings
     public int test;
@@ -26,7 +31,7 @@ public class ParticleLauncher : MonoBehaviour
 
     // ********************************************************************** //
 
-    public void UpdateSettings(Color colour, bool reset) 
+    public void UpdateSettings(Color colour, float sunSize, bool reset) 
     {
 
         if (reset)
@@ -42,23 +47,33 @@ public class ParticleLauncher : MonoBehaviour
         ClearParticles(ringSettings);
         //ClearParticles(atmosphereSettings);
 
-        swirlSettings = SetParticleSettings(colour, "swirl", swirlSettings);
+        swirlSettings = SetParticleSettings(colour, sunSize, "swirl", swirlSettings);
         UpdateParticles(swirlSettings);
 
-        ringSettings = SetParticleSettings(colour, "ring", ringSettings);
+        ringSettings = SetParticleSettings(colour, sunSize, "ring", ringSettings);
         UpdateParticles(ringSettings);
 
         //atmosphereSettings = SetParticleSettings(colour, "atmosphere", atmosphereSettings);
         //UpdateParticles(atmosphereSettings);
+
+        sunSettings = SetParticleSettings(colour, sunSize, "sunsurface", sunSettings);
+        sunGlowSettings = SetParticleSettings(colour, sunSize, "sunredglow", sunGlowSettings);
+        sunSwirlSettings = SetParticleSettings(colour, sunSize, "sunswirls", sunSwirlSettings);
+        sunSettings = SetParticleSettings(colour, sunSize, "sunsphere", sunSettings);
+
 
 
     }
 
     // ********************************************************************** //
 
-    public ParticleSettings SetParticleSettings(Color colour, string type, ParticleSettings settings)
+    public ParticleSettings SetParticleSettings(Color colour, float sunSize, string type, ParticleSettings settings)
     {
         tintColor = colour;
+        sunRadius = sunSize;
+
+        ParticleSystem.MainModule mainModule = settings.particleSystem.main;
+        ParticleSystem.ShapeModule shape = settings.particleSystem.shape;
 
         switch (type) 
         {
@@ -70,6 +85,39 @@ public class ParticleLauncher : MonoBehaviour
                 break;
             case "atmosphere":
                 settings.colourGradient = SetColourSolid(0.2f, 0.2f);
+                break;
+            case "sunsurface":
+                settings.particleSystem.Stop();  // get rid of the old particles before we resize
+
+                // adjust the glowing size and the size of the bits of glow accordingly
+                shape.radius = SetSunRadius(sunSize);
+
+                mainModule.startSize = SetSunGlowRadius(sunSize);
+                settings.particleSystem.Play();
+
+                break;
+            case "sunsphere":
+                sunSphere.transform.localScale = new Vector3(sunRadius * 1.8f, sunRadius * 1.8f, sunRadius * 1.8f);
+                break;
+
+            case "sunredglow":
+                settings.particleSystem.Stop();  // get rid of the old particles before we resize
+
+                // adjust the glowing size and the size of the bits of glow accordingly
+                shape.radius = SetSunRadius(sunSize);
+
+                mainModule.startSize = SetSunGlowRadius(sunSize);
+                settings.particleSystem.Play();
+                break;
+
+            case "sunswirls":
+                settings.particleSystem.Stop();  // get rid of the old particles before we resize
+
+                // adjust the glowing size and the size of the bits of glow accordingly
+                shape.radius = SetSunRadius(sunSize*1.2f);
+
+                mainModule.startSize = SetSunGlowRadius(sunSize*1.5f);
+                settings.particleSystem.Play();
                 break;
         }
 
@@ -184,6 +232,23 @@ public class ParticleLauncher : MonoBehaviour
         return gradient;
 
     }
+    // ********************************************************************** //
+
+    private float SetSunRadius(float radius)
+    {
+        // Set the radius of the emission shape for this particle system
+        return radius;
+    }
+
+    // ********************************************************************** //
+
+    private ParticleSystem.MinMaxCurve SetSunGlowRadius(float radius) 
+    {
+        // the size of the glowing bits need to be scaled to the sun size to look good 
+        return new ParticleSystem.MinMaxCurve(radius * 0.5f, radius);
+
+    }
+
     // ********************************************************************** //
 
 }

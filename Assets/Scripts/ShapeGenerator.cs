@@ -17,7 +17,7 @@ public class ShapeGenerator
     ShapeSettings settings;
     INoiseFilter[] noiseFilters;   // holds any of the noise filters we might create (i.e. either SimpleNoiseFilters or RigidNoiseFilters)
     public MinMax elevationMinMax;
-
+    float sunSize;
     public System.Random rand = new System.Random();  // Randomisation of planet settings
 
     // ********************************************************************** //
@@ -75,7 +75,8 @@ public class ShapeGenerator
 
     public ShapeSettings RandomizeShapeSettings(ShapeSettings settings) 
     {
-        settings.planetRadius = 1f; 
+        settings.planetRadius = 1f;
+        sunSize = RandomNumberInRange(0.02f,0.45f);
 
         for (int i = 0; i < settings.noiseLayers.Length; i++)
         {
@@ -132,6 +133,13 @@ public class ShapeGenerator
     public float RandomNumberInRange(double minimum, double maximum)
     {
         return (float)(rand.NextDouble() * (maximum - minimum) + minimum);
+    }
+
+    // ********************************************************************** //
+
+    public float GetSunSize() 
+    {
+        return sunSize;
     }
 
     // ********************************************************************** //
