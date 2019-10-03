@@ -76,7 +76,7 @@ public class ShapeGenerator
     public ShapeSettings RandomizeShapeSettings(ShapeSettings settings) 
     {
         settings.planetRadius = 1f;
-        sunSize = RandomNumberInRange(0.02f,0.45f);
+        sunSize = RandomNumberInRange(0.02f,0.55f);
 
         for (int i = 0; i < settings.noiseLayers.Length; i++)
         {

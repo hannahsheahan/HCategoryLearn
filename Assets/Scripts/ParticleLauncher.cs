@@ -19,7 +19,8 @@ public class ParticleLauncher : MonoBehaviour
     public ParticleSettings sunGlowSettings;
     public ParticleSettings sunSwirlSettings;
     public GameObject sunSphere;
-    public GameObject sun;
+    public Light sunLight;
+
 
     GradientColorKey[] colorKey;
     GradientAlphaKey[] alphaKey;
@@ -101,8 +102,14 @@ public class ParticleLauncher : MonoBehaviour
 
                 break;
             case "sunsphere":
-                //sun.transform = sunPosition;
+                // change the size of the sun
                 sunSphere.transform.localScale = new Vector3(sunRadius * 1.8f, sunRadius * 1.8f, sunRadius * 1.8f);
+
+                // also scale the intensity of the light source with size of sun so that it reflects off the main planet
+                double lightScale = (double)(sunRadius * 10f);
+                sunLight.intensity = (float)Math.Pow(lightScale, 2.5);
+                sunLight.range = sunRadius * 100f;
+
                 break;
 
             case "sunredglow":
