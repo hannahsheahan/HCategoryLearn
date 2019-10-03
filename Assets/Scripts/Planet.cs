@@ -34,6 +34,7 @@ public class Planet : MonoBehaviour
     private int cubeFaces = 6;
     private Color tintColor;
     private float sunSize;
+    private float ringSize;
     // ********************************************************************** //
 
     void Awake() 
@@ -49,8 +50,7 @@ public class Planet : MonoBehaviour
         shapeGenerator.UpdateSettings(shapeSettings, reset);
         colourGenerator.UpdateSettings(colourSettings, reset);
         tintColor = colourGenerator.GetTintColor();
-        sunSize = shapeGenerator.GetSunSize();
-        particleLauncher.UpdateSettings(tintColor, sunSize, reset);
+        particleLauncher.UpdateSettings(tintColor, reset);
 
         // only create new meshFilters when you need them
         if (meshFilters == null || meshFilters.Length == 0) 
