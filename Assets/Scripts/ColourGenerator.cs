@@ -116,7 +116,7 @@ public class ColourGenerator
             ColourSettings.BiomeColourSettings.Biome biome = settings.biomeColourSettings.biomes[i];
 
             // an overall colour tint
-            biome.tintPercent = RandomNumberInRange(0.0f,0.2f);  // ***HRS can probs get rid of this later
+            biome.tintPercent = 0.1f; // HRS probably doesnt make much of a difference
             biome.tint = tintColor;
         }
         return settings;

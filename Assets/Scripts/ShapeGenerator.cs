@@ -95,9 +95,9 @@ public class ShapeGenerator
                     noiseLayer.noiseSettings.simpleNoiseSettings.numLayers = 4;                                    
 
                     // variable feature values
-                    noiseLayer.noiseSettings.simpleNoiseSettings.strength = RandomNumberInRange(0.05f, 0.3f) * (i+1);
+                    noiseLayer.noiseSettings.simpleNoiseSettings.strength = 0.2f * (i + 1); // RandomNumberInRange(0.05f, 0.3f) * (i+1);
                     noiseLayer.noiseSettings.simpleNoiseSettings.baseRoughness = RandomNumberInRange(0.7f, 1.1f) * (i+1); // we may want to keep this one fixed around 1f
-                    noiseLayer.noiseSettings.simpleNoiseSettings.roughness = RandomNumberInRange(1f, 3.0f);       // looks nice around 2.2f
+                    noiseLayer.noiseSettings.simpleNoiseSettings.roughness = 2.2f;  // RandomNumberInRange(1f, 3.0f);       // looks nice around 2.2f
 
                     // change the position of the noise on the planet (almost the same as creating new noise object, if we do this for each layer independently its fine
                     noiseLayer.noiseSettings.simpleNoiseSettings.centre.x = RandomNumberInRange(-.5f, .5f);
@@ -113,9 +113,9 @@ public class ShapeGenerator
                     noiseLayer.noiseSettings.rigidNoiseSettings.numLayers = 4;  
 
                     // variable feature values
-                    noiseLayer.noiseSettings.rigidNoiseSettings.strength = RandomNumberInRange(0.05f, 0.4f) * (i + 1);
-                    noiseLayer.noiseSettings.rigidNoiseSettings.baseRoughness = RandomNumberInRange(0.8f, 1.5f) * (i + 1); // we may want to keep this one fixed around 1f
-                    noiseLayer.noiseSettings.rigidNoiseSettings.roughness = RandomNumberInRange(1f, 3.0f);       // looks nice around 2.2f
+                    noiseLayer.noiseSettings.rigidNoiseSettings.strength = RandomNumberInRange(0.05f, 0.4f) * (i + 1);      // height of mountains
+                    noiseLayer.noiseSettings.rigidNoiseSettings.baseRoughness =  RandomNumberInRange(0.8f, 1.5f) * (i + 1); // roughness of mountains
+                    noiseLayer.noiseSettings.rigidNoiseSettings.roughness = 2.2f;  // RandomNumberInRange(1f, 3.0f);       // looks nice around 2.2f
 
                     // change the position of the noise on the planet (almost the same as creating new noise object, if we do this for each layer independently its fine
                     noiseLayer.noiseSettings.rigidNoiseSettings.centre.x = RandomNumberInRange(-.5f, .5f);

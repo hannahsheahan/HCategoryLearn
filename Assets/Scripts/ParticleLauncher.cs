@@ -30,6 +30,8 @@ public class ParticleLauncher : MonoBehaviour
     float sunRadius;
     float ringRadius;
     float dustAmount;
+    float ringThickness;
+    float atmosphereAmount;
 
     public System.Random rand = new System.Random();  // Randomisation of planet settings
     public int test;
@@ -67,24 +69,31 @@ public class ParticleLauncher : MonoBehaviour
         tintColor = colour;
         bool prewarm = true;
 
-        ParticleSystem.MainModule mainModule = settings.particleSystem.main;
-        ParticleSystem.ShapeModule shape = settings.particleSystem.shape;
-        ParticleSystem.EmissionModule emission = settings.particleSystem.emission;
+        ParticleSystem.MainModule mainModule = settings.ParticleSystem.main;
+        ParticleSystem.ShapeModule shape = settings.ParticleSystem.shape;
+        ParticleSystem.EmissionModule emission = settings.ParticleSystem.emission;
+        ParticleSystem.TrailModule trails = settings.ParticleSystem.trails;
 
         switch (type) 
         {
             case "ring":
                 //prewarm = false; // it's quite cool seeing the rings start spinning
                 shape.radius = ringRadius;
-                settings.colourGradient = SetColourSolid(colour, 0.3f, 0.9f);
+                shape.radiusThickness = ringThickness;
+                //settings.colourGradient = SetColourSolid(colour, 0.3f, 0.9f);
+                mainModule.startColor = SetMinMaxGradient(colour, 0.3f, 0.9f, colour, 0.3f, 0.9f);
+                trails.colorOverLifetime = SetMinMaxGradient(colour, 0.8f, 0.8f, colour, 0.4f, 0.9f);
                 break;
 
             case "swirl":
-                settings.colourGradient = SetColourGradient();
+                //settings.colourGradient = SetColourGradient();
+                mainModule.startColor = SetMinMaxGradient(colour, 0.3f, 1f, colour, 0.3f, 0.2f);
                 break;
 
             case "atmosphere":
-                settings.colourGradient = SetColourSolid(colour, 0.2f, 0.2f);
+                //settings.colourGradient = SetColourSolid(colour, 0.2f, 0.2f);
+                mainModule.startColor = SetMinMaxGradient(colour, 0.1f, 0.6f, colour, 0.2f, 0.9f);
+                emission.rateOverTime = atmosphereAmount;
                 break;
             
             case "dust":
@@ -132,17 +141,17 @@ public class ParticleLauncher : MonoBehaviour
     public void UpdateParticles(ParticleSettings settings, bool prewarm)
     {
         ClearParticles(settings);
-        var main = settings.particleSystem.main;
+        var main = settings.ParticleSystem.main;
         main.prewarm = prewarm ? true : false ;
-        settings.particleSystem.Play();
+        settings.ParticleSystem.Play();
     }
 
     // ********************************************************************** //
 
     public void ClearParticles(ParticleSettings settings)
     {
-        settings.particleSystem.Stop(); 
-        settings.particleSystem.Clear();
+        settings.ParticleSystem.Stop(); 
+        settings.ParticleSystem.Clear();
     }
     // ********************************************************************** //
 
@@ -160,7 +169,7 @@ public class ParticleLauncher : MonoBehaviour
 
     // ********************************************************************** //
 
-    private Gradient SetColourGradient()
+    private Gradient SetGradient()
     {
         Gradient gradient;
 
@@ -221,12 +230,16 @@ public class ParticleLauncher : MonoBehaviour
     {
         // Planet particle system settings (rings)
         ringRadius = RandomNumberInRange(0f, 2.4f);
+        ringThickness = RandomNumberInRange(0f, 0.4f);
+
+        // Atmostphere settings
+        atmosphereAmount = RandomNumberInRange(10f, 250f);
 
         // Sun settings
         sunRadius = RandomNumberInRange(0.02f, 0.55f);
 
         // Dust settings
-        dustAmount = RandomNumberInRange(0f,2f);
+        dustAmount = RandomNumberInRange(0f,3f);
     }
 
     // ********************************************************************** //
@@ -244,6 +257,16 @@ public class ParticleLauncher : MonoBehaviour
         // the size of the glowing bits need to be scaled to the sun size to look good 
         return new ParticleSystem.MinMaxCurve(radius * 0.5f, radius);
 
+    }
+
+    // ********************************************************************** //
+
+    private ParticleSystem.MinMaxGradient SetMinMaxGradient(Color colourA, float alphaA, float damperA, Color colourB, float alphaB, float damperB) 
+    {
+        Color minColour = new Color(colourA.r - (colourA.r - 0.5f) * damperA, colourA.g - (colourA.g - 0.5f) * damperA, colourA.b - (colourA.b - 0.5f) * damperA, alphaA);
+        Color maxColour = new Color(colourB.r - (colourB.r - 0.5f), colourB.g - (colourB.g - 0.5f) , colourB.b - (colourB.b - 0.5f), alphaB);
+
+        return new ParticleSystem.MinMaxGradient(minColour, maxColour);
     }
 
     // ********************************************************************** //

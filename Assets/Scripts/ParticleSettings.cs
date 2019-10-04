@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class ParticleSettings : MonoBehaviour
 {
-    public ParticleSystem particleSystem;
-    public Gradient colourGradient;
+    public ParticleSystem ParticleSystem;
+    public Gradient colourGradient;   // this doesnt have much of an impact
 
 }
