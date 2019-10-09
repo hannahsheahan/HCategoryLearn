@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Planet : MonoBehaviour
 {
@@ -35,6 +36,9 @@ public class Planet : MonoBehaviour
     private Color tintColor;
     private float sunSize;
     private float ringSize;
+
+    private System.Random rnd = new System.Random();
+
     // ********************************************************************** //
 
     void Awake() 
@@ -86,6 +90,11 @@ public class Planet : MonoBehaviour
         Initialize(reset);
         GenerateMesh();
         GenerateColours();
+
+        // Take a screenshot of this new planet and save it to file
+        string planetName = PlanetIDGenerator(5);
+        string planetPath = "/Users/hannahsheahan/Documents/Postdoc/Experiments/hCategoryLearn/StimulusSet/" + planetName + ".jpg";
+        ScreenCapture.CaptureScreenshot(planetPath);
     }
 
     // ********************************************************************** //
@@ -138,5 +147,26 @@ public class Planet : MonoBehaviour
     }
 
     // ********************************************************************** //
+
+    string PlanetIDGenerator(int ndigits=5) 
+    {
+        // Create a random code of N digits in length
+        int code = rnd.Next(0, (int)Math.Pow(10, ndigits-1));          // This will specify a subject-unique (probably) confirmation code for them to enter after finishing experiment to show completion
+        string IDcode = code.ToString();
+
+        while (IDcode.Length < 7)       // pad the code string with zeros until its 7 digits
+        {
+            IDcode = "0" + IDcode;
+        }
+
+        // convert the planet ID number to real planet information code
+        string planetName = "planet";
+        planetName = planetName + "_" + IDcode;
+
+        return planetName;
+    }
+
+    // ********************************************************************** //
+
 
 }
