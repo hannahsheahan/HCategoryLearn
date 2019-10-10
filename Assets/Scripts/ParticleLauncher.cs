@@ -98,7 +98,7 @@ public class ParticleLauncher : MonoBehaviour
             
             case "dust":
                 //shape.donutRadius = dustAmount;
-                emission.rateOverTime = dustAmount * 200f;
+                emission.rateOverTime = dustAmount * 50f;
                 break;
 
             case "sunsurface":
