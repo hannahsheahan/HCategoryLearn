@@ -27,11 +27,11 @@ public class ParticleLauncher : MonoBehaviour
 
     // Parameters of our particle systems
     Color tintColor;   // is passed from the planet ColourSettings
-    float sunRadius;
-    float ringRadius;
-    float dustAmount;
-    float ringThickness;
-    float atmosphereAmount;
+    public float sunRadius;
+    public float ringRadius;
+    public float dustAmount;
+    public float ringThickness;
+    public float atmosphereAmount;
 
     public System.Random rand = new System.Random();  // Randomisation of planet settings
     public int test;

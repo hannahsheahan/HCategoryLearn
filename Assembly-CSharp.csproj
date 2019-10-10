@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\EffectExamples\Misc Effects\Scripts\SpawnEffect.cs" />
+    <Compile Include="Assets\Scripts\AllPlanetData.cs" />
     <Compile Include="Assets\Scripts\AnswerButton.cs" />
     <Compile Include="Assets\Scripts\AnswerButtonPoolControl.cs" />
     <Compile Include="Assets\Scripts\AnswerData.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Assets\Scripts\ParticleLauncher.cs" />
     <Compile Include="Assets\Scripts\ParticleSettings.cs" />
     <Compile Include="Assets\Scripts\Planet.cs" />
+    <Compile Include="Assets\Scripts\PlanetData.cs" />
     <Compile Include="Assets\Scripts\QuestionData.cs" />
     <Compile Include="Assets\Scripts\RestBreakProgress.cs" />
     <Compile Include="Assets\Scripts\RewardAnimationScript.cs" />

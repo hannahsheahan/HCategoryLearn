@@ -21,10 +21,10 @@ MonoBehaviour:
       simpleNoiseSettings:
         strength: 0.2
         numLayers: 4
-        baseRoughness: 1.0642909
+        baseRoughness: 1.0166402
         roughness: 2.2
         persistence: 0.6
-        centre: {x: 0.15773216, y: 0.17037177, z: -0.44178477}
+        centre: {x: 0.19299316, y: -0.2829422, z: -0.1427318}
         minValue: 0.95
       rigidNoiseSettings:
         strength: 0.3
@@ -48,12 +48,12 @@ MonoBehaviour:
         centre: {x: -0.085331194, y: -0.39205444, z: -0.21580444}
         minValue: 0.95
       rigidNoiseSettings:
-        strength: 0.2913948
+        strength: 0.45596007
         numLayers: 4
-        baseRoughness: 2.4298031
+        baseRoughness: 2.0895956
         roughness: 2.2
         persistence: 0.5
-        centre: {x: -0.3570176, y: -0.11787382, z: -0.36439332}
+        centre: {x: -0.47611094, y: 0.42724442, z: 0.20737758}
         minValue: 0.95
         weightMultiplier: 0.78
   - enabled: 1
@@ -69,11 +69,11 @@ MonoBehaviour:
         centre: {x: -0.3224555, y: 0.11726597, z: 0.29666477}
         minValue: 0.95
       rigidNoiseSettings:
-        strength: 1.1592395
+        strength: 0.8270426
         numLayers: 4
-        baseRoughness: 2.9645822
+        baseRoughness: 2.9129596
         roughness: 2.2
         persistence: 0.5
-        centre: {x: 0.4525638, y: 0.24275121, z: 0.43687966}
+        centre: {x: -0.15817586, y: -0.45568585, z: -0.42013898}
         minValue: 0.95
         weightMultiplier: 0.78
