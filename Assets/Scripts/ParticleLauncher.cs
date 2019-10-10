@@ -34,8 +34,6 @@ public class ParticleLauncher : MonoBehaviour
     float atmosphereAmount;
 
     public System.Random rand = new System.Random();  // Randomisation of planet settings
-    public int test;
-
 
     // ********************************************************************** //
 

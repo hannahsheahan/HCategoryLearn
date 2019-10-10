@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.IO;
+using System.Globalization;
 
 public class Planet : MonoBehaviour
 {
@@ -37,6 +39,11 @@ public class Planet : MonoBehaviour
     private float sunSize;
     private float ringSize;
 
+    public AllPlanetData allExistingPlanets;
+    public PlanetData planetData;
+    private string dataAsJson;
+    public string filePath = "/Users/hannahsheahan/Documents/Postdoc/Experiments/hCategoryLearn/StimulusSet/";
+
     private System.Random rnd = new System.Random();
 
     // ********************************************************************** //
@@ -45,6 +52,18 @@ public class Planet : MonoBehaviour
     { 
         particleLauncher = gameObject.GetComponent(typeof(ParticleLauncher)) as ParticleLauncher;
         tintColor = new Color();
+
+        // Create an object to store all the planet parameters for saving
+        planetData = new PlanetData();
+
+        // Read in the existing record of planet details
+        //existingPlanetData
+        if (File.Exists(filePath))
+        {
+            Debug.Log("Opening record of generated planets.");
+            LoadExistingPlanets(filePath);
+        }
+
     }
 
     // ********************************************************************** //
@@ -91,10 +110,7 @@ public class Planet : MonoBehaviour
         GenerateMesh();
         GenerateColours();
 
-        // Take a screenshot of this new planet and save it to file
-        string planetName = PlanetIDGenerator(5);
-        string planetPath = "/Users/hannahsheahan/Documents/Postdoc/Experiments/hCategoryLearn/StimulusSet/" + planetName + ".jpg";
-        ScreenCapture.CaptureScreenshot(planetPath);
+        SavePlanet();
     }
 
     // ********************************************************************** //
@@ -168,5 +184,52 @@ public class Planet : MonoBehaviour
 
     // ********************************************************************** //
 
+    void SavePlanet() 
+    {
+
+        // Take a screenshot of this new planet and save it to file
+        string planetName = PlanetIDGenerator(5);
+        string planetPath = filePath + planetName + ".jpg";
+        ScreenCapture.CaptureScreenshot(planetPath);
+        Debug.Log("Saving image to .jpg file.");
+
+        // Add all the details about this random planet to the stimulus set .json file
+        planetData.planetName = planetName;
+        planetData.generationDateTime = GetDateTime();
+
+        // Add new planet to the List of all existing planets (could be 100k objects in this list, so beware performance HRS)
+        allExistingPlanets.allPlanetData.Add(planetData);
+
+        // convert the data to JSON format
+        Debug.Log("Saving image details to .json file.");
+        dataAsJson = JsonUtility.ToJson(allExistingPlanets);
+
+        File.WriteAllText(filePath + "stimulusLookup.json", dataAsJson);
+
+    }
+
+    // ********************************************************************** //
+
+    string GetDateTime() 
+    {
+        DateTime dateTime = DateTime.Now;
+    
+        string stringDateTime = dateTime.ToString("dd-MM-yy", DateTimeFormatInfo.InvariantInfo) + '_' + dateTime.ToString("t", DateTimeFormatInfo.InvariantInfo);
+        stringDateTime = stringDateTime.Replace("/", "-");   // make sure you don't have conflicting characters for writing to web server
+        stringDateTime = stringDateTime.Replace(":", "-");   
+
+        return stringDateTime;
+    }
+
+    // ********************************************************************** //
+
+    public void LoadExistingPlanets(string filepath)
+    {
+        // may need to write an exception case here HRS
+        string json = File.ReadAllText(filepath);
+        allExistingPlanets = JsonUtility.FromJson<AllPlanetData>(json);
+    }
+
+    // ********************************************************************** //
 
 }
