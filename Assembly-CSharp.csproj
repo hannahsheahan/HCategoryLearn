@@ -84,6 +84,7 @@
     <Compile Include="Assets\Scripts\FramesPerSecond.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\GameData.cs" />
+    <Compile Include="Assets\Scripts\GaussianSummaryStats.cs" />
     <Compile Include="Assets\Scripts\HideOrDisplay3DObject.cs" />
     <Compile Include="Assets\Scripts\INoiseFilter.cs" />
     <Compile Include="Assets\Scripts\MinMax.cs" />

@@ -59,6 +59,7 @@ public class Planet : MonoBehaviour
         else 
         {
             allExistingPlanets.allPlanetData = new List<PlanetData>();
+            allExistingPlanets.planetColours = new Color[allExistingPlanets.nLevels];
         }
     }
 
@@ -159,7 +160,6 @@ public class Planet : MonoBehaviour
         }
     }
 
-
     // ********************************************************************** //      string PlanetIDGenerator(int ndigits=5)      {         // Create a random code of N digits in length         int code = rnd.Next(0, (int)Math.Pow(10, ndigits-1));          // This will specify a subject-unique (probably) confirmation code for them to enter after finishing experiment to show completion         string IDcode = code.ToString();          while (IDcode.Length < 7)       // pad the code string with zeros until its 7 digits         {             IDcode = "0" + IDcode;         }          // convert the planet ID number to real planet information code         string planetName = "planet";         planetName = planetName + "_" + IDcode;          return planetName;     }      // ********************************************************************** //      void SavePlanet()      {          // Take a screenshot of this new planet and save it to file         string planetName = PlanetIDGenerator(5);         string planetPath = filePath + planetName + ".jpg";         ScreenCapture.CaptureScreenshot(planetPath);         Debug.Log("Saving image to .jpg file.");          // Add all the details about this random planet to the stimulus set .json file         planetData = CurrentPlanetSettings(planetName);         // Add new planet to the List of all existing planets (could be 100k objects in this list, so beware performance HRS)         allExistingPlanets.allPlanetData.Add(planetData);          // convert the data to JSON format         Debug.Log("Saving image details to .json file.");         dataAsJson = JsonUtility.ToJson(allExistingPlanets);          File.WriteAllText(recordFilePath, dataAsJson);      }      // ********************************************************************** //      string GetDateTime()      {         DateTime dateTime = DateTime.Now;              string stringDateTime = dateTime.ToString("dd-MM-yy", DateTimeFormatInfo.InvariantInfo) + '_' + dateTime.ToString("t", DateTimeFormatInfo.InvariantInfo);         stringDateTime = stringDateTime.Replace("/", "-");   // make sure you don't have conflicting characters for writing to web server         stringDateTime = stringDateTime.Replace(":", "-");             return stringDateTime;     }      // ********************************************************************** //      public void LoadExistingPlanets(string filepath)     {         // may need to write an exception case here HRS         string json = File.ReadAllText(filepath);         allExistingPlanets = JsonUtility.FromJson<AllPlanetData>(json);          Debug.Log("Just loaded data from " + allExistingPlanets.allPlanetData.Count + " generated planets.");     }      // ********************************************************************** //      public PlanetData CurrentPlanetSettings(string planetName)      {         // This function generates local variable copies of the settings that we want to save for this planet          planetData = new PlanetData();              // new to create a new object to store this planet's parameters         planetData.planetName = planetName;         planetData.generationDateTime = GetDateTime();         planetData.planetColour = tintColor;
         planetData.saturation = saturation;         planetData.shapeNoiseLayers = shapeSettings.noiseLayers;          // The particle systems settings         planetData.sunRadius = particleLauncher.sunRadius;         planetData.ringRadius = particleLauncher.ringRadius;         planetData.dustAmount = particleLauncher.dustAmount;         planetData.ringThickness = particleLauncher.ringThickness;         planetData.atmosphereAmount = particleLauncher.atmosphereAmount;          return planetData;     }
 
@@ -168,24 +168,48 @@ public class Planet : MonoBehaviour
     private void GenerateStimulusSet()
     {
         // This function will go through all the planet stimulus settings we want a sample of, generate that planet then save it
-
         // Define the gaussian distribution means for each level (save these to file too)
-        float[] ringRadii = new float[] { 0.9f, 1.4f, 2f };
-        float[] mooninesses = new float[] { 2f, 14f, 40f};
-        float[] sunRadii = new float[] { 0.1f, 0.35f, 0.8f };
-        Color[] planetColours = new Color[] { new Color(200f/255f, 100f/255f, 0f), new Color(0f, 200f/255f, 100f/255f), new Color(100f/255f, 0f, 200f/255f) };  // orange, green, purple
-        float[] mountainRoughnesses = new float[] {0.4f, 1.7f, 9f };
-        float[] mountainHeights = new float[] { 0.0001f, 0.1f, 0.3f};
-        float[] atmosphereStrengths = new float[] { 10f, 150f, 300f };
+        float[] meanRingRadii = new float[] { 0.9f, 1.4f, 2f };
+        float[] meanMooninesses = new float[] { 2f, 14f, 40f };
+        float[] meanSunRadii = new float[] { 0.1f, 0.3f, 0.8f };
+        Color[] meanPlanetColours = new Color[] { new Color(200f / 255f, 100f / 255f, 0f), new Color(0f, 200f / 255f, 100f / 255f), new Color(100f / 255f, 0f, 200f / 255f) };  // orange, green, purple
+        float[] meanMountainRoughnesses = new float[] { 0.4f, 1.7f, 9f };
+        float[] meanMountainHeights = new float[] { 0.0001f, 0.1f, 0.3f };
+        float[] meanAtmosphereStrengths = new float[] { 10f, 150f, 300f };
 
         // Define normal dist. standard deviations for each parameter
         float ringStd = 0.1f;
         float moonStd = 2f;
-        float sunStd  = 0.05f;
+        float sunStd = 0.03f;
         float colourStd = 0.1f;
         float roughnessStd = 0.1f;
         float heightStd = 0.008f;
         float atmosphereStd = 10f;
+
+        // Ensure that we generate samples from a consistent set of distributions every time we append to this file
+        // if there is an existing set of settings, then continue sampling from those original settings in file
+        if (allExistingPlanets.allPlanetData.Count == 0) 
+        { 
+            for (int i=0; i < allExistingPlanets.nLevels; i++) 
+            {
+                // set the sampling parameters for saving to file
+                allExistingPlanets.ringRadii[i].mean = meanRingRadii[i];
+                allExistingPlanets.sunRadii[i].mean = meanSunRadii[i];
+                allExistingPlanets.mooninesses[i].mean = meanMooninesses[i];
+                allExistingPlanets.atmosphereLevels[i].mean = meanAtmosphereStrengths[i];
+                allExistingPlanets.mountainHeights[i].mean = meanMountainHeights[i];
+                allExistingPlanets.mountainRoughnesses[i].mean = meanMountainRoughnesses[i];
+                allExistingPlanets.planetColours[i] = meanPlanetColours[i];
+
+                allExistingPlanets.ringRadii[i].stdev = ringStd;
+                allExistingPlanets.sunRadii[i].stdev = sunStd;
+                allExistingPlanets.mooninesses[i].stdev = moonStd;
+                allExistingPlanets.atmosphereLevels[i].stdev = atmosphereStd;
+                allExistingPlanets.mountainHeights[i].stdev = heightStd;
+                allExistingPlanets.mountainRoughnesses[i].stdev = roughnessStd;
+                allExistingPlanets.colourStd = colourStd;
+            }
+        }
 
 
 
@@ -193,46 +217,41 @@ public class Planet : MonoBehaviour
         //{
         colourSampleStats = new ColourSamplingStatistics();
 
-        Color colour = planetColours[1];
+        Color colour = allExistingPlanets.planetColours[1];
+        colourSampleStats.setMean = true;
         colourSampleStats.meanColour = colour;
         colourSampleStats.stdev = colourStd; 
-        colourSampleStats.setMean = true;
         //}
 
         //foreach (float radius in ringRadii) 
         //{ 
         particleSampleStats = new ParticleSamplingStatistics();
+        particleSampleStats.setMean = true;
 
-        float ringRadius = ringRadii[1];
-        particleSampleStats.meanRingRadius = ringRadius;
-        particleSampleStats.stdRingRadius = ringStd;
+        particleSampleStats.meanRingRadius = allExistingPlanets.ringRadii[1].mean;
+        particleSampleStats.stdRingRadius = allExistingPlanets.ringRadii[1].stdev;
 
-        float moons = mooninesses[1];
-        particleSampleStats.meanMooniness = moons;
-        particleSampleStats.stdMooniness = moonStd;
+        particleSampleStats.meanMooniness = allExistingPlanets.mooninesses[1].mean;
+        particleSampleStats.stdMooniness = allExistingPlanets.mooninesses[1].stdev;
 
-        float atmosphere = atmosphereStrengths[1];
-        particleSampleStats.meanAtmosphere = atmosphere;
-        particleSampleStats.stdAtmosphere = atmosphereStd;
+        particleSampleStats.meanAtmosphere = allExistingPlanets.atmosphereLevels[1].mean;
+        particleSampleStats.stdAtmosphere = allExistingPlanets.atmosphereLevels[1].stdev;
 
-        float sunRadius = sunRadii[1];
-        particleSampleStats.meanSunRadius = sunRadius;
-        particleSampleStats.stdSunRadius = sunStd;
+        particleSampleStats.meanSunRadius = allExistingPlanets.sunRadii[1].mean;
+        particleSampleStats.stdSunRadius = allExistingPlanets.sunRadii[1].stdev;
 
 
         shapeSampleStats = new ShapeSamplingStatistics();
+        shapeSampleStats.setMean = true;
 
-        float roughness = mountainRoughnesses[1];
-        shapeSampleStats.meanBaseRoughness = roughness;
-        shapeSampleStats.stdBaseRoughness = roughnessStd;
+        shapeSampleStats.meanBaseRoughness = allExistingPlanets.mountainRoughnesses[1].mean;
+        shapeSampleStats.stdBaseRoughness = allExistingPlanets.mountainRoughnesses[1].stdev;
 
-        float height = mountainHeights[1];
-        shapeSampleStats.meanStrength = height;
-        shapeSampleStats.stdStrength = heightStd;
+        shapeSampleStats.meanStrength = allExistingPlanets.mountainHeights[1].mean;
+        shapeSampleStats.stdStrength = allExistingPlanets.mountainHeights[1].stdev;
 
     //}
 
-    //GeneratePlanet(true);
 
 }
 
