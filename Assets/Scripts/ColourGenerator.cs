@@ -27,9 +27,9 @@ public class ColourGenerator
 
     // ********************************************************************** //
 
-    public void UpdateSettings(ColourSettings settings, bool reset)
+    public void UpdateSettings(ColourSettings settings, bool reset, ColourSamplingStatistics colorStats)
     {
-        this.settings = reset ? RandomizeColourSettings(settings) : settings;       // generate a new random planet
+        this.settings = reset ? RandomizeColourSettings(settings, colorStats) : settings;       // generate a new random planet
         if (texture == null || texture.height != settings.biomeColourSettings.biomes.Length)
         { 
             texture = new Texture2D(textureResolution*2, settings.biomeColourSettings.biomes.Length, TextureFormat.RGBA32, false);  // first half of this is the ocean, second half is the biomes/icy north pole etc
@@ -102,10 +102,11 @@ public class ColourGenerator
 
     // ********************************************************************** //
 
-    public ColourSettings RandomizeColourSettings(ColourSettings settings)
+    public ColourSettings RandomizeColourSettings(ColourSettings settings, ColourSamplingStatistics colorStats)
     {
-        saturation = 0.7f; // RandomNumberInRange(0.3f, 1f); // actually we want to keep this consistent to make difficulty of colour descrimination the same
-        tintColor = RandomColour(saturation);
+        saturation =  GaussianRandom(0.6f, 0.3f); // 0.7f; // actually we want to keep this consistent to make difficulty of colour descrimination the same
+
+        tintColor = colorStats.setMean ? RandomColourAroundMean(colorStats) : RandomColour(saturation);
         darkColor = new Color(tintColor.r * .5f, tintColor.g * .5f, tintColor.b * .5f);
 
         settings.oceanColour = RandomOceanGradient();
@@ -133,9 +134,37 @@ public class ColourGenerator
 
     // ********************************************************************** //
 
+    public float GaussianRandom(float mean, float std) 
+    {
+        // code from https://stackoverflow.com/questions/218060/random-gaussian-variables
+        double u1 = 1.0 - rand.NextDouble(); //uniform(0,1] random doubles
+        double u2 = 1.0 - rand.NextDouble();
+        double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2); //random normal(0,1)
+        double randNormal = mean + std * randStdNormal;                                       //random normal(mean,stdDev^2)
+        return (float)randNormal;
+    }
+
+    // ********************************************************************** //
+
     private Color RandomColour(float sat)
     {
         return new Color(RandomNumberInRange(0.1f,1f), RandomNumberInRange(0.1f, 1f), RandomNumberInRange(0.1f, 1f), sat);  // without sat, defaults to alpha=1
+    }
+
+    // ********************************************************************** //
+
+    private Color RandomColourAroundMean(ColourSamplingStatistics colorStats) 
+    {
+        // make sure we dont move in the critical directions that keep the colours separate ( HRS this is worse science though)
+        /*
+        float threshold = 0.001f;
+        float r = (colorStats.meanColour.r < threshold) ? 0f : GaussianRandom(colorStats.meanColour.r, colorStats.stdev);
+        float g = (colorStats.meanColour.g < threshold) ? 0f : GaussianRandom(colorStats.meanColour.g, colorStats.stdev);
+        float b = (colorStats.meanColour.b < threshold) ? 0f : GaussianRandom(colorStats.meanColour.b, colorStats.stdev);
+        return new Color(r, g, b);
+        */
+
+        return new Color(GaussianRandom(colorStats.meanColour.r, colorStats.stdev), GaussianRandom(colorStats.meanColour.g, colorStats.stdev), GaussianRandom(colorStats.meanColour.b, colorStats.stdev));
     }
 
     // ********************************************************************** //
@@ -231,6 +260,5 @@ public class ColourGenerator
     }
 
     // ********************************************************************** //
-
 
 }

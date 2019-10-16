@@ -22,9 +22,9 @@ public class ShapeGenerator
 
     // ********************************************************************** //
 
-    public void UpdateSettings(ShapeSettings settings, bool reset) 
+    public void UpdateSettings(ShapeSettings settings, bool reset, ShapeSamplingStatistics shapeSampleStats) 
     {
-        this.settings = reset ? RandomizeShapeSettings(settings) : settings;       // generate a new random planet
+        this.settings = reset ? RandomizeShapeSettings(settings, shapeSampleStats) : settings;       // generate a new random planet
         noiseFilters = new INoiseFilter[settings.noiseLayers.Length];
 
         for (int i = 0; i < noiseFilters.Length; i++) 
@@ -73,7 +73,7 @@ public class ShapeGenerator
 
     // ********************************************************************** //
 
-    public ShapeSettings RandomizeShapeSettings(ShapeSettings settings) 
+    public ShapeSettings RandomizeShapeSettings(ShapeSettings settings, ShapeSamplingStatistics shapeSampleStats) 
     {
         // Planet physical shape settings
         settings.planetRadius = 1f;
@@ -95,8 +95,18 @@ public class ShapeGenerator
                     noiseLayer.noiseSettings.simpleNoiseSettings.numLayers = 4;                                    
 
                     // variable feature values
-                    noiseLayer.noiseSettings.simpleNoiseSettings.strength = RandomNumberInRange(0.01f, 0.3f) * (i+1);
-                    noiseLayer.noiseSettings.simpleNoiseSettings.baseRoughness = RandomNumberInRange(0.7f, 1.1f) * (i+1); // we may want to keep this one fixed around 1f
+
+                    if (shapeSampleStats.setMean) 
+                    {
+                        noiseLayer.noiseSettings.simpleNoiseSettings.strength = GaussianRandom(shapeSampleStats.meanStrength, shapeSampleStats.stdStrength) * (i + 1);
+                        noiseLayer.noiseSettings.simpleNoiseSettings.baseRoughness = GaussianRandom(shapeSampleStats.meanBaseRoughness, shapeSampleStats.stdBaseRoughness) * (i + 1); // we may want to keep this one fixed around 1f
+
+                    }
+                    else 
+                    {
+                        noiseLayer.noiseSettings.simpleNoiseSettings.strength = RandomNumberInRange(0.01f, 0.3f) * (i + 1);
+                        noiseLayer.noiseSettings.simpleNoiseSettings.baseRoughness = RandomNumberInRange(0.7f, 1.1f) * (i + 1); // we may want to keep this one fixed around 1f
+                    }
                     noiseLayer.noiseSettings.simpleNoiseSettings.roughness = 2.2f;  // RandomNumberInRange(1f, 3.0f);       // looks nice around 2.2f
 
                     // change the position of the noise on the planet (almost the same as creating new noise object, if we do this for each layer independently its fine
@@ -106,7 +116,8 @@ public class ShapeGenerator
                     break;
 
                 case NoiseSettings.FilterType.Rigid:
-                    // HRS note in most recent version we dont have any rigid noise filters to keep the stimuli dimensions clearly separable
+                    // HRS note in generated stimulus set version we dont have any rigid noise filters to keep the stimuli dimensions clearly separable
+                    /*
                     // constant feature values
                     noiseLayer.noiseSettings.rigidNoiseSettings.persistence = 0.5f;                              //  keep this fixed around .5f
                     noiseLayer.noiseSettings.rigidNoiseSettings.minValue = 0.95f;                                //  keep this fixed around .95f, because the height-based colours start fucking up
@@ -121,6 +132,7 @@ public class ShapeGenerator
                     noiseLayer.noiseSettings.rigidNoiseSettings.centre.x = RandomNumberInRange(-.5f, .5f);
                     noiseLayer.noiseSettings.rigidNoiseSettings.centre.y = RandomNumberInRange(-.5f, .5f);
                     noiseLayer.noiseSettings.rigidNoiseSettings.centre.z = RandomNumberInRange(-.5f, .5f);
+                    */
                     break;
             }
         }
@@ -133,6 +145,18 @@ public class ShapeGenerator
     public float RandomNumberInRange(double minimum, double maximum)
     {
         return (float)(rand.NextDouble() * (maximum - minimum) + minimum);
+    }
+
+    // ********************************************************************** //
+
+    public float GaussianRandom(float mean, float std)
+    {
+        // code from https://stackoverflow.com/questions/218060/random-gaussian-variables
+        double u1 = 1.0 - rand.NextDouble(); //uniform(0,1] random doubles
+        double u2 = 1.0 - rand.NextDouble();
+        double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2); //random normal(0,1)
+        double randNormal = mean + std * randStdNormal;                                       //random normal(mean,stdDev^2)
+        return (float)randNormal;
     }
 
     // ********************************************************************** //

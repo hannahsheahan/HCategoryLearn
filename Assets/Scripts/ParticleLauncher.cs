@@ -40,11 +40,11 @@ public class ParticleLauncher : MonoBehaviour
 
     // ********************************************************************** //
 
-    public void UpdateSettings(Color colour, bool reset) 
+    public void UpdateSettings(Color colour, bool reset, ParticleSamplingStatistics particleSampleStats) 
     {
         if (reset) 
         { 
-            RandomizeParticleSettings();
+            RandomizeParticleSettings(particleSampleStats);
         }
 
         // later put this in a loop over different particle systems so it doesn't repeat code (***HRS to do)
@@ -85,7 +85,7 @@ public class ParticleLauncher : MonoBehaviour
                 //mainModule.startColor = SetMinMaxGradient(colour, 0.3f, 0.5f, colour, 0.3f, 0.8f);
                 //trails.colorOverLifetime = SetMinMaxGradient(colour, 0.8f, 1f, colour, 0.4f, 0.5f);
                 mainModule.startColor = SetMinMaxGradient(colour, 0.3f, 0.5f, colour, 0.3f, 0.8f);
-                trails.colorOverLifetime = SetMinMaxGradient(colour, 0.8f, 1f, colour, 0.4f, 0.5f);
+                trails.colorOverLifetime = SetMinMaxGradient(colour, 0.8f, 1f, colour, 0.4f, 0.7f);
 
 
                 break;
@@ -173,6 +173,18 @@ public class ParticleLauncher : MonoBehaviour
 
     // ********************************************************************** //
 
+    public float GaussianRandom(float mean, float std)
+    {
+        // code from https://stackoverflow.com/questions/218060/random-gaussian-variables
+        double u1 = 1.0 - rand.NextDouble(); //uniform(0,1] random doubles
+        double u2 = 1.0 - rand.NextDouble();
+        double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2); //random normal(0,1)
+        double randNormal = mean + std * randStdNormal;                                       //random normal(mean,stdDev^2)
+        return (float)randNormal;
+    }
+
+    // ********************************************************************** //
+
     private Color RandomColour()
     {
         return new Color(RandomNumberInRange(0.1f, 1f), RandomNumberInRange(0.1f, 1f), RandomNumberInRange(0.1f, 1f));  // defaults to alpha=1
@@ -237,21 +249,26 @@ public class ParticleLauncher : MonoBehaviour
 
     // ********************************************************************** //
 
-    private void RandomizeParticleSettings() 
+    private void RandomizeParticleSettings(ParticleSamplingStatistics particleSampleStats) 
     {
-        // Planet particle system settings (rings)
-        ringRadius = RandomNumberInRange(0.8f, 2f);
-        ringThickness = RandomNumberInRange(0.1f, 0.3f);  // becomes hard perceptually at small ring radius
-        //ringTransparency = RandomNumberInRange(0.2f, 1f);
 
-        // Atmostphere settings
-        atmosphereAmount = RandomNumberInRange(10f, 300f);
-
-        // Sun settings
-        sunRadius = RandomNumberInRange(0.02f, 0.55f);
-
-        // Dust settings
-        dustAmount = RandomNumberInRange(0f,3f);
+        // Sample particle settings from specified distributions
+        if (particleSampleStats.setMean)
+        {
+            ringRadius = GaussianRandom(particleSampleStats.meanRingRadius, particleSampleStats.stdRingRadius);
+            sunRadius = GaussianRandom(particleSampleStats.meanSunRadius, particleSampleStats.stdSunRadius);
+            atmosphereAmount = GaussianRandom(particleSampleStats.meanAtmosphere, particleSampleStats.stdAtmosphere);
+            dustAmount = GaussianRandom(particleSampleStats.meanMooniness, particleSampleStats.stdMooniness);
+            ringThickness = 0.2f;  // constant
+        }
+        else
+        {   // Completely randomise all particle settings 
+            ringRadius = RandomNumberInRange(0.8f, 2f);
+            ringThickness = 0.2f; //RandomNumberInRange(0.1f, 0.3f);  // becomes hard perceptually at small ring radius, so keep fixed for now
+            atmosphereAmount = RandomNumberInRange(10f, 300f);
+            sunRadius = RandomNumberInRange(0.02f, 0.55f);
+            dustAmount = RandomNumberInRange(0f,3f);
+        }
     }
 
     // ********************************************************************** //
