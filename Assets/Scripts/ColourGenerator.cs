@@ -21,6 +21,7 @@ public class ColourGenerator
     GradientAlphaKey[] oceanAlphaKey;
     public Color tintColor;
     public Color darkColor;
+    public float saturation;
 
     public System.Random rand = new System.Random();  // Randomisation of planet settings
 
@@ -103,7 +104,8 @@ public class ColourGenerator
 
     public ColourSettings RandomizeColourSettings(ColourSettings settings)
     {
-        tintColor = RandomColour();
+        saturation = 0.7f; // RandomNumberInRange(0.3f, 1f); // actually we want to keep this consistent to make difficulty of colour descrimination the same
+        tintColor = RandomColour(saturation);
         darkColor = new Color(tintColor.r * .5f, tintColor.g * .5f, tintColor.b * .5f);
 
         settings.oceanColour = RandomOceanGradient();
@@ -131,9 +133,9 @@ public class ColourGenerator
 
     // ********************************************************************** //
 
-    private Color RandomColour()
+    private Color RandomColour(float sat)
     {
-        return new Color(RandomNumberInRange(0.1f,1f), RandomNumberInRange(0.1f, 1f), RandomNumberInRange(0.1f, 1f));  // defaults to alpha=1
+        return new Color(RandomNumberInRange(0.1f,1f), RandomNumberInRange(0.1f, 1f), RandomNumberInRange(0.1f, 1f), sat);  // without sat, defaults to alpha=1
     }
 
     // ********************************************************************** //
@@ -222,5 +224,13 @@ public class ColourGenerator
     }
 
     // ********************************************************************** //
+
+    public float GetSaturation() 
+    {
+        return saturation;
+    }
+
+    // ********************************************************************** //
+
 
 }

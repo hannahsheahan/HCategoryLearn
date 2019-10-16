@@ -32,6 +32,7 @@ public class ParticleLauncher : MonoBehaviour
     public float dustAmount;
     public float ringThickness;
     public float atmosphereAmount;
+    public float ringTransparency;
 
     public System.Random rand = new System.Random();  // Randomisation of planet settings
     public int test;
@@ -77,17 +78,26 @@ public class ParticleLauncher : MonoBehaviour
         switch (type) 
         {
             case "ring":
-                //prewarm = false; // it's quite cool seeing the rings start spinning
+                //prewarm = false; // it's quite cool seeing the rings start spinning, but not when we collect static images
                 shape.radius = ringRadius;
                 shape.radiusThickness = ringThickness;
                 //settings.colourGradient = SetColourSolid(colour, 0.3f, 0.9f);
-                mainModule.startColor = SetMinMaxGradient(colour, 0.3f, 0.9f, colour, 0.3f, 0.9f);
-                trails.colorOverLifetime = SetMinMaxGradient(colour, 0.8f, 0.8f, colour, 0.4f, 0.9f);
+                //mainModule.startColor = SetMinMaxGradient(colour, 0.3f, 0.5f, colour, 0.3f, 0.8f);
+                //trails.colorOverLifetime = SetMinMaxGradient(colour, 0.8f, 1f, colour, 0.4f, 0.5f);
+                mainModule.startColor = SetMinMaxGradient(colour, 0.3f, 0.5f, colour, 0.3f, 0.8f);
+                trails.colorOverLifetime = SetMinMaxGradient(colour, 0.8f, 1f, colour, 0.4f, 0.5f);
+
+
                 break;
 
             case "swirl":
                 //settings.colourGradient = SetColourGradient();
-                mainModule.startColor = SetMinMaxGradient(colour, 0.3f, 1f, colour, 0.3f, 0.2f);
+                //shape.radius = ringRadius;
+                //shape.scale = new Vector3(1.3f-ringThickness*.3f, 1f, ringThickness);
+                float normalisedAtmosphere = atmosphereAmount / 300f;
+                mainModule.startColor = SetMinMaxGradient(colour, 0.3f, 0.6f, colour, 0.2f, 0.7f);
+                trails.colorOverTrail = SetMinMaxGradient(Color.white, normalisedAtmosphere, 0.2f, Color.white, normalisedAtmosphere, 0.9f);
+
                 break;
 
             case "atmosphere":
@@ -97,8 +107,9 @@ public class ParticleLauncher : MonoBehaviour
                 break;
             
             case "dust":
+                // these are actually moons now
                 //shape.donutRadius = dustAmount;
-                emission.rateOverTime = dustAmount * 50f;
+                emission.rateOverTime = dustAmount * 10f;
                 break;
 
             case "sunsurface":
@@ -229,11 +240,12 @@ public class ParticleLauncher : MonoBehaviour
     private void RandomizeParticleSettings() 
     {
         // Planet particle system settings (rings)
-        ringRadius = RandomNumberInRange(0f, 2.4f);
-        ringThickness = RandomNumberInRange(0f, 0.4f);
+        ringRadius = RandomNumberInRange(0.8f, 2f);
+        ringThickness = RandomNumberInRange(0.1f, 0.3f);  // becomes hard perceptually at small ring radius
+        //ringTransparency = RandomNumberInRange(0.2f, 1f);
 
         // Atmostphere settings
-        atmosphereAmount = RandomNumberInRange(10f, 250f);
+        atmosphereAmount = RandomNumberInRange(10f, 300f);
 
         // Sun settings
         sunRadius = RandomNumberInRange(0.02f, 0.55f);
@@ -263,6 +275,7 @@ public class ParticleLauncher : MonoBehaviour
 
     private ParticleSystem.MinMaxGradient SetMinMaxGradient(Color colourA, float alphaA, float damperA, Color colourB, float alphaB, float damperB) 
     {
+        // The higher the value of the damper, the less saturated the colour will be
         Color minColour = new Color(colourA.r - (colourA.r - 0.5f) * damperA, colourA.g - (colourA.g - 0.5f) * damperA, colourA.b - (colourA.b - 0.5f) * damperA, alphaA);
         Color maxColour = new Color(colourB.r - (colourB.r - 0.5f), colourB.g - (colourB.g - 0.5f) , colourB.b - (colourB.b - 0.5f), alphaB);
 
