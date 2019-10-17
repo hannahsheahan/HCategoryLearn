@@ -100,7 +100,6 @@ public class ShapeGenerator
                     {
                         noiseLayer.noiseSettings.simpleNoiseSettings.strength = GaussianRandom(shapeSampleStats.meanStrength, shapeSampleStats.stdStrength) * (i + 1);
                         noiseLayer.noiseSettings.simpleNoiseSettings.baseRoughness = GaussianRandom(shapeSampleStats.meanBaseRoughness, shapeSampleStats.stdBaseRoughness) * (i + 1); // we may want to keep this one fixed around 1f
-
                     }
                     else 
                     {

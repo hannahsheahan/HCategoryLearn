@@ -101,6 +101,7 @@
     <Compile Include="Assets\Scripts\RewardAnimationScript.cs" />
     <Compile Include="Assets\Scripts\RigidNoiseFilter.cs" />
     <Compile Include="Assets\Scripts\ScreenMessageScript.cs" />
+    <Compile Include="Assets\Scripts\ScreenRecorder.cs" />
     <Compile Include="Assets\Scripts\ShapeGenerator.cs" />
     <Compile Include="Assets\Scripts\ShapeSamplingStatistics.cs" />
     <Compile Include="Assets\Scripts\ShapeSettings.cs" />

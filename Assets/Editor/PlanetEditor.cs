@@ -43,6 +43,13 @@ public class PlanetEditor : Editor
             planet.GeneratePlanet(true);
         }
 
+        // Create a button for doing the whole simulation of all settings of the planet
+        if (GUILayout.Button("Generate Full Stimulus Set"))
+        {
+            planet.GenerateStimulusSet();
+        }
+
+
         DrawSettingsEditor(planet.shapeSettings, planet.OnShapeSettingsUpdated, ref planet.shapeSettingsFoldout, ref shapeEditor);
         DrawSettingsEditor(planet.colourSettings, planet.OnColourSettingsUpdated, ref planet.colourSettingsFoldout, ref colourEditor);
     }
