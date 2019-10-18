@@ -258,7 +258,7 @@ public class Planet : MonoBehaviour
         // Define the gaussian distribution means for each level (save these to file too)
         float[] meanRingRadii = new float[] { 0.4f, 1.35f, 2.1f };
         float[] meanMooninesses = new float[] { 0.4f, 2.3f, 4f };
-        float[] meanSunRadii = new float[] { 0.1f, 0.3f, 0.8f };
+        float[] meanSunRadii = new float[] { 0.06f, 0.3f, 0.7f };
         Color[] meanPlanetColours = new Color[] { new Color(200f / 255f, 100f / 255f, 0f), new Color(0f, 200f / 255f, 100f / 255f), new Color(100f / 255f, 0f, 200f / 255f) };  // orange, green, purple
         float[] meanMountainRoughnesses = new float[] { 0.4f, 1.7f, 9f };
         float[] meanMountainHeights = new float[] { 0.0001f, 0.1f, 0.3f };
@@ -321,8 +321,8 @@ public class Planet : MonoBehaviour
         GaussianSummaryStats roughness = allExistingPlanets.mountainRoughnesses[0];
         GaussianSummaryStats ringradius = allExistingPlanets.ringRadii[0];
         GaussianSummaryStats mooniness = allExistingPlanets.mooninesses[0];
-        GaussianSummaryStats atmosphere = allExistingPlanets.atmosphereLevels[count % 3];
-        GaussianSummaryStats sunradius = allExistingPlanets.sunRadii[0];
+        GaussianSummaryStats atmosphere = allExistingPlanets.atmosphereLevels[0];
+        GaussianSummaryStats sunradius = allExistingPlanets.sunRadii[count % 3];
 
         colourSampleStats = new ColourSamplingStatistics();
         colourSampleStats.setMean = true;
