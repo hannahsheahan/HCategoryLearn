@@ -306,7 +306,6 @@ public class Planet : MonoBehaviour
     {
         Debug.Log("planet index: " + count);
 
-        /*
         Color colour = allExistingPlanets.planetColours[count % 3];
         GaussianSummaryStats height = allExistingPlanets.mountainHeights[(int)(Math.Floor(count/3f)%3)];
         GaussianSummaryStats roughness = allExistingPlanets.mountainRoughnesses[(int)(Math.Floor(count / (3f*3f)) % 3)];
@@ -314,8 +313,10 @@ public class Planet : MonoBehaviour
         GaussianSummaryStats mooniness = allExistingPlanets.mooninesses[(int)(Math.Floor(count / (3f * 3f * 3f * 3f)) % 3)];
         GaussianSummaryStats atmosphere = allExistingPlanets.atmosphereLevels[(int)(Math.Floor(count / (3f * 3f * 3f * 3f * 3f)) % 3)];
         GaussianSummaryStats sunradius = allExistingPlanets.sunRadii[(int)(Math.Floor(count / (3f * 3f * 3f * 3f * 3f * 3f)) % 3)];
-        */
 
+
+        // for testing perception of individual levels while keeping all other parameters constant
+        /*
         Color colour = allExistingPlanets.planetColours[0];
         GaussianSummaryStats height = allExistingPlanets.mountainHeights[0];
         GaussianSummaryStats roughness = allExistingPlanets.mountainRoughnesses[0];
@@ -323,6 +324,7 @@ public class Planet : MonoBehaviour
         GaussianSummaryStats mooniness = allExistingPlanets.mooninesses[0];
         GaussianSummaryStats atmosphere = allExistingPlanets.atmosphereLevels[0];
         GaussianSummaryStats sunradius = allExistingPlanets.sunRadii[count % 3];
+        */
 
         colourSampleStats = new ColourSamplingStatistics();
         colourSampleStats.setMean = true;
