@@ -262,7 +262,7 @@ public class Planet : MonoBehaviour
         Color[] meanPlanetColours = new Color[] { new Color(200f / 255f, 100f / 255f, 0f), new Color(0f, 200f / 255f, 100f / 255f), new Color(100f / 255f, 0f, 200f / 255f) };  // orange, green, purple
         float[] meanMountainRoughnesses = new float[] { 0.4f, 1.7f, 9f };
         float[] meanMountainHeights = new float[] { 0.0001f, 0.1f, 0.3f };
-        float[] meanAtmosphereStrengths = new float[] { 10f, 150f, 300f };
+        float[] meanAtmosphereStrengths = new float[] { 10f, 150f, 400f };
 
         // Define normal dist. standard deviations for each parameter
         float ringStd = 0.1f;
@@ -320,8 +320,8 @@ public class Planet : MonoBehaviour
         GaussianSummaryStats height = allExistingPlanets.mountainHeights[0];
         GaussianSummaryStats roughness = allExistingPlanets.mountainRoughnesses[0];
         GaussianSummaryStats ringradius = allExistingPlanets.ringRadii[0];
-        GaussianSummaryStats mooniness = allExistingPlanets.mooninesses[count % 3];
-        GaussianSummaryStats atmosphere = allExistingPlanets.atmosphereLevels[0];
+        GaussianSummaryStats mooniness = allExistingPlanets.mooninesses[0];
+        GaussianSummaryStats atmosphere = allExistingPlanets.atmosphereLevels[count % 3];
         GaussianSummaryStats sunradius = allExistingPlanets.sunRadii[0];
 
         colourSampleStats = new ColourSamplingStatistics();

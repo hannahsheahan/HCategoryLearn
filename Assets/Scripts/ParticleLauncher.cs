@@ -15,6 +15,7 @@ public class ParticleLauncher : MonoBehaviour
     public ParticleSettings swirlSettings;          // Note: unlike ColorSettings and ShapeSettings, ParticleSettings is a monobehaviour not a scriptable object (so it can take specific particle systems)
     public ParticleSettings ringSettings;
     public ParticleSettings atmosphereSettings;
+    public ParticleSettings largerAtmosphereSettings;
     public ParticleSettings sunSettings;
     public ParticleSettings sunGlowSettings;
     public ParticleSettings sunSwirlSettings;
@@ -53,6 +54,7 @@ public class ParticleLauncher : MonoBehaviour
         swirlSettings = SetParticleSettings(colour, "swirl", swirlSettings);
         ringSettings = SetParticleSettings(colour, "ring", ringSettings);
         atmosphereSettings = SetParticleSettings(colour, "atmosphere", atmosphereSettings);
+        largerAtmosphereSettings = SetParticleSettings(colour, "largerAtmosphere", largerAtmosphereSettings);
         dustSettings = SetParticleSettings(colour, "dust", dustSettings);
 
         // Sun particle systems
@@ -94,7 +96,7 @@ public class ParticleLauncher : MonoBehaviour
                 //settings.colourGradient = SetColourGradient();
                 //shape.radius = ringRadius;
                 //shape.scale = new Vector3(1.3f-ringThickness*.3f, 1f, ringThickness);
-                float normalisedAtmosphere = atmosphereAmount / 300f;
+                float normalisedAtmosphere = atmosphereAmount / 400f;
                 mainModule.startColor = SetMinMaxGradient(colour, 0.3f, 0.6f, colour, 0.2f, 0.7f);
                 trails.colorOverTrail = SetMinMaxGradient(Color.white, normalisedAtmosphere, 0.2f, Color.white, normalisedAtmosphere, 0.9f);
 
@@ -102,10 +104,15 @@ public class ParticleLauncher : MonoBehaviour
 
             case "atmosphere":
                 //settings.colourGradient = SetColourSolid(colour, 0.2f, 0.2f);
-                mainModule.startColor = SetMinMaxGradient(colour, 0.1f, 0.6f, colour, 0.2f, 0.9f);
+                mainModule.prewarm = true;
+                mainModule.startColor = SetMinMaxGradient(colour, 0.2f, 0.7f, colour, 0.2f, 0.7f); // fixed
                 emission.rateOverTime = atmosphereAmount;
                 break;
-            
+
+            case "largerAtmosphere":
+                emission.rateOverTime = atmosphereAmount/15f;
+                break;
+
             case "dust":
                 // these are actually moons now
                 //shape.donutRadius = dustAmount;
