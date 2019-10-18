@@ -199,8 +199,8 @@ public class Planet : MonoBehaviour
             }
 
             // loop through all the settings we want to save
-            //if (settingsIndex < (Math.Pow(3,7)))  // 7 features to vary across
-            if (settingsIndex < 3)  // 7 features to vary across
+            if (settingsIndex < (Math.Pow(3,7)))  // 7 features to vary across
+            // if (settingsIndex < 3)  // for testing percetion of levels of an individual feature (along with lines ~410)
             {
                 if (readyForSaving)  // this imposes a 1 frame delay between procedural generation (so that generation of everything is complete) and saving (yay!)
                 {
