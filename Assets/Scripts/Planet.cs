@@ -210,8 +210,8 @@ public class Planet : MonoBehaviour
             }
 
             // loop through all the settings we want to save
-            if (settingsIndex < (Math.Pow(3,7)))  // 7 features to vary across
-            // if (settingsIndex < 3)  // for testing percetion of levels of an individual feature (along with lines ~410)
+           // if (settingsIndex < (Math.Pow(3,7)))  // 7 features to vary across
+             if (settingsIndex < 3)  // for testing percetion of levels of an individual feature (along with lines ~410)
             {
                 if (readyForSaving)  // this imposes a 1 frame delay between procedural generation (so that generation of everything is complete) and saving (yay!)
                 {
@@ -317,13 +317,14 @@ public class Planet : MonoBehaviour
     {
         Debug.Log("planet index: " + count);
 
-        int colourindex     = 2;//count % 3;
-        int heightindex     = 2;//(int)(Math.Floor(count / 3f) % 3);
-        int roughnessindex  = 2;//(int)(Math.Floor(count / (3f * 3f)) % 3);
-        int ringindex       = 2;//(int)(Math.Floor(count / (3f * 3f * 3f)) % 3);
-        int mooninessindex  = 2;//(int)(Math.Floor(count / (3f * 3f * 3f * 3f)) % 3);
-        int atmosphereindex = 2;//(int)(Math.Floor(count / (3f * 3f * 3f * 3f * 3f)) % 3);
-        int sunindex        = 2;//(int)(Math.Floor(count / (3f * 3f * 3f * 3f * 3f * 3f)) % 3);
+        int colourindex     = count % 3;
+        int heightindex     = (int)(Math.Floor(count / 3f) % 3);
+        int roughnessindex  = (int)(Math.Floor(count / (3f * 3f)) % 3);
+        int ringindex       = (int)(Math.Floor(count / (3f * 3f * 3f)) % 3);
+        int mooninessindex  = (int)(Math.Floor(count / (3f * 3f * 3f * 3f)) % 3);
+        int atmosphereindex = (int)(Math.Floor(count / (3f * 3f * 3f * 3f * 3f)) % 3);
+        int sunindex        = (int)(Math.Floor(count / (3f * 3f * 3f * 3f * 3f * 3f)) % 3);
+
 
         Color colour = allExistingPlanets.planetColours[colourindex];
         GaussianSummaryStats height = allExistingPlanets.mountainHeights[heightindex];
@@ -333,16 +334,18 @@ public class Planet : MonoBehaviour
         GaussianSummaryStats atmosphere = allExistingPlanets.atmosphereLevels[atmosphereindex];
         GaussianSummaryStats sunradius = allExistingPlanets.sunRadii[sunindex];
 
-        // for testing perception of individual levels while keeping all other parameters constant
+
         /*
-        Color colour = allExistingPlanets.planetColours[0];
+        // for testing perception of individual levels while keeping all other parameters constant
+        Color colour = allExistingPlanets.planetColours[count % 3];
         GaussianSummaryStats height = allExistingPlanets.mountainHeights[0];
         GaussianSummaryStats roughness = allExistingPlanets.mountainRoughnesses[0];
         GaussianSummaryStats ringradius = allExistingPlanets.ringRadii[0];
         GaussianSummaryStats mooniness = allExistingPlanets.mooninesses[0];
         GaussianSummaryStats atmosphere = allExistingPlanets.atmosphereLevels[0];
-        GaussianSummaryStats sunradius = allExistingPlanets.sunRadii[count % 3];
+        GaussianSummaryStats sunradius = allExistingPlanets.sunRadii[0];
         */
+
 
         colourSampleStats = new ColourSamplingStatistics();
         colourSampleStats.setMean = true;
