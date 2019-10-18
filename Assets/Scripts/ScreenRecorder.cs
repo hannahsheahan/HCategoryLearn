@@ -19,9 +19,14 @@ public class ScreenRecorder : MonoBehaviour
      public int captureHeight = 1080;
 
     public string planetName;
-    
-     // optional game object to hide during screenshots (usually your scene canvas hud)
-     public GameObject hideGameObject; 
+    public bool threadAlive = false;
+    public bool threadStarted = true;
+    private string filename;
+    private byte[] fileHeader;
+    private byte[] fileData;
+
+    // optional game object to hide during screenshots (usually your scene canvas hud)
+    public GameObject hideGameObject; 
  
      // optimize for many screenshots will not destroy any objects so future screenshots will be fast
      public bool optimizeForManyScreenshots = true;
@@ -32,7 +37,7 @@ public class ScreenRecorder : MonoBehaviour
  
      // folder to write output (defaults to data path)
      public string folder;
- 
+    public System.Threading.Thread thread;
      // private vars for screenshot
      private Rect rect;
      private RenderTexture renderTexture;
@@ -42,9 +47,16 @@ public class ScreenRecorder : MonoBehaviour
      // commands
      private bool captureScreenshot = false;
      private bool captureVideo = false;
- 
-     // create a unique filename using a one-up variable
-     private string uniqueFilename(int width, int height)
+
+    private void Awake()
+    {
+        thread = new System.Threading.Thread(mythread);
+        threadStarted = true;
+    }
+
+
+    // create a unique filename using a one-up variable
+    private string uniqueFilename(int width, int height)
      {
         folder = "/Users/hannahsheahan/Documents/Postdoc/Experiments/hCategoryLearn/StimulusSet";
          // if folder not specified by now use a good default
@@ -86,8 +98,8 @@ public class ScreenRecorder : MonoBehaviour
  
      public void CaptureScreenshot(string planet)
      {
-        planetName = planet;
-         captureScreenshot = true;
+        planetName = planet + ".jpg";
+        captureScreenshot = true;
      }
 
 
@@ -114,9 +126,12 @@ public class ScreenRecorder : MonoBehaviour
 
     void Update()
      {
-         // check keyboard 'k' for one time screenshot capture and holding down 'v' for continious screenshots
-         captureScreenshot |= Input.GetKeyDown("k");
-         captureVideo = Input.GetKey("v");
+        // check keyboard 'k' for one time screenshot capture and holding down 'v' for continious screenshots
+
+        threadAlive = thread.IsAlive;
+
+        captureScreenshot |= Input.GetKeyDown("k");
+        captureVideo = Input.GetKey("v");
  
          if (captureScreenshot || captureVideo)
          {
@@ -151,11 +166,11 @@ public class ScreenRecorder : MonoBehaviour
              RenderTexture.active = null;
  
              // get our unique filename
-             string filename = uniqueFilename((int) rect.width, (int) rect.height);
+             filename = uniqueFilename((int) rect.width, (int) rect.height);
  
              // pull in our file header/data bytes for the specified image format (has to be done from main thread)
-             byte[] fileHeader = null;
-             byte[] fileData = null;
+             fileHeader = null;
+             fileData = null;
              if (format == Format.RAW)
              {
                  fileData = screenShot.GetRawTextureData();
@@ -175,20 +190,27 @@ public class ScreenRecorder : MonoBehaviour
                  fileHeader = System.Text.Encoding.ASCII.GetBytes(headerStr);
                  fileData = screenShot.GetRawTextureData();
              }
- 
-             // create new thread to save the image to file (only operation that can be done in background)
-             new System.Threading.Thread(() =>
-             {
-                 // create file and write optional header with image bytes
-                 var f = System.IO.File.Create(filename);
-                 if (fileHeader != null) f.Write(fileHeader, 0, fileHeader.Length);
-                 f.Write(fileData, 0, fileData.Length);
-                 f.Close();
-                 Debug.Log(string.Format("Wrote screenshot {0} of size {1}", filename, fileData.Length));
-             }).Start();
- 
-             // unhide optional game object if set
-             if (hideGameObject != null) hideGameObject.SetActive(true);
+
+            // create new thread to save the image to file (only operation that can be done in background)
+            /*
+            new System.Threading.Thread(() =>
+            {
+                threadAlive = true;
+                // create file and write optional header with image bytes
+                var f = System.IO.File.Create(filename);
+                if (fileHeader != null) f.Write(fileHeader, 0, fileHeader.Length);
+                f.Write(fileData, 0, fileData.Length);
+                f.Close();
+                Debug.Log(string.Format("Wrote screenshot {0} of size {1}", filename, fileData.Length));
+                threadAlive = false;
+            }).Start();
+            */
+            thread = new System.Threading.Thread(mythread);
+            thread.Start();
+            thread.Join();
+
+            // unhide optional game object if set
+            if (hideGameObject != null) hideGameObject.SetActive(true);
  
              // cleanup if needed
              if (optimizeForManyScreenshots == false)
@@ -199,5 +221,17 @@ public class ScreenRecorder : MonoBehaviour
              }
          }
      }
- }
- 
+
+
+    void mythread()
+    {
+        // create file and write optional header with image bytes
+        var f = System.IO.File.Create(filename);
+        if (fileHeader != null) f.Write(fileHeader, 0, fileHeader.Length);
+        f.Write(fileData, 0, fileData.Length);
+        f.Close();
+        Debug.Log(string.Format("Wrote screenshot {0} of size {1}", filename, fileData.Length));
+        threadStarted = true;
+    }
+
+}

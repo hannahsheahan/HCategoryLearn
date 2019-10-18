@@ -45,8 +45,17 @@ public class Planet : MonoBehaviour
     ParticleSamplingStatistics particleSampleStats;
     ShapeSamplingStatistics shapeSampleStats;
 
-    public AllPlanetData allExistingPlanets;     public PlanetData planetData;     private string dataAsJson;     public string filePath = "/Users/hannahsheahan/Documents/Postdoc/Experiments/hCategoryLearn/StimulusSet/";     private string recordFilePath;
+    public AllPlanetData allExistingPlanets;     public PlanetData planetData;     private string dataAsJson;     public string filePath = "/Users/hannahsheahan/Documents/Postdoc/Experiments/hCategoryLearn/StimulusSet/";     public string planetPath;
+    private string recordFilePath;
     private Timer savingTimer; 
+    private bool startGenerativeProcess = false;
+    private int settingsIndex = 0;
+    private bool settingsNotLoaded = true;
+    private bool readyForSaving = false;
+    private bool finishedSaving = true;
+    private bool startedSaving = false;
+    private bool finished = false;
+
     private ScreenRecorder recorder;
     public GameObject camera;
      private System.Random rnd = new System.Random();
@@ -119,7 +128,6 @@ public class Planet : MonoBehaviour
         Initialize(reset);
         GenerateMesh();
         GenerateColours();
-        SavePlanet();
     }
 
     // ********************************************************************** //
@@ -171,13 +179,95 @@ public class Planet : MonoBehaviour
         }
     }
 
-    // ********************************************************************** //      string PlanetIDGenerator(int ndigits=5)      {         // Create a random code of N digits in length         int code = rnd.Next(0, (int)Math.Pow(10, ndigits-1));          // This will specify a subject-unique (probably) confirmation code for them to enter after finishing experiment to show completion         string IDcode = code.ToString();          while (IDcode.Length < 7)       // pad the code string with zeros until its 7 digits         {             IDcode = "0" + IDcode;         }          // convert the planet ID number to real planet information code         string planetName = "planet";         planetName = planetName + "_" + IDcode;          return planetName;     }      // ********************************************************************** //      void SavePlanet()      {          // Take a screenshot of this new planet and save it to file         string planetName = PlanetIDGenerator(5);         string planetPath = filePath + planetName + ".jpg";         recorder.CaptureScreenshot(planetName);
-        //ScreenCapture.CaptureScreenshot(planetPath);         Debug.Log("Saving image to .jpg file.");          // Add all the details about this random planet to the stimulus set .json file         planetData = CurrentPlanetSettings(planetName);         // Add new planet to the List of all existing planets (could be 100k objects in this list, so beware performance HRS)         allExistingPlanets.allPlanetData.Add(planetData);          // convert the data to JSON format         Debug.Log("Saving image details to .json file.");         dataAsJson = JsonUtility.ToJson(allExistingPlanets);          File.WriteAllText(recordFilePath, dataAsJson);      }      // ********************************************************************** //      string GetDateTime()      {         DateTime dateTime = DateTime.Now;              string stringDateTime = dateTime.ToString("dd-MM-yy", DateTimeFormatInfo.InvariantInfo) + '_' + dateTime.ToString("t", DateTimeFormatInfo.InvariantInfo);         stringDateTime = stringDateTime.Replace("/", "-");   // make sure you don't have conflicting characters for writing to web server         stringDateTime = stringDateTime.Replace(":", "-");             return stringDateTime;     }      // ********************************************************************** //      public void LoadExistingPlanets(string filepath)     {         // may need to write an exception case here HRS         string json = File.ReadAllText(filepath);         allExistingPlanets = JsonUtility.FromJson<AllPlanetData>(json);          Debug.Log("Just loaded data from " + allExistingPlanets.allPlanetData.Count + " generated planets.");     }      // ********************************************************************** //      public PlanetData CurrentPlanetSettings(string planetName)      {         // This function generates local variable copies of the settings that we want to save for this planet          planetData = new PlanetData();              // new to create a new object to store this planet's parameters         planetData.planetName = planetName;         planetData.generationDateTime = GetDateTime();         planetData.planetColour = tintColor;
+    // ********************************************************************** //      string PlanetIDGenerator(int ndigits=5)      {         // Create a random code of N digits in length         int code = rnd.Next(0, (int)Math.Pow(10, ndigits-1));          // This will specify a subject-unique (probably) confirmation code for them to enter after finishing experiment to show completion         string IDcode = code.ToString();          while (IDcode.Length < 7)       // pad the code string with zeros until its 7 digits         {             IDcode = "0" + IDcode;         }          // convert the planet ID number to real planet information code         string planetName = "planet";         planetName = planetName + "_" + IDcode;          return planetName;     }      // ********************************************************************** //      void SavePlanet()      {
+        // Take a screenshot of this new planet and save it to file
+        string planetName = PlanetIDGenerator(5);         planetPath = filePath + planetName + ".jpg";         recorder.CaptureScreenshot(planetName);
+
+        //ScreenCapture.CaptureScreenshot(planetPath);
+        Debug.Log("Saving image to .jpg file.");          // Add all the details about this random planet to the stimulus set .json file         planetData = CurrentPlanetSettings(planetName);         // Add new planet to the List of all existing planets (could be 100k objects in this list, so beware performance HRS)         allExistingPlanets.allPlanetData.Add(planetData);          // convert the data to JSON format         Debug.Log("Saving image details to .json file.");         dataAsJson = JsonUtility.ToJson(allExistingPlanets);          File.WriteAllText(recordFilePath, dataAsJson);
+             }      // ********************************************************************** //      string GetDateTime()      {         DateTime dateTime = DateTime.Now;              string stringDateTime = dateTime.ToString("dd-MM-yy", DateTimeFormatInfo.InvariantInfo) + '_' + dateTime.ToString("t", DateTimeFormatInfo.InvariantInfo);         stringDateTime = stringDateTime.Replace("/", "-");   // make sure you don't have conflicting characters for writing to web server         stringDateTime = stringDateTime.Replace(":", "-");             return stringDateTime;     }      // ********************************************************************** //      public void LoadExistingPlanets(string filepath)     {         // may need to write an exception case here HRS         string json = File.ReadAllText(filepath);         allExistingPlanets = JsonUtility.FromJson<AllPlanetData>(json);          Debug.Log("Just loaded data from " + allExistingPlanets.allPlanetData.Count + " generated planets.");     }      // ********************************************************************** //      public PlanetData CurrentPlanetSettings(string planetName)      {         // This function generates local variable copies of the settings that we want to save for this planet          planetData = new PlanetData();              // new to create a new object to store this planet's parameters         planetData.planetName = planetName;         planetData.generationDateTime = GetDateTime();         planetData.planetColour = tintColor;
         planetData.saturation = saturation;         planetData.shapeNoiseLayers = shapeSettings.noiseLayers;          // The particle systems settings         planetData.sunRadius = particleLauncher.sunRadius;         planetData.ringRadius = particleLauncher.ringRadius;         planetData.dustAmount = particleLauncher.dustAmount;         planetData.ringThickness = particleLauncher.ringThickness;         planetData.atmosphereAmount = particleLauncher.atmosphereAmount;          return planetData;     }
 
     // ********************************************************************** //
 
-    public void GenerateStimulusSet()
+   void Update() 
+   {
+        if (!finished) 
+        { 
+            Debug.Log("start update");
+            Debug.Log("thread status: " + recorder.threadAlive);
+            Debug.Log("thread started: " + recorder.threadStarted);
+
+            if (!startedSaving) // check for a trigger from the thread starting
+            { 
+                startedSaving = recorder.threadAlive;
+            }
+
+            // loop through all the settings we want to save
+            if (settingsIndex < 3) 
+            { 
+                if (readyForSaving)  // this imposes a 1 frame delay between procedural generation (so that generation of everything is complete) and saving (yay!)
+                {
+                    Debug.Log("save planet");
+                    SavePlanet();
+                    readyForSaving = false;
+                    settingsIndex++;
+                }
+
+                if (startedSaving) 
+                {
+                    Debug.Log("thread is alive");
+                    //var file = new FileInfo(planetPath);
+                    //finishedSaving = !(IsFileLocked(file));
+                    finishedSaving = !recorder.threadAlive;
+                    startedSaving = recorder.threadAlive;
+                    Debug.Log("finishedSaving: " + finishedSaving);  // this says its never finishing saving...? think thats not working right, but once thats done we are almost there HRS!
+                }
+
+                if (!startGenerativeProcess & settingsNotLoaded)
+                {
+                    Debug.Log("load all settings");
+                    LoadSettings();  // first time around only
+                    settingsNotLoaded = false;
+                } 
+                else
+                {
+                    if (startGenerativeProcess) 
+                    { 
+                        if (recorder.threadStarted & (!recorder.threadAlive) )
+                        {
+                            recorder.threadStarted = false;
+                            Debug.Log("load NEXT settings");
+                            LoadNextSettings(settingsIndex);
+                            Debug.Log("generate next planet");
+                            GeneratePlanet(true);
+                            readyForSaving = true;
+                            finishedSaving = false;
+                        }
+                    }
+                }
+            }
+            else if (!finished) // write a message when we're done
+            {
+                Debug.Log("Done!");
+                finished = true;
+            }
+        }
+    }
+
+    // ********************************************************************** //
+
+    public void GenerateStimulusSet() 
+    {
+        startGenerativeProcess = true;
+        Debug.Log("Generation process started at: " + GetDateTime());
+        Debug.Log("Generating full stimulus set...");
+
+    }
+
+    // ********************************************************************** //
+
+    public void LoadSettings()
     {
         // This function will go through all the planet stimulus settings we want a sample of, generate that planet then save it
         // Define the gaussian distribution means for each level (save these to file too)
@@ -222,80 +312,96 @@ public class Planet : MonoBehaviour
                 allExistingPlanets.colourStd = colourStd;
             }
         }
-
-        savingTimer.Reset();
-        bool ready = false;
-        float totaliters = 3; //(float)Math.Pow(3, 7);
-        float count = 0;
-        Debug.Log("Generation process started at: " + GetDateTime());
-        Debug.Log("Generating full stimulus set...");
-        foreach (Color colour in allExistingPlanets.planetColours)
-        {
-            GaussianSummaryStats height = allExistingPlanets.mountainHeights[0];
-            GaussianSummaryStats roughness = allExistingPlanets.mountainRoughnesses[0];
-            GaussianSummaryStats ringradius = allExistingPlanets.ringRadii[0];
-            GaussianSummaryStats mooniness = allExistingPlanets.mooninesses[0];
-            GaussianSummaryStats atmosphere = allExistingPlanets.atmosphereLevels[0];
-            GaussianSummaryStats sunradius = allExistingPlanets.sunRadii[0];
-
-
-                                    // foreach (GaussianSummaryStats height in allExistingPlanets.mountainHeights)
-                                    // {
-                                    //    foreach (GaussianSummaryStats roughness in allExistingPlanets.mountainRoughnesses)
-                                    //    {
-                                    //        foreach (GaussianSummaryStats ringradius in allExistingPlanets.ringRadii)
-                                    //        {
-                                    //            foreach (GaussianSummaryStats mooniness in allExistingPlanets.mooninesses)
-                                    //            {
-                                    //                foreach (GaussianSummaryStats atmosphere in allExistingPlanets.atmosphereLevels)
-                                    //               {
-                                    //                    foreach (GaussianSummaryStats sunradius in allExistingPlanets.sunRadii)
-                                    //                    {
-                                    colourSampleStats = new ColourSamplingStatistics();
-                                    colourSampleStats.setMean = true;
-                                    colourSampleStats.meanColour = colour;
-                                    colourSampleStats.stdev = colourStd;
-
-                                    shapeSampleStats = new ShapeSamplingStatistics();
-                                    shapeSampleStats.setMean = true;
-
-                                    shapeSampleStats.meanBaseRoughness = roughness.mean;
-                                    shapeSampleStats.stdBaseRoughness = roughness.stdev;
-
-                                    shapeSampleStats.meanStrength = height.mean;
-                                    shapeSampleStats.stdStrength = height.stdev;
-
-                                    particleSampleStats = new ParticleSamplingStatistics();
-                                    particleSampleStats.setMean = true;
-
-                                    particleSampleStats.meanRingRadius = ringradius.mean;
-                                    particleSampleStats.stdRingRadius = ringradius.stdev;
-
-                                    particleSampleStats.meanMooniness = mooniness.mean;
-                                    particleSampleStats.stdMooniness = mooniness.stdev;
-
-                                    particleSampleStats.meanAtmosphere = atmosphere.mean;
-                                    particleSampleStats.stdAtmosphere = atmosphere.stdev;
-
-                                    particleSampleStats.meanSunRadius = sunradius.mean;
-                                    particleSampleStats.stdSunRadius = sunradius.stdev;
-
-
-                                    // generate the planet and mark progress
-                                    GeneratePlanet(true);
-                                    count++;
-                                    Debug.Log((count/totaliters) + "% complete...");
-                                    //savingTimer.Reset();
-              //                  }
-              //              }
-              //          }
-              //      }
-              //  }
-           // }
-        }
-        Debug.Log("Done!");
+        settingsNotLoaded = false;
     }
 
     // ********************************************************************** //
 
+    void LoadNextSettings(int count) 
+    {
+        float totaliters = 3; //(float)Math.Pow(3, 7);
+        //foreach (Color colour in allExistingPlanets.planetColours)
+        //{
+        Color colour = allExistingPlanets.planetColours[count % 3];
+        GaussianSummaryStats height = allExistingPlanets.mountainHeights[0];
+        GaussianSummaryStats roughness = allExistingPlanets.mountainRoughnesses[0];
+        GaussianSummaryStats ringradius = allExistingPlanets.ringRadii[0];
+        GaussianSummaryStats mooniness = allExistingPlanets.mooninesses[0];
+        GaussianSummaryStats atmosphere = allExistingPlanets.atmosphereLevels[0];
+        GaussianSummaryStats sunradius = allExistingPlanets.sunRadii[0];
+
+
+        // foreach (GaussianSummaryStats height in allExistingPlanets.mountainHeights)
+        // {
+        //    foreach (GaussianSummaryStats roughness in allExistingPlanets.mountainRoughnesses)
+        //    {
+        //        foreach (GaussianSummaryStats ringradius in allExistingPlanets.ringRadii)
+        //        {
+        //            foreach (GaussianSummaryStats mooniness in allExistingPlanets.mooninesses)
+        //            {
+        //                foreach (GaussianSummaryStats atmosphere in allExistingPlanets.atmosphereLevels)
+        //               {
+        //                    foreach (GaussianSummaryStats sunradius in allExistingPlanets.sunRadii)
+        //                    {
+        colourSampleStats = new ColourSamplingStatistics();
+        colourSampleStats.setMean = true;
+        colourSampleStats.meanColour = colour;
+        colourSampleStats.stdev = allExistingPlanets.colourStd;
+
+        shapeSampleStats = new ShapeSamplingStatistics();
+        shapeSampleStats.setMean = true;
+
+        shapeSampleStats.meanBaseRoughness = roughness.mean;
+        shapeSampleStats.stdBaseRoughness = roughness.stdev;
+
+        shapeSampleStats.meanStrength = height.mean;
+        shapeSampleStats.stdStrength = height.stdev;
+
+        particleSampleStats = new ParticleSamplingStatistics();
+        particleSampleStats.setMean = true;
+
+        particleSampleStats.meanRingRadius = ringradius.mean;
+        particleSampleStats.stdRingRadius = ringradius.stdev;
+
+        particleSampleStats.meanMooniness = mooniness.mean;
+        particleSampleStats.stdMooniness = mooniness.stdev;
+
+        particleSampleStats.meanAtmosphere = atmosphere.mean;
+        particleSampleStats.stdAtmosphere = atmosphere.stdev;
+
+        particleSampleStats.meanSunRadius = sunradius.mean;
+        particleSampleStats.stdSunRadius = sunradius.stdev;
+
+    }
+
+    // ********************************************************************** //
+    /*
+    /// <summary>
+    /// Code by ChrisW -> http://stackoverflow.com/questions/876473/is-there-a-way-to-check-if-a-file-is-in-use
+    /// </summary>
+    protected virtual bool IsFileLocked(FileInfo file)
+    {
+        FileStream stream = null;
+
+        try
+        {
+            stream = file.Open(FileMode.Open, FileAccess.ReadWrite, FileShare.None);
+        }
+        catch (IOException)
+        {
+            return true;
+        }
+        finally
+        {
+            if (stream != null)
+                stream.Close();
+        }
+
+        //file is not locked
+        return false;
+    }
+    */
+    // ********************************************************************** //
+
 }
+
