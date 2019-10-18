@@ -182,9 +182,8 @@ public class Planet : MonoBehaviour
     // ********************************************************************** //      string PlanetIDGenerator(int ndigits=5)      {         // Create a random code of N digits in length         int code = rnd.Next(0, (int)Math.Pow(10, ndigits-1));          // This will specify a subject-unique (probably) confirmation code for them to enter after finishing experiment to show completion         string IDcode = code.ToString();          while (IDcode.Length < 7)       // pad the code string with zeros until its 7 digits         {             IDcode = "0" + IDcode;         }          // convert the planet ID number to real planet information code         string planetName = "planet";         planetName = planetName + "_" + IDcode;          return planetName;     }      // ********************************************************************** //      void SavePlanet()      {
         // Take a screenshot of this new planet and save it to file
         string planetName = PlanetIDGenerator(5);         planetPath = filePath + planetName + ".jpg";         recorder.CaptureScreenshot(planetName);
-
-        //ScreenCapture.CaptureScreenshot(planetPath);
-        Debug.Log("Saving image to .jpg file.");          // Add all the details about this random planet to the stimulus set .json file         planetData = CurrentPlanetSettings(planetName);         // Add new planet to the List of all existing planets (could be 100k objects in this list, so beware performance HRS)         allExistingPlanets.allPlanetData.Add(planetData);          // convert the data to JSON format         Debug.Log("Saving image details to .json file.");         dataAsJson = JsonUtility.ToJson(allExistingPlanets);          File.WriteAllText(recordFilePath, dataAsJson);
+        Debug.Log("Saving image to .jpg file and details to .json file.");          // Add all the details about this random planet to the stimulus set .json file         planetData = CurrentPlanetSettings(planetName); 
+        // Add new planet to the List of all existing planets (could be 100k objects in this list, so beware performance HRS)         allExistingPlanets.allPlanetData.Add(planetData);          // convert the data to JSON format         dataAsJson = JsonUtility.ToJson(allExistingPlanets);          File.WriteAllText(recordFilePath, dataAsJson);
              }      // ********************************************************************** //      string GetDateTime()      {         DateTime dateTime = DateTime.Now;              string stringDateTime = dateTime.ToString("dd-MM-yy", DateTimeFormatInfo.InvariantInfo) + '_' + dateTime.ToString("t", DateTimeFormatInfo.InvariantInfo);         stringDateTime = stringDateTime.Replace("/", "-");   // make sure you don't have conflicting characters for writing to web server         stringDateTime = stringDateTime.Replace(":", "-");             return stringDateTime;     }      // ********************************************************************** //      public void LoadExistingPlanets(string filepath)     {         // may need to write an exception case here HRS         string json = File.ReadAllText(filepath);         allExistingPlanets = JsonUtility.FromJson<AllPlanetData>(json);          Debug.Log("Just loaded data from " + allExistingPlanets.allPlanetData.Count + " generated planets.");     }      // ********************************************************************** //      public PlanetData CurrentPlanetSettings(string planetName)      {         // This function generates local variable copies of the settings that we want to save for this planet          planetData = new PlanetData();              // new to create a new object to store this planet's parameters         planetData.planetName = planetName;         planetData.generationDateTime = GetDateTime();         planetData.planetColour = tintColor;
         planetData.saturation = saturation;         planetData.shapeNoiseLayers = shapeSettings.noiseLayers;          // The particle systems settings         planetData.sunRadius = particleLauncher.sunRadius;         planetData.ringRadius = particleLauncher.ringRadius;         planetData.dustAmount = particleLauncher.dustAmount;         planetData.ringThickness = particleLauncher.ringThickness;         planetData.atmosphereAmount = particleLauncher.atmosphereAmount;          return planetData;     }
 
@@ -194,34 +193,21 @@ public class Planet : MonoBehaviour
    {
         if (!finished) 
         { 
-            Debug.Log("start update");
-            Debug.Log("thread status: " + recorder.threadAlive);
-            Debug.Log("thread started: " + recorder.threadStarted);
-
             if (!startedSaving) // check for a trigger from the thread starting
             { 
                 startedSaving = recorder.threadAlive;
             }
 
             // loop through all the settings we want to save
-            if (settingsIndex < 3) 
-            { 
+            //if (settingsIndex < (Math.Pow(3,7)))  // 7 features to vary across
+            if (settingsIndex < 3)  // 7 features to vary across
+            {
                 if (readyForSaving)  // this imposes a 1 frame delay between procedural generation (so that generation of everything is complete) and saving (yay!)
                 {
                     Debug.Log("save planet");
                     SavePlanet();
                     readyForSaving = false;
                     settingsIndex++;
-                }
-
-                if (startedSaving) 
-                {
-                    Debug.Log("thread is alive");
-                    //var file = new FileInfo(planetPath);
-                    //finishedSaving = !(IsFileLocked(file));
-                    finishedSaving = !recorder.threadAlive;
-                    startedSaving = recorder.threadAlive;
-                    Debug.Log("finishedSaving: " + finishedSaving);  // this says its never finishing saving...? think thats not working right, but once thats done we are almost there HRS!
                 }
 
                 if (!startGenerativeProcess & settingsNotLoaded)
@@ -262,7 +248,6 @@ public class Planet : MonoBehaviour
         startGenerativeProcess = true;
         Debug.Log("Generation process started at: " + GetDateTime());
         Debug.Log("Generating full stimulus set...");
-
     }
 
     // ********************************************************************** //
@@ -271,8 +256,8 @@ public class Planet : MonoBehaviour
     {
         // This function will go through all the planet stimulus settings we want a sample of, generate that planet then save it
         // Define the gaussian distribution means for each level (save these to file too)
-        float[] meanRingRadii = new float[] { 0.9f, 1.4f, 2f };
-        float[] meanMooninesses = new float[] { 2f, 14f, 40f };
+        float[] meanRingRadii = new float[] { 0.4f, 1.35f, 2.1f };
+        float[] meanMooninesses = new float[] { 0.4f, 2.3f, 4f };
         float[] meanSunRadii = new float[] { 0.1f, 0.3f, 0.8f };
         Color[] meanPlanetColours = new Color[] { new Color(200f / 255f, 100f / 255f, 0f), new Color(0f, 200f / 255f, 100f / 255f), new Color(100f / 255f, 0f, 200f / 255f) };  // orange, green, purple
         float[] meanMountainRoughnesses = new float[] { 0.4f, 1.7f, 9f };
@@ -281,7 +266,7 @@ public class Planet : MonoBehaviour
 
         // Define normal dist. standard deviations for each parameter
         float ringStd = 0.1f;
-        float moonStd = 2f;
+        float moonStd = 0.1f;
         float sunStd = 0.03f;
         float colourStd = 0.1f;
         float roughnessStd = 0.1f;
@@ -319,30 +304,26 @@ public class Planet : MonoBehaviour
 
     void LoadNextSettings(int count) 
     {
-        float totaliters = 3; //(float)Math.Pow(3, 7);
-        //foreach (Color colour in allExistingPlanets.planetColours)
-        //{
+        Debug.Log("planet index: " + count);
+
+        /*
         Color colour = allExistingPlanets.planetColours[count % 3];
+        GaussianSummaryStats height = allExistingPlanets.mountainHeights[(int)(Math.Floor(count/3f)%3)];
+        GaussianSummaryStats roughness = allExistingPlanets.mountainRoughnesses[(int)(Math.Floor(count / (3f*3f)) % 3)];
+        GaussianSummaryStats ringradius = allExistingPlanets.ringRadii[(int)(Math.Floor(count / (3f * 3f * 3f)) % 3)];
+        GaussianSummaryStats mooniness = allExistingPlanets.mooninesses[(int)(Math.Floor(count / (3f * 3f * 3f * 3f)) % 3)];
+        GaussianSummaryStats atmosphere = allExistingPlanets.atmosphereLevels[(int)(Math.Floor(count / (3f * 3f * 3f * 3f * 3f)) % 3)];
+        GaussianSummaryStats sunradius = allExistingPlanets.sunRadii[(int)(Math.Floor(count / (3f * 3f * 3f * 3f * 3f * 3f)) % 3)];
+        */
+
+        Color colour = allExistingPlanets.planetColours[0];
         GaussianSummaryStats height = allExistingPlanets.mountainHeights[0];
         GaussianSummaryStats roughness = allExistingPlanets.mountainRoughnesses[0];
         GaussianSummaryStats ringradius = allExistingPlanets.ringRadii[0];
-        GaussianSummaryStats mooniness = allExistingPlanets.mooninesses[0];
+        GaussianSummaryStats mooniness = allExistingPlanets.mooninesses[count % 3];
         GaussianSummaryStats atmosphere = allExistingPlanets.atmosphereLevels[0];
         GaussianSummaryStats sunradius = allExistingPlanets.sunRadii[0];
 
-
-        // foreach (GaussianSummaryStats height in allExistingPlanets.mountainHeights)
-        // {
-        //    foreach (GaussianSummaryStats roughness in allExistingPlanets.mountainRoughnesses)
-        //    {
-        //        foreach (GaussianSummaryStats ringradius in allExistingPlanets.ringRadii)
-        //        {
-        //            foreach (GaussianSummaryStats mooniness in allExistingPlanets.mooninesses)
-        //            {
-        //                foreach (GaussianSummaryStats atmosphere in allExistingPlanets.atmosphereLevels)
-        //               {
-        //                    foreach (GaussianSummaryStats sunradius in allExistingPlanets.sunRadii)
-        //                    {
         colourSampleStats = new ColourSamplingStatistics();
         colourSampleStats.setMean = true;
         colourSampleStats.meanColour = colour;
@@ -371,36 +352,8 @@ public class Planet : MonoBehaviour
 
         particleSampleStats.meanSunRadius = sunradius.mean;
         particleSampleStats.stdSunRadius = sunradius.stdev;
-
     }
 
-    // ********************************************************************** //
-    /*
-    /// <summary>
-    /// Code by ChrisW -> http://stackoverflow.com/questions/876473/is-there-a-way-to-check-if-a-file-is-in-use
-    /// </summary>
-    protected virtual bool IsFileLocked(FileInfo file)
-    {
-        FileStream stream = null;
-
-        try
-        {
-            stream = file.Open(FileMode.Open, FileAccess.ReadWrite, FileShare.None);
-        }
-        catch (IOException)
-        {
-            return true;
-        }
-        finally
-        {
-            if (stream != null)
-                stream.Close();
-        }
-
-        //file is not locked
-        return false;
-    }
-    */
     // ********************************************************************** //
 
 }

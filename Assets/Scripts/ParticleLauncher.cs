@@ -109,7 +109,8 @@ public class ParticleLauncher : MonoBehaviour
             case "dust":
                 // these are actually moons now
                 //shape.donutRadius = dustAmount;
-                emission.rateOverTime = dustAmount * 10f;
+                mainModule.startSize = new ParticleSystem.MinMaxCurve(dustAmount / 100f, dustAmount / 60f);
+                emission.rateOverTime = dustAmount * 5f;
                 break;
 
             case "sunsurface":

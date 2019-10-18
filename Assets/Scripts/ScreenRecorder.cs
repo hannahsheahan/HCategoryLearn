@@ -205,6 +205,7 @@ public class ScreenRecorder : MonoBehaviour
                 threadAlive = false;
             }).Start();
             */
+
             thread = new System.Threading.Thread(mythread);
             thread.Start();
             thread.Join();
