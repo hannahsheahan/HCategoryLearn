@@ -19,7 +19,6 @@ public class ShapeGenerator
     public MinMax elevationMinMax;
     public System.Random rand = new System.Random();  // Randomisation of planet settings
 
-
     // ********************************************************************** //
 
     public void UpdateSettings(ShapeSettings settings, bool reset, ShapeSamplingStatistics shapeSampleStats) 
@@ -77,6 +76,8 @@ public class ShapeGenerator
     {
         // Planet physical shape settings
         settings.planetRadius = 1f;
+        settings.mountainHeightLevel = shapeSampleStats.mountainHeightLevel;
+        settings.mountainRoughnessLevel = shapeSampleStats.mountainRoughnessLevel;
 
         for (int i = 0; i < settings.noiseLayers.Length; i++)
         {

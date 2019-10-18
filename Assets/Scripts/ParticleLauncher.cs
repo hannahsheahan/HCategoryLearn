@@ -35,6 +35,12 @@ public class ParticleLauncher : MonoBehaviour
     public float atmosphereAmount;
     public float ringTransparency;
 
+    public int sunLevel;
+    public int ringLevel;
+    public int dustLevel;
+    public int atmosphereLevel;
+
+
     public System.Random rand = new System.Random();  // Randomisation of planet settings
     public int test;
 
@@ -263,11 +269,18 @@ public class ParticleLauncher : MonoBehaviour
         // Sample particle settings from specified distributions
         if (particleSampleStats.setMean)
         {
+            // parameter values
             ringRadius = GaussianRandom(particleSampleStats.meanRingRadius, particleSampleStats.stdRingRadius);
             sunRadius = GaussianRandom(particleSampleStats.meanSunRadius, particleSampleStats.stdSunRadius);
             atmosphereAmount = GaussianRandom(particleSampleStats.meanAtmosphere, particleSampleStats.stdAtmosphere);
             dustAmount = GaussianRandom(particleSampleStats.meanMooniness, particleSampleStats.stdMooniness);
             ringThickness = 0.2f;  // constant
+
+            // levels
+            sunLevel = particleSampleStats.sunLevel;
+            ringLevel = particleSampleStats.ringLevel;
+            dustLevel = particleSampleStats.mooninessLevel;
+            atmosphereLevel = particleSampleStats.atmosphereLevel;
         }
         else
         {   // Completely randomise all particle settings 

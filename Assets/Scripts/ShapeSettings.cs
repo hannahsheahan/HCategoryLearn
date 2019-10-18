@@ -15,6 +15,10 @@ public class ShapeSettings : ScriptableObject
     public float planetRadius = 2;
     public NoiseLayer[] noiseLayers;
 
+    public int mountainHeightLevel;
+    public int mountainRoughnessLevel;
+
+
     [System.Serializable]
     public class NoiseLayer
     {

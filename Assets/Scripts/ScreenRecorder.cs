@@ -87,7 +87,7 @@ public class ScreenRecorder : MonoBehaviour
             planetName = stringDateTime;
          }
         // use width, height, and counter for unique file name
-        var filename = folder + "/" + planetName;
+        var filename = folder + "/" + planetName + ".jpg";
  
          // up counter for next call
          ++counter;
@@ -98,7 +98,7 @@ public class ScreenRecorder : MonoBehaviour
  
      public void CaptureScreenshot(string planet)
      {
-        planetName = planet + ".jpg";
+        planetName = planet;
         captureScreenshot = true;
      }
 
@@ -191,21 +191,7 @@ public class ScreenRecorder : MonoBehaviour
                  fileData = screenShot.GetRawTextureData();
              }
 
-            // create new thread to save the image to file (only operation that can be done in background)
-            /*
-            new System.Threading.Thread(() =>
-            {
-                threadAlive = true;
-                // create file and write optional header with image bytes
-                var f = System.IO.File.Create(filename);
-                if (fileHeader != null) f.Write(fileHeader, 0, fileHeader.Length);
-                f.Write(fileData, 0, fileData.Length);
-                f.Close();
-                Debug.Log(string.Format("Wrote screenshot {0} of size {1}", filename, fileData.Length));
-                threadAlive = false;
-            }).Start();
-            */
-
+            // Save using a new thread in the background
             thread = new System.Threading.Thread(mythread);
             thread.Start();
             thread.Join();
