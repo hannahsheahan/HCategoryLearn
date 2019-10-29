@@ -272,7 +272,7 @@ public class Planet : MonoBehaviour
         float[] meanSunRadii = new float[] { 0.06f, 0.3f, 0.7f };
         Color[] meanPlanetColours = new Color[] { new Color(200f / 255f, 100f / 255f, 0f), new Color(0f, 200f / 255f, 100f / 255f), new Color(100f / 255f, 0f, 200f / 255f) };  // orange, green, purple
         float[] meanMountainRoughnesses = new float[] { 0.4f, 1.7f, 9f };
-        float[] meanMountainHeights = new float[] { 0.0001f, 0.1f, 0.3f };
+        float[] meanMountainHeights = new float[] { 0.0001f, 0.2f, 0.5f };
         float[] meanAtmosphereStrengths = new float[] { 10f, 150f, 400f };
 
         // Define normal dist. standard deviations for each parameter
@@ -350,7 +350,7 @@ public class Planet : MonoBehaviour
         colourSampleStats = new ColourSamplingStatistics();
         colourSampleStats.setMean = true;
 
-        colourSampleStats.colourLevel = colourindex;
+        colourSampleStats.colourLevel = colourindex;  // try using this as a key for saturation level rather than colour
         colourSampleStats.meanColour = colour;
         colourSampleStats.stdev = allExistingPlanets.colourStd;
 

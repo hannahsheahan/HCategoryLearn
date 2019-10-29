@@ -14,17 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   planetRadius: 1
   noiseLayers:
-  - enabled: 1
+  - enabled: 0
     useFirstLayerAsMask: 1
     noiseSettings:
       filterType: 0
       simpleNoiseSettings:
-        strength: 0.16
+        strength: 0.26
         numLayers: 4
-        baseRoughness: 0.7446533
-        roughness: 2.2
-        persistence: 0.6
-        centre: {x: 0.2734793, y: -0.24289829, z: 0.41389337}
+        baseRoughness: 0.72
+        roughness: 0.28
+        persistence: 0.62
+        centre: {x: 0.43663648, y: 0.098854296, z: -0.09278643}
         minValue: 0.95
       rigidNoiseSettings:
         strength: 0.3
@@ -35,3 +35,26 @@ MonoBehaviour:
         centre: {x: 0, y: 0, z: 0}
         minValue: 0.95
         weightMultiplier: 0.8
+  - enabled: 1
+    useFirstLayerAsMask: 1
+    noiseSettings:
+      filterType: 1
+      simpleNoiseSettings:
+        strength: 0.34
+        numLayers: 4
+        baseRoughness: 7.04
+        roughness: 2.2
+        persistence: 0.25
+        centre: {x: 0.43663648, y: 0.098854296, z: -0.09278643}
+        minValue: 0.95
+      rigidNoiseSettings:
+        strength: 4.22
+        numLayers: 4
+        baseRoughness: 1.43
+        roughness: 4.18
+        persistence: 0.5
+        centre: {x: 0, y: 0, z: 0}
+        minValue: 0.95
+        weightMultiplier: 0.8
+  mountainHeightLevel: 0
+  mountainRoughnessLevel: 0
