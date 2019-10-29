@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.IO;
+using System.Linq;
 using System.Globalization;
 
 public class Planet : MonoBehaviour
@@ -41,6 +42,8 @@ public class Planet : MonoBehaviour
     private float saturation;
     private float sunSize;
     private float ringSize;
+    public int[] featureorder;
+    public string datasetForm;
 
     ColourSamplingStatistics colourSampleStats;
     ParticleSamplingStatistics particleSampleStats;
@@ -56,7 +59,7 @@ public class Planet : MonoBehaviour
     private bool finishedSaving = true;
     private bool startedSaving = false;
     private bool finished = false;
-    public int numPlanets = 8;  // how many planets to generate in this simulation
+    public int numPlanets;  
 
     private ScreenRecorder recorder;
     public GameObject camera;
@@ -76,6 +79,11 @@ public class Planet : MonoBehaviour
         particleSampleStats = new ParticleSamplingStatistics();
         colourSampleStats = new ColourSamplingStatistics();
 
+        // Our sampling settings
+        datasetForm = "heirarchy";  // "flat", "singlefeature", "hierarchy"
+        numPlanets = 8 * 200;  // how many planets to generate in this simulation
+        featureorder = new int[] { 0, 1, 2, 3, 4, 5, 6 };
+        featureorder = RandomPermutation(featureorder);  // the random ordering of features in the hierarchy
 
         // Read in the existing record of planet details
         recordFilePath = filePath + "stimulusLookup.json";         if (File.Exists(recordFilePath))         {             Debug.Log("Opening record of generated planets.");             LoadExistingPlanets(recordFilePath);         }
@@ -249,6 +257,14 @@ public class Planet : MonoBehaviour
             else if (!finished) // write a message when we're done
             {
                 Debug.Log("Done!");
+                if (datasetForm == "heirarchy") 
+                {
+                    Debug.Log("featureorder: ");
+                    foreach (int feature in featureorder) 
+                    {
+                        Debug.Log(feature);
+                    }
+                }
                 finished = true;
             }
         }
@@ -270,19 +286,19 @@ public class Planet : MonoBehaviour
         // This function will go through all the planet stimulus settings we want a sample of, generate that planet then save it
         // Define the gaussian distribution means for each level (save these to file too)
         float[] meanRingRadii = new float[] { 0.4f, 1.35f, 2.1f };
-        float[] meanMooninesses = new float[] { 0.4f, 2.3f, 4f };
+        float[] meanMooninesses = new float[] { 0.4f, 2.3f, 5f };
         float[] meanSunRadii = new float[] { 0.06f, 0.3f, 0.7f };
         //Color[] meanPlanetColours = new Color[] { new Color(200f / 255f, 100f / 255f, 0f), new Color(0f, 200f / 255f, 100f / 255f), new Color(100f / 255f, 0f, 200f / 255f) };  // orange, green, purple
         Color[] meanPlanetColours = new Color[] { new Color(200f / 255f, 100f / 255f, 0f), new Color(200f / 255f, 100f / 255f, 0f), new Color(200f / 255f, 100f / 255f, 0f) };  // always orange now
         float[] meanMountainRoughnesses = new float[] { 0.4f, 1.7f, 9f };
-        float[] meanMountainHeights = new float[] { 0.0001f, 0.2f, 0.5f };
+        float[] meanMountainHeights = new float[] { 0.0001f, 0.2f, 0.4f };
         float[] meanAtmosphereStrengths = new float[] { 10f, 150f, 400f };
         float[] meanSaturations = new float[] { 0.05f, 0.5f, 0.95f };
 
         // Define normal dist. standard deviations for each parameter
-        float ringStd = 0.1f;
+        float ringStd = 0.15f;
         float moonStd = 0.1f;
-        float sunStd = 0.03f;
+        float sunStd = 0.04f;
         float colourStd = 0.05f;   // this is now for the saturation
         float roughnessStd = 0.1f;
         float heightStd = 0.008f;
@@ -321,7 +337,6 @@ public class Planet : MonoBehaviour
 
     bool LessThanHalfOfX(float index, float x) 
     {
-        // HRS might get rid of this
         // This function returns a bool answer to the question "is i less than or equal to half of x"
         // indices are indexed 0-(x-1), so bias the case of i==x/2 to return true
         float epsilon = 0.0001f;
@@ -330,11 +345,30 @@ public class Planet : MonoBehaviour
 
     // ********************************************************************** //
 
+    int[] RandomPermutation(int[] inputarray) 
+    {
+        List<int> listToSample = inputarray.OfType<int>().ToList();
+        int[] newarray = new int[inputarray.Length];
+        int index;
+
+        for (int i = 0; i < inputarray.Length; i++) 
+        {
+            // take a random sample of our mutable list without replacement
+            index = rnd.Next(0, listToSample.Count);
+            newarray[i] = listToSample[index];
+
+            // remove the sampled element from the list we just sampled from
+            listToSample.RemoveAt(index);
+        }
+
+        return newarray;
+    }
+    // ********************************************************************** //
+
     void LoadNextSettings(int count) 
     {
         Debug.Log("planet index: " + count);
 
-        string datasetForm = "heirarchy";  // "flat", "singlefeature", "hierarchy"
         int colourindex;
         int heightindex;
         int roughnessindex;
@@ -374,7 +408,18 @@ public class Planet : MonoBehaviour
             case "heirarchy":
                 // for generating a single hierarchical dataset of level 3 (8 planets)
                 // note that the -1, 0 and +1 levels in the RSA matrix correspond to 0, 1 and 2 index levels of each feature respectively.
-                int[] featureorder = { 0, 1, 2, 3, 4, 5, 6 };  // HRS can also make a function that uses a random permutation but keep fixed for now
+                // the numbers 0-6 here correspond to the ordering: 
+                // [0] colourindex 
+                // [1] roughnessindex 
+                // [2] heightindex 
+                // [3] ringindex
+                // [4] mooninessindex
+                // [5] atmosphereindex
+                // [6] sunindex
+                // such that e.g. for featureorder = { 6, 0, 1, 2, 3, 4, 5 }; the 6th element of featureorder is always the sunindex, with takes the position of feature 5 in the hierarchy
+                //           e.g. the 0th element of featureorder corresponds to the colourindex, which takes the position of the 6th feature in the hierarchy
+                //int[] featureorder = { 0, 1, 2, 3, 4, 5, 6 };  // HRS can also make a function that uses a random permutation but keep fixed for now
+
                 int[] featureindex = new int[featureorder.Length];
 
                 // Populate the feature index array to be equal to the null level so that it makes setting the hierarchy easier
@@ -383,14 +428,19 @@ public class Planet : MonoBehaviour
                     featureindex[i] = NULL_LEVEL;
                 }
 
-                // set the hierarchy logic
-                float x = (float)numPlanets;
+                // set the hierarchy logic - yes this could be simplified for better coding practice HRS
+                if (numPlanets % 8 != 0) 
+                {
+                    Debug.Log("Warning: generating a number of planets that will not correctly fill the 3 level hierarchy. Check numPlanets.");
+                }
+
+                float x = 8f;
+                count = count % 8;
                 float rightsidecount = count;
                 featureindex[0] = LessThanHalfOfX((float)count, x) ? LOW_LEVEL: HIGH_LEVEL;
                 if (featureindex[0] == LOW_LEVEL)  // fill in the left side of the tree from root, N0
                 {
                     x = x / 2f;
-
                     featureindex[1] = LessThanHalfOfX((float)count, x) ? LOW_LEVEL : HIGH_LEVEL;
                     if (featureindex[1] == LOW_LEVEL)    // left side of tree from N1
                     {
@@ -408,7 +458,6 @@ public class Planet : MonoBehaviour
                 {
                     x = x / 2f;
                     rightsidecount = rightsidecount - x;
-
                     featureindex[2] = LessThanHalfOfX(rightsidecount, x) ? LOW_LEVEL : HIGH_LEVEL;
                     if (featureindex[2] == LOW_LEVEL)    // left side of tree from N2
                     {

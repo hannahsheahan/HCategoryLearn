@@ -105,10 +105,9 @@ public class ColourGenerator
 
     public ColourSettings RandomizeColourSettings(ColourSettings settings, ColourSamplingStatistics colorStats)
     {
-        saturation = colorStats.meanSaturation; // GaussianRandom(0.6f, 0.3f); // 0.7f; // actually we want to keep this consistent to make difficulty of colour descrimination the same
 
         //tintColor = colorStats.setMean ? RandomColourAroundMean(colorStats) : RandomColour(saturation);
-        tintColor = colorStats.setMean ? RandomSaturationAroundMean(colorStats) : RandomColour(saturation); // manipulating saturation only now
+        tintColor = colorStats.setMean ? RandomSaturationAroundMean(colorStats) : RandomColour(); // manipulating saturation only now
 
         darkColor = new Color(tintColor.r * .6f, tintColor.g * .6f, tintColor.b * .6f);
         colourLevel = colorStats.colourLevel;
@@ -150,9 +149,9 @@ public class ColourGenerator
 
     // ********************************************************************** //
 
-    private Color RandomColour(float sat)
+    private Color RandomColour()
     {
-        return new Color(RandomNumberInRange(0.1f,1f), RandomNumberInRange(0.1f, 1f), RandomNumberInRange(0.1f, 1f), sat);  // without sat, defaults to alpha=1
+        return new Color(RandomNumberInRange(0.1f,1f), RandomNumberInRange(0.1f, 1f), RandomNumberInRange(0.1f, 1f));  // without sat, defaults to alpha=1
     }
 
     // ********************************************************************** //
@@ -168,8 +167,8 @@ public class ColourGenerator
     {
         float H, S, V;   // take the hue from the meanColour and adjust the saturation only
         Color.RGBToHSV(colorStats.meanColour, out H, out S, out V);
-
-        return Color.HSVToRGB(H, GaussianRandom(colorStats.meanSaturation, colorStats.stdev), V);
+        saturation = GaussianRandom(colorStats.meanSaturation, colorStats.stdev); // sample saturation from gaussian
+        return Color.HSVToRGB(H, saturation, V);
     }
 
     // ********************************************************************** //
