@@ -56,6 +56,7 @@ public class Planet : MonoBehaviour
     private bool finishedSaving = true;
     private bool startedSaving = false;
     private bool finished = false;
+    public int numPlanets = 8;  // how many planets to generate in this simulation
 
     private ScreenRecorder recorder;
     public GameObject camera;
@@ -211,8 +212,9 @@ public class Planet : MonoBehaviour
 
             // loop through all the settings we want to save
            // if (settingsIndex < (Math.Pow(3,7)))  // 7 features to vary across
-             if (settingsIndex < 3)  // for testing percetion of levels of an individual feature (along with lines ~410)
-            {
+           //  if (settingsIndex < 3)  // for testing percetion of levels of an individual feature (along with lines ~410)
+           if (settingsIndex < numPlanets) // for generating a single hierarchy of level 3
+             {
                 if (readyForSaving)  // this imposes a 1 frame delay between procedural generation (so that generation of everything is complete) and saving (yay!)
                 {
                     Debug.Log("save planet");
@@ -281,7 +283,7 @@ public class Planet : MonoBehaviour
         float ringStd = 0.1f;
         float moonStd = 0.1f;
         float sunStd = 0.03f;
-        float colourStd = 0.05f; //0.1f;
+        float colourStd = 0.05f;   // this is now for the saturation
         float roughnessStd = 0.1f;
         float heightStd = 0.008f;
         float atmosphereStd = 10f;
@@ -317,19 +319,136 @@ public class Planet : MonoBehaviour
 
     // ********************************************************************** //
 
+    bool LessThanHalfOfX(float index, float x) 
+    {
+        // HRS might get rid of this
+        // This function returns a bool answer to the question "is i less than or equal to half of x"
+        // indices are indexed 0-(x-1), so bias the case of i==x/2 to return true
+        float epsilon = 0.0001f;
+        return (index+epsilon) < (x/2f);
+    }
+
+    // ********************************************************************** //
+
     void LoadNextSettings(int count) 
     {
         Debug.Log("planet index: " + count);
 
-        int colourindex     = count % 3;
-        int heightindex     = (int)(Math.Floor(count / 3f) % 3);
-        int roughnessindex  = (int)(Math.Floor(count / (3f * 3f)) % 3);
-        int ringindex       = (int)(Math.Floor(count / (3f * 3f * 3f)) % 3);
-        int mooninessindex  = (int)(Math.Floor(count / (3f * 3f * 3f * 3f)) % 3);
-        int atmosphereindex = (int)(Math.Floor(count / (3f * 3f * 3f * 3f * 3f)) % 3);
-        int sunindex        = (int)(Math.Floor(count / (3f * 3f * 3f * 3f * 3f * 3f)) % 3);
+        string datasetForm = "heirarchy";  // "flat", "singlefeature", "hierarchy"
+        int colourindex;
+        int heightindex;
+        int roughnessindex;
+        int ringindex;
+        int mooninessindex;
+        int atmosphereindex;
+        int sunindex;
 
-        /*
+        const int LOW_LEVEL = 0;
+        const int NULL_LEVEL = 1;
+        const int HIGH_LEVEL = 2;
+
+        switch (datasetForm) 
+        {
+            case "flat":
+                // for generating a full data set (non hierarchical, all combinations)
+                colourindex     = count % 3;
+                heightindex     = (int)(Math.Floor(count / 3f) % 3);
+                roughnessindex  = (int)(Math.Floor(count / (3f * 3f)) % 3);
+                ringindex       = (int)(Math.Floor(count / (3f * 3f * 3f)) % 3);
+                mooninessindex  = (int)(Math.Floor(count / (3f * 3f * 3f * 3f)) % 3);
+                atmosphereindex = (int)(Math.Floor(count / (3f * 3f * 3f * 3f * 3f)) % 3);
+                sunindex        = (int)(Math.Floor(count / (3f * 3f * 3f * 3f * 3f * 3f)) % 3);
+                break;
+
+            case "singlefeature":
+                // for testing perception of individual levels while keeping all other parameters constant. Whichever one you want to alter, make =(count%3)
+                colourindex = count % 3;
+                heightindex = 0;
+                roughnessindex = 0;
+                ringindex = 0;
+                mooninessindex = 0;
+                atmosphereindex = 0;
+                sunindex = 0;
+                break;
+
+            case "heirarchy":
+                // for generating a single hierarchical dataset of level 3 (8 planets)
+                // note that the -1, 0 and +1 levels in the RSA matrix correspond to 0, 1 and 2 index levels of each feature respectively.
+                int[] featureorder = { 0, 1, 2, 3, 4, 5, 6 };  // HRS can also make a function that uses a random permutation but keep fixed for now
+                int[] featureindex = new int[featureorder.Length];
+
+                // Populate the feature index array to be equal to the null level so that it makes setting the hierarchy easier
+                for (int i=0; i < featureindex.Length; i++)
+                {
+                    featureindex[i] = NULL_LEVEL;
+                }
+
+                // set the hierarchy logic
+                float x = (float)numPlanets;
+                float rightsidecount = count;
+                featureindex[0] = LessThanHalfOfX((float)count, x) ? LOW_LEVEL: HIGH_LEVEL;
+                if (featureindex[0] == LOW_LEVEL)  // fill in the left side of the tree from root, N0
+                {
+                    x = x / 2f;
+
+                    featureindex[1] = LessThanHalfOfX((float)count, x) ? LOW_LEVEL : HIGH_LEVEL;
+                    if (featureindex[1] == LOW_LEVEL)    // left side of tree from N1
+                    {
+                        x = x / 2f;
+                        featureindex[3] = LessThanHalfOfX((float)count, x) ? LOW_LEVEL : HIGH_LEVEL;
+                    }
+                    else                                 // right side of tree from N1
+                    {
+                        x = x / 2f;
+                        rightsidecount = rightsidecount - x;
+                        featureindex[4] = LessThanHalfOfX(rightsidecount, x) ? LOW_LEVEL : HIGH_LEVEL;
+                    }
+                }
+                else    // right side of tree from root, N0
+                {
+                    x = x / 2f;
+                    rightsidecount = rightsidecount - x;
+
+                    featureindex[2] = LessThanHalfOfX(rightsidecount, x) ? LOW_LEVEL : HIGH_LEVEL;
+                    if (featureindex[2] == LOW_LEVEL)    // left side of tree from N2
+                    {
+                        x = x / 2f;
+                        featureindex[5] = LessThanHalfOfX(rightsidecount, x) ? LOW_LEVEL : HIGH_LEVEL;
+                    }
+                    else                                 // right side of tree from N2
+                    {
+                        x = x / 2f;
+                        rightsidecount = rightsidecount - x;
+                        featureindex[6] = LessThanHalfOfX(rightsidecount, x) ? LOW_LEVEL : HIGH_LEVEL;
+                    }
+                }
+
+                // print these out to check its working properly
+                for (int i=0; i < featureindex.Length; i++) 
+                { 
+                    Debug.Log("feature index ["+i+"]: "+featureindex[i]);
+                }
+
+                colourindex = featureindex[featureorder[0]];           // 0th element on feature order says which feature this is the RSA matrix
+                roughnessindex = featureindex[featureorder[1]];        // 1
+                heightindex = featureindex[featureorder[2]];           // 2
+                ringindex = featureindex[featureorder[3]];             // 3
+                mooninessindex = featureindex[featureorder[4]];        // 4
+                atmosphereindex = featureindex[featureorder[5]];       // 5
+                sunindex = featureindex[featureorder[6]];              // 6
+                break;
+
+            default:
+                colourindex = 0;           
+                roughnessindex = 0;       
+                heightindex = 0;         
+                ringindex = 0;            
+                mooninessindex = 0;    
+                atmosphereindex = 0;     
+                sunindex = 0;
+                break;
+        }
+
         Color colour = allExistingPlanets.planetColours[colourindex];
         GaussianSummaryStats height = allExistingPlanets.mountainHeights[heightindex];
         GaussianSummaryStats roughness = allExistingPlanets.mountainRoughnesses[roughnessindex];
@@ -338,20 +457,6 @@ public class Planet : MonoBehaviour
         GaussianSummaryStats atmosphere = allExistingPlanets.atmosphereLevels[atmosphereindex];
         GaussianSummaryStats sunradius = allExistingPlanets.sunRadii[sunindex];
         GaussianSummaryStats coloursaturation = allExistingPlanets.saturationLevels[colourindex];
-        */
-
-        // for testing perception of individual levels while keeping all other parameters constant
-        Color colour = allExistingPlanets.planetColours[0];
-        GaussianSummaryStats height = allExistingPlanets.mountainHeights[0];
-        GaussianSummaryStats roughness = allExistingPlanets.mountainRoughnesses[0];
-        GaussianSummaryStats ringradius = allExistingPlanets.ringRadii[0];
-        GaussianSummaryStats mooniness = allExistingPlanets.mooninesses[0];
-        GaussianSummaryStats atmosphere = allExistingPlanets.atmosphereLevels[0];
-        GaussianSummaryStats sunradius = allExistingPlanets.sunRadii[0];
-        GaussianSummaryStats coloursaturation = allExistingPlanets.saturationLevels[count % 3];
-
-
-
 
         colourSampleStats = new ColourSamplingStatistics();
         colourSampleStats.setMean = true;
