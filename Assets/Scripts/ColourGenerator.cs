@@ -105,10 +105,12 @@ public class ColourGenerator
 
     public ColourSettings RandomizeColourSettings(ColourSettings settings, ColourSamplingStatistics colorStats)
     {
-        saturation =  GaussianRandom(0.6f, 0.3f); // 0.7f; // actually we want to keep this consistent to make difficulty of colour descrimination the same
+        saturation = colorStats.meanSaturation; // GaussianRandom(0.6f, 0.3f); // 0.7f; // actually we want to keep this consistent to make difficulty of colour descrimination the same
 
-        tintColor = colorStats.setMean ? RandomColourAroundMean(colorStats) : RandomColour(saturation);
-        darkColor = new Color(tintColor.r * .5f, tintColor.g * .5f, tintColor.b * .5f);
+        //tintColor = colorStats.setMean ? RandomColourAroundMean(colorStats) : RandomColour(saturation);
+        tintColor = colorStats.setMean ? RandomSaturationAroundMean(colorStats) : RandomColour(saturation); // manipulating saturation only now
+
+        darkColor = new Color(tintColor.r * .6f, tintColor.g * .6f, tintColor.b * .6f);
         colourLevel = colorStats.colourLevel;
 
         settings.oceanColour = RandomOceanGradient();
@@ -157,16 +159,17 @@ public class ColourGenerator
 
     private Color RandomColourAroundMean(ColourSamplingStatistics colorStats) 
     {
-        // make sure we dont move in the critical directions that keep the colours separate ( HRS this is worse science though)
-        /*
-        float threshold = 0.001f;
-        float r = (colorStats.meanColour.r < threshold) ? 0f : GaussianRandom(colorStats.meanColour.r, colorStats.stdev);
-        float g = (colorStats.meanColour.g < threshold) ? 0f : GaussianRandom(colorStats.meanColour.g, colorStats.stdev);
-        float b = (colorStats.meanColour.b < threshold) ? 0f : GaussianRandom(colorStats.meanColour.b, colorStats.stdev);
-        return new Color(r, g, b);
-        */
+        return new Color(GaussianRandom(colorStats.meanColour.r, colorStats.stdev), GaussianRandom(colorStats.meanColour.g, colorStats.stdev), GaussianRandom(colorStats.meanColour.b, colorStats.stdev) );
+    }
 
-        return new Color(GaussianRandom(colorStats.meanColour.r, colorStats.stdev), GaussianRandom(colorStats.meanColour.g, colorStats.stdev), GaussianRandom(colorStats.meanColour.b, colorStats.stdev));
+    // ********************************************************************** //
+
+    private Color RandomSaturationAroundMean(ColourSamplingStatistics colorStats)
+    {
+        float H, S, V;   // take the hue from the meanColour and adjust the saturation only
+        Color.RGBToHSV(colorStats.meanColour, out H, out S, out V);
+
+        return Color.HSVToRGB(H, GaussianRandom(colorStats.meanSaturation, colorStats.stdev), V);
     }
 
     // ********************************************************************** //

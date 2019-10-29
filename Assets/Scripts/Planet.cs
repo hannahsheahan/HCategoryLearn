@@ -270,16 +270,18 @@ public class Planet : MonoBehaviour
         float[] meanRingRadii = new float[] { 0.4f, 1.35f, 2.1f };
         float[] meanMooninesses = new float[] { 0.4f, 2.3f, 4f };
         float[] meanSunRadii = new float[] { 0.06f, 0.3f, 0.7f };
-        Color[] meanPlanetColours = new Color[] { new Color(200f / 255f, 100f / 255f, 0f), new Color(0f, 200f / 255f, 100f / 255f), new Color(100f / 255f, 0f, 200f / 255f) };  // orange, green, purple
+        //Color[] meanPlanetColours = new Color[] { new Color(200f / 255f, 100f / 255f, 0f), new Color(0f, 200f / 255f, 100f / 255f), new Color(100f / 255f, 0f, 200f / 255f) };  // orange, green, purple
+        Color[] meanPlanetColours = new Color[] { new Color(200f / 255f, 100f / 255f, 0f), new Color(200f / 255f, 100f / 255f, 0f), new Color(200f / 255f, 100f / 255f, 0f) };  // always orange now
         float[] meanMountainRoughnesses = new float[] { 0.4f, 1.7f, 9f };
         float[] meanMountainHeights = new float[] { 0.0001f, 0.2f, 0.5f };
         float[] meanAtmosphereStrengths = new float[] { 10f, 150f, 400f };
+        float[] meanSaturations = new float[] { 0.05f, 0.5f, 0.95f };
 
         // Define normal dist. standard deviations for each parameter
         float ringStd = 0.1f;
         float moonStd = 0.1f;
         float sunStd = 0.03f;
-        float colourStd = 0.1f;
+        float colourStd = 0.05f; //0.1f;
         float roughnessStd = 0.1f;
         float heightStd = 0.008f;
         float atmosphereStd = 10f;
@@ -298,6 +300,7 @@ public class Planet : MonoBehaviour
                 allExistingPlanets.mountainHeights[i].mean = meanMountainHeights[i];
                 allExistingPlanets.mountainRoughnesses[i].mean = meanMountainRoughnesses[i];
                 allExistingPlanets.planetColours[i] = meanPlanetColours[i];
+                allExistingPlanets.saturationLevels[i].mean = meanSaturations[i];
 
                 allExistingPlanets.ringRadii[i].stdev = ringStd;
                 allExistingPlanets.sunRadii[i].stdev = sunStd;
@@ -306,6 +309,7 @@ public class Planet : MonoBehaviour
                 allExistingPlanets.mountainHeights[i].stdev = heightStd;
                 allExistingPlanets.mountainRoughnesses[i].stdev = roughnessStd;
                 allExistingPlanets.colourStd = colourStd;
+                allExistingPlanets.saturationLevels[i].stdev = colourStd;
             }
         }
         settingsNotLoaded = false;
@@ -325,7 +329,7 @@ public class Planet : MonoBehaviour
         int atmosphereindex = (int)(Math.Floor(count / (3f * 3f * 3f * 3f * 3f)) % 3);
         int sunindex        = (int)(Math.Floor(count / (3f * 3f * 3f * 3f * 3f * 3f)) % 3);
 
-
+        /*
         Color colour = allExistingPlanets.planetColours[colourindex];
         GaussianSummaryStats height = allExistingPlanets.mountainHeights[heightindex];
         GaussianSummaryStats roughness = allExistingPlanets.mountainRoughnesses[roughnessindex];
@@ -333,18 +337,20 @@ public class Planet : MonoBehaviour
         GaussianSummaryStats mooniness = allExistingPlanets.mooninesses[mooninessindex];
         GaussianSummaryStats atmosphere = allExistingPlanets.atmosphereLevels[atmosphereindex];
         GaussianSummaryStats sunradius = allExistingPlanets.sunRadii[sunindex];
+        GaussianSummaryStats coloursaturation = allExistingPlanets.saturationLevels[colourindex];
+        */
 
-
-        /*
         // for testing perception of individual levels while keeping all other parameters constant
-        Color colour = allExistingPlanets.planetColours[count % 3];
+        Color colour = allExistingPlanets.planetColours[0];
         GaussianSummaryStats height = allExistingPlanets.mountainHeights[0];
         GaussianSummaryStats roughness = allExistingPlanets.mountainRoughnesses[0];
         GaussianSummaryStats ringradius = allExistingPlanets.ringRadii[0];
         GaussianSummaryStats mooniness = allExistingPlanets.mooninesses[0];
         GaussianSummaryStats atmosphere = allExistingPlanets.atmosphereLevels[0];
         GaussianSummaryStats sunradius = allExistingPlanets.sunRadii[0];
-        */
+        GaussianSummaryStats coloursaturation = allExistingPlanets.saturationLevels[count % 3];
+
+
 
 
         colourSampleStats = new ColourSamplingStatistics();
@@ -353,6 +359,7 @@ public class Planet : MonoBehaviour
         colourSampleStats.colourLevel = colourindex;  // try using this as a key for saturation level rather than colour
         colourSampleStats.meanColour = colour;
         colourSampleStats.stdev = allExistingPlanets.colourStd;
+        colourSampleStats.meanSaturation = coloursaturation.mean;
 
         shapeSampleStats = new ShapeSamplingStatistics();
         shapeSampleStats.setMean = true;

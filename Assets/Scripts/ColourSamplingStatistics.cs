@@ -9,5 +9,8 @@ public class ColourSamplingStatistics
 
     public int colourLevel;
     public Color meanColour;
-    public float stdev;
+    public float stdev;  // now refers to saturation std
+
+    public float meanSaturation;
+    
 }
