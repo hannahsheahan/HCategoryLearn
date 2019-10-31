@@ -18,6 +18,8 @@ public class ShapeGenerator
     INoiseFilter[] noiseFilters;   // holds any of the noise filters we might create (i.e. either SimpleNoiseFilters or RigidNoiseFilters)
     public MinMax elevationMinMax;
     public System.Random rand = new System.Random();  // Randomisation of planet settings
+    public float mountainHeight;
+    public float mountainRoughness;
 
     // ********************************************************************** //
 
@@ -99,8 +101,10 @@ public class ShapeGenerator
 
                     if (shapeSampleStats.setMean) 
                     {
-                        noiseLayer.noiseSettings.simpleNoiseSettings.strength = GaussianRandom(shapeSampleStats.meanStrength, shapeSampleStats.stdStrength) * (i + 1);
-                        noiseLayer.noiseSettings.simpleNoiseSettings.baseRoughness = GaussianRandom(shapeSampleStats.meanBaseRoughness, shapeSampleStats.stdBaseRoughness) * (i + 1); // we may want to keep this one fixed around 1f
+                        mountainHeight = GaussianRandom(shapeSampleStats.meanStrength, shapeSampleStats.stdStrength) * (i + 1);
+                        mountainRoughness = GaussianRandom(shapeSampleStats.meanBaseRoughness, shapeSampleStats.stdBaseRoughness) * (i + 1); // we may want to keep this one fixed around 1f
+                        noiseLayer.noiseSettings.simpleNoiseSettings.strength = mountainHeight;
+                        noiseLayer.noiseSettings.simpleNoiseSettings.baseRoughness = mountainRoughness;
                     }
                     else 
                     {
@@ -135,8 +139,8 @@ public class ShapeGenerator
                     */
                     break;
             }
+            settings.noiseLayers[i] = noiseLayer;
         }
-
         return settings;
     }
 

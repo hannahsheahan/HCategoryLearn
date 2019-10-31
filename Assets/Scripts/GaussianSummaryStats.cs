@@ -5,6 +5,11 @@ using UnityEngine;
 [System.Serializable]
 public class GaussianSummaryStats 
 {
+    /// <summary>
+    /// Author: Hannah Sheahan, sheahan.hannah@gmail.com
+    /// Date: 18/10/2019
+    /// </summary>
+
     public float mean;
     public float stdev;
 
