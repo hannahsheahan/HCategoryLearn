@@ -14,9 +14,9 @@ using System.Globalization;
 
 public class ScreenRecorder : MonoBehaviour
  {
-     // 4k = 3840 x 2160   1080p = 1920 x 1080
-     public int captureWidth = 1920;
-     public int captureHeight = 1080;
+    // 4k = 3840 x 2160   1080p = 1920 x 1080
+    private int captureWidth = 960; //1920;
+    private int captureHeight = 540; //1080;
 
     public string planetName;
     public bool threadAlive = false;
@@ -164,7 +164,7 @@ public class ScreenRecorder : MonoBehaviour
             // reset active camera texture and render texture
             camera.targetTexture = null;
              RenderTexture.active = null;
- 
+
              // get our unique filename
              filename = uniqueFilename((int) rect.width, (int) rect.height);
  
