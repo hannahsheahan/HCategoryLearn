@@ -17,10 +17,10 @@ MonoBehaviour:
     biomes:
     - gradient:
         serializedVersion: 2
-        key0: {r: 0.32801107, g: 0.1548699, b: 0.351946, a: 1}
-        key1: {r: 0.65602213, g: 0.3097398, b: 0.703892, a: 1}
-        key2: {r: 0.5904199, g: 0.24779184, b: 0.351946, a: 0}
-        key3: {r: 0.7872266, g: 0.7872266, b: 0.7872266, a: 0}
+        key0: {r: 0.54920316, g: 0.39374208, b: 0.18572578, a: 1}
+        key1: {r: 0.9153386, g: 0.65623677, b: 0.30954295, a: 1}
+        key2: {r: 0.8238047, g: 0.5249894, b: 0.15477148, a: 0}
+        key3: {r: 1, g: 1, b: 1, a: 0}
         key4: {r: 1, g: 1, b: 1, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
         key6: {r: 0, g: 0, b: 0, a: 0}
@@ -44,7 +44,7 @@ MonoBehaviour:
         m_Mode: 0
         m_NumColorKeys: 5
         m_NumAlphaKeys: 2
-      tint: {r: 0.29105985, g: 0.8907098, b: 0.18323337, a: 1}
+      tint: {r: 0.9153386, g: 0.65623677, b: 0.30954295, a: 1}
       startHeight: 1
       tintPercent: 0.1
     - gradient:
@@ -76,7 +76,7 @@ MonoBehaviour:
         m_Mode: 0
         m_NumColorKeys: 7
         m_NumAlphaKeys: 4
-      tint: {r: 0.65602213, g: 0.3097398, b: 0.703892, a: 1}
+      tint: {r: 0.9153386, g: 0.65623677, b: 0.30954295, a: 1}
       startHeight: 0.681
       tintPercent: 0.1
     noise:
@@ -99,14 +99,14 @@ MonoBehaviour:
         minValue: 0
         weightMultiplier: 0.8
     noiseOffset: 1.63
-    noiseStrength: 0.16
-    blendAmount: 0.652
+    noiseStrength: 0.09
+    blendAmount: 0.615
   oceanColour:
     serializedVersion: 2
-    key0: {r: 0.09840333, g: 0.04646097, b: 0.1055838, a: 1}
-    key1: {r: 0.09840333, g: 0.04646097, b: 0.1055838, a: 1}
-    key2: {r: 0.32801107, g: 0.1548699, b: 0.351946, a: 0}
-    key3: {r: 0.4592155, g: 0.21681786, b: 0.6335028, a: 0}
+    key0: {r: 0.16476095, g: 0.11812263, b: 0.055717736, a: 1}
+    key1: {r: 0.16476095, g: 0.11812263, b: 0.055717736, a: 1}
+    key2: {r: 0.54920316, g: 0.39374208, b: 0.18572578, a: 0}
+    key3: {r: 0.640737, g: 0.45936573, b: 0.27858865, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}

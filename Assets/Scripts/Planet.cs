@@ -82,7 +82,7 @@ public class Planet : MonoBehaviour
         colourSampleStats = new ColourSamplingStatistics();
 
         // Our sampling settings
-        datasetForm = "heirarchy";  // "flat", "singlefeature", "hierarchy"
+        datasetForm = "hierarchy";  // "flat", "singlefeature", "hierarchy"
         numPlanets = 8 * 200;  // how many planets to generate in this simulation
         featureorder = new int[] { 0, 1, 2, 3, 4, 5, 6 };
         //featureorder = RandomPermutation(featureorder);  // the random ordering of features in the hierarchy
@@ -302,13 +302,14 @@ public class Planet : MonoBehaviour
         float[] meanSaturations = new float[] { 0.05f, 0.5f, 0.95f };
 
         // Define normal dist. standard deviations for each parameter
-        float ringStd = 0.15f;
-        float moonStd = 0.1f;
-        float sunStd = 0.04f;
-        float colourStd = 0.05f;   // this is now for the saturation
-        float roughnessStd = 0.1f;
-        float heightStd = 0.008f;
-        float atmosphereStd = 10f;
+        float stdMultiplier = 3.0f; // for making the task harder by blurring the category lines
+        float ringStd = 0.15f * stdMultiplier;
+        float moonStd = 0.1f * stdMultiplier;
+        float sunStd = 0.04f * stdMultiplier;
+        float colourStd = 0.05f * stdMultiplier;   // this is now for the saturation
+        float roughnessStd = 0.1f * stdMultiplier;
+        float heightStd = 0.008f * stdMultiplier;
+        float atmosphereStd = 10f * stdMultiplier;
 
         // Ensure that we generate samples from a consistent set of distributions every time we append to this file
         // if there is an existing set of settings, then continue sampling from those original settings in file
@@ -402,10 +403,10 @@ public class Planet : MonoBehaviour
 
             case "singlefeature":
                 // for testing perception of individual levels while keeping all other parameters constant. Whichever one you want to alter, make =(count%3)
-                colourindex = count % 3;
+                colourindex = 0;
                 heightindex = 0;
                 roughnessindex = 0;
-                ringindex = 0;
+                ringindex = count % 3;
                 mooninessindex = 0;
                 atmosphereindex = 0;
                 sunindex = 0;

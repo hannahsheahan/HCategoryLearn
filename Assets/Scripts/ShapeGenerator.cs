@@ -101,6 +101,7 @@ public class ShapeGenerator
 
                     if (shapeSampleStats.setMean) 
                     {
+                        // note that these will appear weird if they take on negative values, so be aware of that. We dont want to truncate at 0 though because then we effectively limit the variability.
                         mountainHeight = GaussianRandom(shapeSampleStats.meanStrength, shapeSampleStats.stdStrength) * (i + 1);
                         mountainRoughness = GaussianRandom(shapeSampleStats.meanBaseRoughness, shapeSampleStats.stdBaseRoughness) * (i + 1); // we may want to keep this one fixed around 1f
                         noiseLayer.noiseSettings.simpleNoiseSettings.strength = mountainHeight;
