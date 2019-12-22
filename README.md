@@ -1,9 +1,9 @@
-# HCategoryLearn
+# :earth_asia: HCategoryLearn
 ##### Unity Editor Version: 2018.3.1
 
 This repo has been developed from [Sebastian Lague's](https://github.com/SebLague/Procedural-Planets) brilliant tutorial on procedural object generation in Unity. 
 I've developed Sebastian's planets for use in psychology experiments which test how well people can learn and represent a heirarchical taxonomy of planets. 
-:earth_asia: 
+ 
 ## :wrench: Major developments
 - Building a galaxy for our spinning planet to sit in. Includes a night sky, slowly drifting space dust and a sun which varies in proximity to the planet
 - Building additional external planet features e.g. an orbital ring which varies in radius and (optionally) thickness, a thick smokey atmosphere around our planet which varies in intensity, random moons which rotate together with our planet
@@ -17,7 +17,7 @@ I've developed Sebastian's planets for use in psychology experiments which test 
 
 Most interesting settings can be played with in the script _Planet.cs_.
 
-## :bowtie: Experimental psychologists 
+## Experimental psychologists 
 ### Planet properties currently manipulated in _Planet.cs_
 - :volcano: mountain height
 - :globe_with_meridians: mountain spatial frequency
