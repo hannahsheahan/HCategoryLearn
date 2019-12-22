@@ -1,13 +1,18 @@
 # HCategoryLearn
 ##### Unity Editor Version: 2018.3.1
 
-This repo has been developed from Sebastian Lague's brilliant tutorial on procedural object generation in Unity (https://github.com/SebLague/Procedural-Planets) (shorturl.at/axJ58). I've developed Sebastian's planets for use in psychology experiments which test how well people can learn and represent a heirarchical taxonomy of planets. 
-Major developments include:
+This repo has been developed from Sebastian Lague's brilliant tutorial on procedural object generation in Unity (https://github.com/SebLague/Procedural-Planets) ([youtube]shorturl.at/axJ58). 
+I've developed Sebastian's planets for use in psychology experiments which test how well people can learn and represent a heirarchical taxonomy of planets. 
+
+## Major developments
 - Building a galaxy for our planet to sit in. Includes a night sky and a sun which varies in proximity to the planet
 - Building additional external planet features e.g. an orbital ring which varies in radius and (optionally) thickness, a thick smokey atmosphere around our planet which varies in intensity, random moons which rotate together with our planet
 - Fixed the colour gradients along planet mountians and within planet seas to vary as a function of a single random colour theme
 - Built an image generator which takes sequential screen captures of each random planet as it is generated, and saves these images to file along with a lookup .json file containing the details of all relevant planet properties and the distributions they were sampled from.
-- Created a shortlist of ways to retrict the randomness in our planet generation, allowing the planet features to vary either: 1. similarly along a 'flat' structure in which there is no feature-correlation across planets; hierarchically such that planets positioned within a branch of a tree have more highly correlated features than those on different branches; or restricting the variation to a single feature at a time (useful for psychometric tuning or debugging). 
+- Created a shortlist of ways to retrict the randomness in our planet generation, allowing the planet features to vary either: 
+  - similarly along a 'flat' structure in which there is no feature-correlation across planets; 
+  - hierarchically such that planets positioned within a branch of a tree have more highly correlated features than those on different branches;
+  - or restricting the variation to a single feature at a time (useful for psychometric tuning or debugging). 
 
 Most interesting settings can be played with in the script _Planet.cs_.
 
