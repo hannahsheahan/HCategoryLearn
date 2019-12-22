@@ -67,7 +67,6 @@
     <Compile Include="Assets\Scripts\ColourSamplingStatistics.cs" />
     <Compile Include="Assets\Scripts\ColourSettings.cs" />
     <Compile Include="Assets\Scripts\ConditionalHideAttribute.cs" />
-    <Compile Include="Assets\Scripts\filepath.cs" />
     <Compile Include="Assets\Scripts\GaussianSummaryStats.cs" />
     <Compile Include="Assets\Scripts\INoiseFilter.cs" />
     <Compile Include="Assets\Scripts\MinMax.cs" />
