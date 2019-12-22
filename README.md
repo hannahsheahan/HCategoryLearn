@@ -4,19 +4,6 @@
 This repo has been developed from [Sebastian Lague's](https://github.com/SebLague/Procedural-Planets) brilliant tutorial on procedural object generation in Unity. 
 I've developed Sebastian's planets for use in psychology experiments which test how well people can learn and represent a heirarchical taxonomy of planets. 
  
-## :wrench: Major developments
-- Building a galaxy for our spinning planet to sit in. Includes a night sky, slowly drifting space dust and a sun which varies in proximity to the planet
-- Building additional external planet features e.g. an orbital ring which varies in radius and (optionally) thickness, a thick smokey atmosphere around our planet which varies in intensity, random moons which rotate together with our planet
-- Fixed the colour gradients along planet mountians and within planet seas to vary as a function of a single random colour theme
-- Restricted the variation in planet mountain textures so that they now vary along just two dimensions on a single layer: mountain height and the spatial frequency of land.
-- Built an image generator which takes sequential screen captures of each random planet as it is generated, and saves these images to file along with a lookup .json file containing the details of all relevant planet properties and the distributions they were sampled from.
-- Created a shortlist of ways to retrict the randomness in our planet generation, allowing the planet features to vary either: 
-  - similarly along a 'flat' structure in which there is no feature-correlation across planets; 
-  - hierarchically such that planets positioned within a branch of a tree have more highly correlated features than those on different branches;
-  - or restricting the variation to a single feature at a time (useful for psychometric tuning or debugging). 
-
-Most interesting settings can be played with in the script _Planet.cs_.
-
 ## Experimental psychologists 
 ### Planet properties currently manipulated in _Planet.cs_
 - :volcano: mountain height
@@ -26,6 +13,20 @@ Most interesting settings can be played with in the script _Planet.cs_.
 - :art: planet colour saturation
 - :last_quarter_moon_with_face: mooniness (number & size of moons)
 - :dizzy: orbital ring radius
+
+
+## :wrench: Major developments
+- Building a galaxy for our spinning planet to sit in. Includes a night sky, slowly drifting space dust and a sun which varies in proximity to the planet
+- Building additional external planet features e.g. orbital ring which varies in radius and (optionally) thickness, a smokey atmosphere around our planet which varies in intensity, random moons which rotate with our planet
+- Fixed colour gradients along planet mountians and within planet seas to vary as a function of a single random colour theme
+- Restricted variation in planet mountain textures, they now vary along just two dimensions on a single layer
+- Built an image generator which automatically screen captures each generated planet and associated particle systems, saves to.jpg with a lookup .json file containing all planet details
+- Shortlisted ways to retrict planet randomness to different across-planet correlation structures: 
+  - a flat structure in which there is no feature-correlation across planets; 
+  - a hierarchical structure such that planets positioned within a branch of a tree have more highly correlated features than those on different branches;
+  - single feature variability, all others fixed (useful for psychometric tuning or debugging) 
+
+Most interesting settings can be edited in _Planet.cs_.
 
 
 ## Downloading and installing
