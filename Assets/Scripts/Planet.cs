@@ -296,10 +296,10 @@ public class Planet : MonoBehaviour
         float[] meanSunRadii = new float[] { 0.06f, 0.3f, 0.7f };
         //Color[] meanPlanetColours = new Color[] { new Color(200f / 255f, 100f / 255f, 0f), new Color(0f, 200f / 255f, 100f / 255f), new Color(100f / 255f, 0f, 200f / 255f) };  // orange, green, purple
         Color[] meanPlanetColours = new Color[] { new Color(200f / 255f, 100f / 255f, 0f), new Color(200f / 255f, 100f / 255f, 0f), new Color(200f / 255f, 100f / 255f, 0f) };  // always orange now
-        float[] meanMountainRoughnesses = new float[] { 0.4f, 1.7f, 9f };
-        float[] meanMountainHeights = new float[] { 0.0001f, 0.2f, 0.4f };
+        float[] meanMountainRoughnesses = new float[] { 1f, 3f, 8f };
+        float[] meanMountainHeights = new float[] { 0.05f, 0.2f, 0.35f };
         float[] meanAtmosphereStrengths = new float[] { 10f, 150f, 400f };
-        float[] meanSaturations = new float[] { 0.05f, 0.5f, 0.95f };
+        float[] meanSaturations = new float[] { 0.15f, 0.5f, 0.85f };
 
         // Define normal dist. standard deviations for each parameter
         float stdMultiplier = 3.0f; // for making the task harder by blurring the category lines
