@@ -1,8 +1,15 @@
 # HCategoryLearn
 ##### Unity Editor Version: 2018.3.1
 
-This repo has been developed from UniturkDM for an experiment testing the learning and representation of hierarchically structured stimuli.
-The planets stimuli have been based on Sebastian Lague's brilliant tutorial on procedural object generation in Unity (https://github.com/SebLague/Procedural-Planets).
+This repo has been developed from Sebastian Lague's brilliant tutorial on procedural object generation in Unity (https://github.com/SebLague/Procedural-Planets) (https://www.youtube.com/watch?v=QN39W020LqU&list=PLFt_AvWsXl0cONs3T0By4puYy6GM22ko8). I've developed Sebastian's planets for use in psychology experiments which test how well people can learn and represent a heirarchical taxonomy of planets. 
+Major developments include:
+- Building a galaxy for our planet to sit in. Includes a night sky and a sun which varies in proximity to the planet
+- Building additional external planet features e.g. an orbital ring which varies in radius and (optionally) thickness, a thick smokey atmosphere around our planet which varies in intensity, random moons which rotate together with our planet
+- Fixed the colour gradients along planet mountians and within planet seas to vary as a function of a single random colour theme
+- Built an image generator which takes sequential screen captures of each random planet as it is generated, and saves these images to file along with a lookup .json file containing the details of all relevant planet properties and the distributions they were sampled from.
+- Created a shortlist of ways to retrict the randomness in our planet generation, allowing the planet features to vary either: 1. similarly along a 'flat' structure in which there is no feature-correlation across planets; hierarchically such that planets positioned within a branch of a tree have more highly correlated features than those on different branches; or restricting the variation to a single feature at a time (useful for psychometric tuning or debugging). 
+
+Most interesting settings can be played with in the script _Planet.cs_.
 
 
 ## Downloading and installing
@@ -10,27 +17,21 @@ The planets stimuli have been based on Sebastian Lague's brilliant tutorial on p
 2. Download and install Visual Studio (it’s a nice text editor for C#, but feel free to use any other text editor you like e.g. Atom, Xcode…).
 3. If you have a Github account, select:
 ```diff
-+ gitHub.com/hannahsheahan/grandMotherTurkerTest
++ gitHub.com/hannahsheahan/HCategoryLearn
 ```
 and fork it to your account.
 
 4. Open the Unity project on your computer.
 
-5. Add all Scenes to the build settings:   _File_ > _Build Settings_ > Drag and drop all scenes into the _Scenes in Build_ box > _Close_ the Build Settings.
+5. Add our single Scene (PlanetScene) to the build settings:   _File_ > _Build Settings_ > Drag and drop scene into the _Scenes in Build_ box > _Close_ the Build Settings.
 
 ## Setting a data save path
-1. Edit the script _filepath.cs_, and replace the path string with path to your local project folder.
-2. Create a folder called _‘data’_ within the project folder on your local machine.
-3. Open the script _DataController.cs_ and edit the variable _‘baseFilePath’_,  to change the local file saving path to the newly created folder _‘data’_ in your project folder.
-4. If you want to save data online, upload the data writing script _fromunity.php_ (located under _Assets_ > _php_ ) to the server (for Summerfield lab members, this should be under _/www/sandbox/tasks/YOURUSERNAME/YOURTASK/lib/php/_ ). Run 'chmod ugo+rw FOLDERNAME' from this directory in the terminal to sort out file permissions, where FOLDERNAME corresponds to the place on the server where you want to store data (thanks Timo!).
-5. If you want to save data online, edit the _fromunity.php_ script so that the path to your data folder on the server is correct.
-6. In the _DataController.cs_ script, find the function _‘SaveData()’_ and either: A) uncomment the line under ‘v1.0’ if you want to save data to your local machine, OR  B) if you want to save data on the web server (necessary for deploying this online),  uncomment the line under ‘v2.1’ and edit the web server file path for where you want to store the .php writing script, i.e. _sandbox/tasks/YOURUSERNAME/YOURTASK/lib/php/fromunity.php_ . Best to start by trying local file saving to check everything is working smoothly first.
+Edit the script _ScreenRecorder.cs_, and replace the path string for the variable _'folder'_ with a path to an empty local folder on your machine, which will hold the generated planet images.
 
+## Running the planet generator
+1. Open (double-click) the scene _‘PlanetScene’_ in the Project menu.
+2. Run the scene from within Unity (either press the play button at top of Unity, or press cmd+P ). To quit running the scene press cmd+P again.
+3. Run the scene. Now, while the scene is running, go to the _Hierarchy_ menu. Expand the game object named _Rotating Planet Things_, and click on the object named _Planet_. Properties for the Planet will appear in the Inspector. You will notice a set of three very useful buttons called _Generate Planet_, _Reset Planet Settings_ and _Generate Full Stimulus Set_. The first of these buttons is a bit boring and just generates a single planet according to the current settings. The second button _Reset Planet Settings_ will generate a planet with completely random settings which are not restricted by the across-planet structure we've set in the script _Planet.cs_, but it will not save an image of this planet. The final button will generate a full set of planets according to the across-planet structure we have imposed, and save images and a planet-feature-lookup .json file to the empty folder you named previously in the script _ScreenRecorder.cs_.
+4. One final tip. If there is already a generated planet look-up file in the folder we set for our images to be saved in, this will restrict the settings that each new stimulus set will take on. ie. these settings will be loaded and used for generating further planets. So if you are playing around with different feature settings, remember to delete the generated lookup file between runs! Enjoy!
 
-## Running the experiment
-1. Open (double-click) the scene _‘Persistent’_ in the Project menu.
-2. Run the scene from within Unity (either press the play button at top of Unity, or press cmd+P ). To quit running the scene press cmd+P again. Experiments must always be run from within the Persistent scene.
-3. The previous step should have created a datafile either locally in your ‘data’ folder or on the web server, based on your previous data save path choices. Go and check it out to make sure that this happened and take a look at what’s inside it.
-4. You should now have a basic functioning experiment! To understand how these projects are structured architecturally and how to develop from here, I will be releasing a flow diagram at some point, or you can just ask me.
-
-Any questions or problems, please let me know or send me a pull request  :)
+Any questions or problems, please let me know or send me a pull request.
