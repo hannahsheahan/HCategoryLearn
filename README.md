@@ -1,7 +1,7 @@
 # HCategoryLearn
 ##### Unity Editor Version: 2018.3.1
 
-This repo has been developed from Sebastian Lague's brilliant tutorial on procedural object generation in Unity (https://github.com/SebLague/Procedural-Planets) (https://www.youtube.com/watch?v=QN39W020LqU&list=PLFt_AvWsXl0cONs3T0By4puYy6GM22ko8). I've developed Sebastian's planets for use in psychology experiments which test how well people can learn and represent a heirarchical taxonomy of planets. 
+This repo has been developed from Sebastian Lague's brilliant tutorial on procedural object generation in Unity (https://github.com/SebLague/Procedural-Planets) (shorturl.at/axJ58). I've developed Sebastian's planets for use in psychology experiments which test how well people can learn and represent a heirarchical taxonomy of planets. 
 Major developments include:
 - Building a galaxy for our planet to sit in. Includes a night sky and a sun which varies in proximity to the planet
 - Building additional external planet features e.g. an orbital ring which varies in radius and (optionally) thickness, a thick smokey atmosphere around our planet which varies in intensity, random moons which rotate together with our planet
