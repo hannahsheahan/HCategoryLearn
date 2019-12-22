@@ -3,11 +3,12 @@
 
 This repo has been developed from [Sebastian Lague's](https://github.com/SebLague/Procedural-Planets) brilliant tutorial on procedural object generation in Unity. 
 I've developed Sebastian's planets for use in psychology experiments which test how well people can learn and represent a heirarchical taxonomy of planets. 
-
-## Major developments
-- Building a galaxy for our planet to sit in. Includes a night sky and a sun which varies in proximity to the planet
+:earth_asia: 
+## :wrench: Major developments
+- Building a galaxy for our spinning planet to sit in. Includes a night sky, slowly drifting space dust and a sun which varies in proximity to the planet
 - Building additional external planet features e.g. an orbital ring which varies in radius and (optionally) thickness, a thick smokey atmosphere around our planet which varies in intensity, random moons which rotate together with our planet
 - Fixed the colour gradients along planet mountians and within planet seas to vary as a function of a single random colour theme
+- Restricted the variation in planet mountain textures so that they now vary along just two dimensions on a single layer: mountain height and the spatial frequency of land.
 - Built an image generator which takes sequential screen captures of each random planet as it is generated, and saves these images to file along with a lookup .json file containing the details of all relevant planet properties and the distributions they were sampled from.
 - Created a shortlist of ways to retrict the randomness in our planet generation, allowing the planet features to vary either: 
   - similarly along a 'flat' structure in which there is no feature-correlation across planets; 
@@ -15,6 +16,16 @@ I've developed Sebastian's planets for use in psychology experiments which test 
   - or restricting the variation to a single feature at a time (useful for psychometric tuning or debugging). 
 
 Most interesting settings can be played with in the script _Planet.cs_.
+
+## :bowtie: Experimental psychologists 
+### Planet properties currently manipulated in _Planet.cs_
+- :volcano: mountain height
+- :globe_with_meridians: mountain spatial frequency
+- :sunny: planet proximity to sun
+- :dash: atmosphere strength
+- :art: planet colour saturation
+- :last_quarter_moon_with_face: mooniness (number & size of moons)
+- :dizzy: orbital ring radius
 
 
 ## Downloading and installing
