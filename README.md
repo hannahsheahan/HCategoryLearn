@@ -52,3 +52,4 @@ Edit the script _ScreenRecorder.cs_, and replace the path string for the variabl
 4. One final tip. If there is already a generated planet look-up file in the folder we set for our images to be saved in, this will restrict the settings that each new stimulus set will take on. ie. these settings will be loaded and used for generating further planets. So if you are playing around with different feature settings, remember to delete the generated lookup file between runs! Enjoy!
 
 Any questions or problems, please let me know or send me a pull request.
+Please feel free to use this repo for whatever you like, but please credit both myself and Sebastian Lague.
