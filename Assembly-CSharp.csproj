@@ -98,7 +98,6 @@
     <Compile Include="Assets\Simple UI\Samples\IconPreview.cs" />
     <None Include="Assets\EffectExamples\Misc Effects\Shaders\Dissolve.shader" />
     <None Include="Assets\EffectExamples\Misc Effects\Shaders\FireFly.shader" />
-    <None Include="Assets\Fonts\Jupiter\LICENSE.txt" />
     <None Include="Assets\Simple UI\Fonts\OFL.txt" />
     <None Include="Assets\EffectExamples\Misc Effects\Prefabs\Readme_Dissolve_Respawn_.txt" />
     <None Include="Assets\Textures and Sprites\SF UI\Background\LICENSE.txt" />
