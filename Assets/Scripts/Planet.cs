@@ -84,7 +84,7 @@ public class Planet : MonoBehaviour
         // Our sampling settings
         datasetForm = "hierarchy";  // "flat", "singlefeature", "hierarchy"
         numPlanets = 8 * 210;  // how many planets to generate in this simulation
-        featureorder = new int[] { 0, 1, 2, 3, 4, 5, 6 };
+        featureorder = new int[] {0, 1, 2, 3, 4, 5, 6};
         //featureorder = RandomPermutation(featureorder);  // the random ordering of features in the hierarchy
 
         // Read in the existing record of planet details
