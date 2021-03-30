@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/PlanetTest.unity
+- path: Assets/Scenes/PlanetScene.unity
   isLoaded: 1
   isActive: 1

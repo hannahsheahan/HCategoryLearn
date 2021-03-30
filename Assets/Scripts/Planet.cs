@@ -83,7 +83,7 @@ public class Planet : MonoBehaviour
 
         // Our sampling settings
         datasetForm = "hierarchy";  // "flat", "singlefeature", "hierarchy"
-        numPlanets = 8 * 200;  // how many planets to generate in this simulation
+        numPlanets = 8 * 210;  // how many planets to generate in this simulation
         featureorder = new int[] { 0, 1, 2, 3, 4, 5, 6 };
         //featureorder = RandomPermutation(featureorder);  // the random ordering of features in the hierarchy
 
@@ -293,7 +293,7 @@ public class Planet : MonoBehaviour
         // Define the gaussian distribution means for each level (save these to file too)
         float[] meanRingRadii = new float[] { 0.4f, 1.35f, 2.1f };
         float[] meanMooninesses = new float[] { 0.4f, 2.3f, 5f };
-        float[] meanSunRadii = new float[] { 0.06f, 0.3f, 0.7f };
+        float[] meanSunRadii = new float[] { 0.12f, 0.4f, 0.7f };
         //Color[] meanPlanetColours = new Color[] { new Color(200f / 255f, 100f / 255f, 0f), new Color(0f, 200f / 255f, 100f / 255f), new Color(100f / 255f, 0f, 200f / 255f) };  // orange, green, purple
         Color[] meanPlanetColours = new Color[] { new Color(200f / 255f, 100f / 255f, 0f), new Color(200f / 255f, 100f / 255f, 0f), new Color(200f / 255f, 100f / 255f, 0f) };  // always orange now
         float[] meanMountainRoughnesses = new float[] { 1f, 3f, 8f };
@@ -302,10 +302,10 @@ public class Planet : MonoBehaviour
         float[] meanSaturations = new float[] { 0.15f, 0.5f, 0.85f };
 
         // Define normal dist. standard deviations for each parameter
-        float stdMultiplier = 3.0f; // for making the task harder by blurring the category lines
+        float stdMultiplier = 4.0f; // for making the task harder by blurring the category lines
         float ringStd = 0.15f * stdMultiplier;
         float moonStd = 0.1f * stdMultiplier;
-        float sunStd = 0.04f * stdMultiplier;
+        float sunStd = 0.02f * stdMultiplier;
         float colourStd = 0.05f * stdMultiplier;   // this is now for the saturation
         float roughnessStd = 0.1f * stdMultiplier;
         float heightStd = 0.008f * stdMultiplier;

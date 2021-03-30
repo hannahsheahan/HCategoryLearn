@@ -82,6 +82,7 @@ public class ParticleLauncher : MonoBehaviour
         ParticleSystem.ShapeModule shape = settings.ParticleSystem.shape;
         ParticleSystem.EmissionModule emission = settings.ParticleSystem.emission;
         ParticleSystem.TrailModule trails = settings.ParticleSystem.trails;
+        sunRadius = Math.Max(0f, sunRadius);
 
         switch (type) 
         {
@@ -128,10 +129,10 @@ public class ParticleLauncher : MonoBehaviour
 
             case "sunsurface":
                 //sun.transform = sunPosition;
-                mainModule.startColor = SetColourSolid(new Color(1f, 1f, .5f), 0.8f, 1f-sunRadius);
+                mainModule.startColor = SetColourSolid(new Color(1f, 1f, .5f), 0.8f, 1f);//-sunRadius);
                 // adjust the glowing size and the size of the bits of glow accordingly
                 shape.radius = SetSunRadius(sunRadius);
-                mainModule.startSize = SetSunParticleSize(sunRadius);
+                mainModule.startSize = SetSunParticleSize(sunRadius * 2f);
                 break;
 
             case "sunsphere":
