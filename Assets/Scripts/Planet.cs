@@ -10,11 +10,11 @@ public class Planet : MonoBehaviour
 {
     /// <summary>
     /// This script has been built around an online youtube tutorial on procedural
-    /// planet generation, provided by Sebastian Lague: https://github.com/SebLague/Procedural-Planets 
+    /// planet generation, provided by Sebastian Lague: https://github.com/SebLague/Procedural-Planets
     /// Edited: Hannah Sheahan, sheahan.hannah@gmail.com
     /// Date: 21/03/2019
     /// </summary>
-    /// 
+    ///
 
     [Range(2,256)]    // constrains the size of 'resolution' in the GUI
     public int resolution = 100;
@@ -51,7 +51,11 @@ public class Planet : MonoBehaviour
     ParticleSamplingStatistics particleSampleStats;
     ShapeSamplingStatistics shapeSampleStats;
 
-    public AllPlanetData allExistingPlanets;     public PlanetData planetData;     private string dataAsJson;     public string filePath = "/Users/hannahsheahan/Documents/Postdoc/Experiments/hCategoryLearn/StimulusSet/";     public string planetPath;
+    public AllPlanetData allExistingPlanets; 
+    public PlanetData planetData; 
+    private string dataAsJson; 
+    public string filePath = "/Users/hannahsheahan/Documents/Postdoc/Experiments/hCategoryLearn/StimulusSet/"; 
+    public string planetPath;
     private string recordFilePath;
     private Timer savingTimer; 
     private bool startGenerativeProcess = false;
@@ -61,15 +65,15 @@ public class Planet : MonoBehaviour
     private bool finishedSaving = true;
     private bool startedSaving = false;
     private bool finished = false;
-    public int numPlanets;  
+    public int numPlanets;
 
     private ScreenRecorder recorder;
     public GameObject camera;
      private System.Random rnd = new System.Random();
     // ********************************************************************** //
 
-    void Awake() 
-    { 
+    void Awake()
+    {
         particleLauncher = gameObject.GetComponent(typeof(ParticleLauncher)) as ParticleLauncher;
         tintColor = new Color();
         meanColor = new Color();
@@ -88,8 +92,13 @@ public class Planet : MonoBehaviour
         //featureorder = RandomPermutation(featureorder);  // the random ordering of features in the hierarchy
 
         // Read in the existing record of planet details
-        recordFilePath = filePath + "stimulusLookup.json";         if (File.Exists(recordFilePath))         {             Debug.Log("Opening record of generated planets.");             LoadExistingPlanets(recordFilePath);         }
-        else 
+        recordFilePath = filePath + "stimulusLookup.json"; 
+        if (File.Exists(recordFilePath))
+         { 
+            Debug.Log("Opening record of generated planets.");
+             LoadExistingPlanets(recordFilePath);
+         }
+        else
         {
             allExistingPlanets.allPlanetData = new List<PlanetData>();
             allExistingPlanets.planetColours = new Color[allExistingPlanets.nLevels];
@@ -108,7 +117,7 @@ public class Planet : MonoBehaviour
         particleLauncher.UpdateSettings(tintColor, reset, particleSampleStats);
 
         // only create new meshFilters when you need them
-        if (meshFilters == null || meshFilters.Length == 0) 
+        if (meshFilters == null || meshFilters.Length == 0)
         {
             meshFilters = new MeshFilter[cubeFaces];
         }
@@ -116,10 +125,10 @@ public class Planet : MonoBehaviour
 
         Vector3[] directions = { Vector3.up, Vector3.down, Vector3.left, Vector3.right, Vector3.forward, Vector3.back };  // one for each of the cube faces
 
-        for (int i = 0; i < cubeFaces; i++) 
+        for (int i = 0; i < cubeFaces; i++)
         {
-            if (meshFilters[i] == null) 
-            { 
+            if (meshFilters[i] == null)
+            {
                 GameObject meshObj = new GameObject("mesh");
                 meshObj.transform.parent = transform;
 
@@ -136,7 +145,7 @@ public class Planet : MonoBehaviour
 
     // ********************************************************************** //
 
-    public void GeneratePlanet(bool reset=false) 
+    public void GeneratePlanet(bool reset=false)
     {
         Initialize(reset);
         GenerateMesh();
@@ -145,10 +154,10 @@ public class Planet : MonoBehaviour
 
     // ********************************************************************** //
 
-    public void OnShapeSettingsUpdated() 
+    public void OnShapeSettingsUpdated()
     {
-        if (autoUpdate) 
-        { 
+        if (autoUpdate)
+        {
             Initialize();
             GenerateMesh();
         }
@@ -156,7 +165,7 @@ public class Planet : MonoBehaviour
 
     // ********************************************************************** //
 
-    public void OnColourSettingsUpdated() 
+    public void OnColourSettingsUpdated()
     {
         if (autoUpdate)
         {
@@ -167,10 +176,10 @@ public class Planet : MonoBehaviour
 
     // ********************************************************************** //
 
-    void GenerateMesh() 
-    { 
+    void GenerateMesh()
+    {
         // Just generate the mesh for every face of the terrain
-        foreach (TerrainFace face in terrainFaces) 
+        foreach (TerrainFace face in terrainFaces)
         {
             face.ConstructMesh();
         }
@@ -181,7 +190,7 @@ public class Planet : MonoBehaviour
 
     // ********************************************************************** //
 
-    void GenerateColours() 
+    void GenerateColours()
     {
         colourGenerator.UpdateColours();
 
@@ -192,18 +201,83 @@ public class Planet : MonoBehaviour
         }
     }
 
-    // ********************************************************************** //      string PlanetIDGenerator(int ndigits=5)      {         // Create a random code of N digits in length         int code = rnd.Next(0, (int)Math.Pow(10, ndigits-1));          // This will specify a subject-unique (probably) confirmation code for them to enter after finishing experiment to show completion         string IDcode = code.ToString();          while (IDcode.Length < 7)       // pad the code string with zeros until its 7 digits         {             IDcode = "0" + IDcode;         }          // convert the planet ID number to real planet information code         string planetName = "planet";         planetName = planetName + "_" + IDcode + "_" + GetDateTime();          return planetName;     }      // ********************************************************************** //      void SavePlanet()      {
+    // ********************************************************************** //  
+
+    string PlanetIDGenerator(int ndigits=5) 
+    { 
+        // Create a random code of N digits in length
+         int code = rnd.Next(0, (int)Math.Pow(10, ndigits-1));
+          // This will specify a subject-unique (probably) confirmation code for them to enter after finishing experiment to show completion
+         string IDcode = code.ToString();  
+        while (IDcode.Length < 7)       // pad the code string with zeros until its 7 digits 
+        { 
+            IDcode = "0" + IDcode; 
+        }  
+
+        // convert the planet ID number to real planet information code 
+        string planetName = "planet"; 
+        planetName = planetName + "_" + IDcode + "_" + GetDateTime();
+          return planetName; 
+    }  
+
+    // ********************************************************************** //
+      void SavePlanet() 
+    {
         // Take a screenshot of this new planet and save it to file
-        string planetName = PlanetIDGenerator(5);         planetPath = filePath + planetName + ".jpg";         recorder.CaptureScreenshot(planetName);
-        Debug.Log("Saving image to .jpg file and details to .json file.");          // Add all the details about this random planet to the stimulus set .json file         planetData = CurrentPlanetSettings(planetName); 
-        // Add new planet to the List of all existing planets (could be 100k objects in this list, so beware performance HRS)         allExistingPlanets.allPlanetData.Add(planetData);          // convert the data to JSON format         dataAsJson = JsonUtility.ToJson(allExistingPlanets); 
+        string planetName = PlanetIDGenerator(5); 
+        planetPath = filePath + planetName + ".jpg";
+         recorder.CaptureScreenshot(planetName);
+        Debug.Log("Saving image to .jpg file and details to .json file.");  
+
+        // Add all the details about this random planet to the stimulus set .json file 
+        planetData = CurrentPlanetSettings(planetName); 
+
+        // Add new planet to the List of all existing planets (could be 100k objects in this list, so beware performance HRS) 
+        allExistingPlanets.allPlanetData.Add(planetData);  
+
+        // convert the data to JSON format 
+        dataAsJson = JsonUtility.ToJson(allExistingPlanets); 
         File.WriteAllText(recordFilePath, dataAsJson);
-             }      // ********************************************************************** //      string GetDateTime()      {         DateTime dateTime = DateTime.Now;              string stringDateTime = dateTime.ToString("dd-MM-yy", DateTimeFormatInfo.InvariantInfo) + '_' + dateTime.ToString("T", DateTimeFormatInfo.InvariantInfo);         stringDateTime = stringDateTime.Replace("/", "-");   // make sure you don't have conflicting characters for writing to web server         stringDateTime = stringDateTime.Replace(":", "-");             return stringDateTime;     }      // ********************************************************************** //      public void LoadExistingPlanets(string filepath)     {         // may need to write an exception case here HRS         string json = File.ReadAllText(filepath);         allExistingPlanets = JsonUtility.FromJson<AllPlanetData>(json);          Debug.Log("Just loaded data from " + allExistingPlanets.allPlanetData.Count + " generated planets.");     }      // ********************************************************************** //      public PlanetData CurrentPlanetSettings(string planetName)      {         // This function generates local variable copies of the settings that we want to save for this planet          planetData = new PlanetData();              // new to create a new object to store this planet's parameters
-        planetData.planetName = planetName;         planetData.generationDateTime = GetDateTime();         planetData.planetColour = tintColor;
+
+ }
+
+    // ********************************************************************** //
+
+  string GetDateTime() 
+    {
+        DateTime dateTime = DateTime.Now; 
+         string stringDateTime = dateTime.ToString("dd-MM-yy", DateTimeFormatInfo.InvariantInfo) + '_' + dateTime.ToString("T", DateTimeFormatInfo.InvariantInfo); 
+        stringDateTime = stringDateTime.Replace("/", "-");   // make sure you don't have conflicting characters for writing to web server 
+        stringDateTime = stringDateTime.Replace(":", "-");
+          return stringDateTime; 
+    } 
+
+     // ********************************************************************** //
+      public void LoadExistingPlanets(string filepath) 
+    { 
+        // may need to write an exception case here HRS 
+        string json = File.ReadAllText(filepath); 
+        allExistingPlanets = JsonUtility.FromJson<AllPlanetData>(json);  
+        Debug.Log("Just loaded data from " + allExistingPlanets.allPlanetData.Count + " generated planets."); 
+    }
+      // ********************************************************************** //  
+    public PlanetData CurrentPlanetSettings(string planetName)
+     {
+         // This function generates local variable copies of the settings that we want to save for this planet  
+        planetData = new PlanetData();              // new to create a new object to store this planet's parameters
+        planetData.planetName = planetName; 
+        planetData.generationDateTime = GetDateTime(); 
+        planetData.planetColour = tintColor;
         planetData.saturation = saturation;
         planetData.mountainHeight = shapeGenerator.mountainHeight;
         planetData.mountainRoughness = shapeGenerator.mountainRoughness;
-         // The particle systems settings         planetData.sunRadius = particleLauncher.sunRadius;         planetData.ringRadius = particleLauncher.ringRadius;         planetData.dustAmount = particleLauncher.dustAmount;         planetData.atmosphereAmount = particleLauncher.atmosphereAmount; 
+
+         // The particle systems settings 
+        planetData.sunRadius = particleLauncher.sunRadius;
+         planetData.ringRadius = particleLauncher.ringRadius;
+         planetData.dustAmount = particleLauncher.dustAmount;
+         planetData.atmosphereAmount = particleLauncher.atmosphereAmount; 
+
         // Particle systems levels
         planetData.colourLevel = colourLevel;
         planetData.sunLevel = particleLauncher.sunLevel;
@@ -212,16 +286,17 @@ public class Planet : MonoBehaviour
         planetData.atmosphereLevel = particleLauncher.atmosphereLevel;
         planetData.mountainHeightLevel = shapeSettings.mountainHeightLevel;
         planetData.mountainRoughnessLevel = shapeSettings.mountainRoughnessLevel;
-         return planetData;     }
+         return planetData;
+     }
 
     // ********************************************************************** //
 
-   void Update() 
+   void Update()
    {
-        if (!finished) 
-        { 
+        if (!finished)
+        {
             if (!startedSaving) // check for a trigger from the thread starting
-            { 
+            {
                 startedSaving = recorder.threadAlive;
             }
 
@@ -243,11 +318,11 @@ public class Planet : MonoBehaviour
                     Debug.Log("load all settings");
                     LoadSettings();  // first time around only
                     settingsNotLoaded = false;
-                } 
+                }
                 else
                 {
-                    if (startGenerativeProcess) 
-                    { 
+                    if (startGenerativeProcess)
+                    {
                         if (recorder.threadStarted & (!recorder.threadAlive) )
                         {
                             recorder.threadStarted = false;
@@ -264,10 +339,10 @@ public class Planet : MonoBehaviour
             else if (!finished) // write a message when we're done
             {
                 Debug.Log("Done!");
-                if (datasetForm == "heirarchy") 
+                if (datasetForm == "heirarchy")
                 {
                     Debug.Log("featureorder: ");
-                    foreach (int feature in featureorder) 
+                    foreach (int feature in featureorder)
                     {
                         Debug.Log(feature);
                     }
@@ -279,7 +354,7 @@ public class Planet : MonoBehaviour
 
     // ********************************************************************** //
 
-    public void GenerateStimulusSet() 
+    public void GenerateStimulusSet()
     {
         startGenerativeProcess = true;
         Debug.Log("Generation process started at: " + GetDateTime());
@@ -314,9 +389,9 @@ public class Planet : MonoBehaviour
 
         // Ensure that we generate samples from a consistent set of distributions every time we append to this file
         // if there is an existing set of settings, then continue sampling from those original settings in file
-        if (allExistingPlanets.allPlanetData.Count == 0) 
-        { 
-            for (int i=0; i < allExistingPlanets.nLevels; i++) 
+        if (allExistingPlanets.allPlanetData.Count == 0)
+        {
+            for (int i=0; i < allExistingPlanets.nLevels; i++)
             {
                 // set the sampling parameters for saving to file
                 allExistingPlanets.ringRadii[i].mean = meanRingRadii[i];
@@ -343,7 +418,7 @@ public class Planet : MonoBehaviour
 
     // ********************************************************************** //
 
-    bool LessThanHalfOfX(float index, float x) 
+    bool LessThanHalfOfX(float index, float x)
     {
         // This function returns a bool answer to the question "is i less than or equal to half of x"
         // indices are indexed 0-(x-1), so bias the case of i==x/2 to return true
@@ -353,13 +428,13 @@ public class Planet : MonoBehaviour
 
     // ********************************************************************** //
 
-    int[] RandomPermutation(int[] inputarray) 
+    int[] RandomPermutation(int[] inputarray)
     {
         List<int> listToSample = inputarray.OfType<int>().ToList();
         int[] newarray = new int[inputarray.Length];
         int index;
 
-        for (int i = 0; i < inputarray.Length; i++) 
+        for (int i = 0; i < inputarray.Length; i++)
         {
             // take a random sample of our mutable list without replacement
             index = rnd.Next(0, listToSample.Count);
@@ -373,7 +448,7 @@ public class Planet : MonoBehaviour
     }
     // ********************************************************************** //
 
-    void LoadNextSettings(int count) 
+    void LoadNextSettings(int count)
     {
         Debug.Log("planet index: " + count);
 
@@ -389,7 +464,7 @@ public class Planet : MonoBehaviour
         const int NULL_LEVEL = 1;
         const int HIGH_LEVEL = 2;
 
-        switch (datasetForm) 
+        switch (datasetForm)
         {
             case "flat":
                 // for generating a full data set (non hierarchical, all combinations)
@@ -416,10 +491,10 @@ public class Planet : MonoBehaviour
             case "heirarchy":
                 // for generating a single hierarchical dataset of level 3 (8 planets)
                 // note that the -1, 0 and +1 levels in the RSA matrix correspond to 0, 1 and 2 index levels of each feature respectively.
-                // the numbers 0-6 here correspond to the ordering: 
-                // [0] colourindex 
-                // [1] roughnessindex 
-                // [2] heightindex 
+                // the numbers 0-6 here correspond to the ordering:
+                // [0] colourindex
+                // [1] roughnessindex
+                // [2] heightindex
                 // [3] ringindex
                 // [4] mooninessindex
                 // [5] atmosphereindex
@@ -437,7 +512,7 @@ public class Planet : MonoBehaviour
                 }
 
                 // set the hierarchy logic - yes this could be simplified for better coding practice HRS
-                if (numPlanets % 8 != 0) 
+                if (numPlanets % 8 != 0)
                 {
                     Debug.Log("Warning: generating a number of planets that will not correctly fill the 3 level hierarchy. Check numPlanets.");
                 }
@@ -481,8 +556,8 @@ public class Planet : MonoBehaviour
                 }
 
                 // print these out to check its working properly
-                for (int i=0; i < featureindex.Length; i++) 
-                { 
+                for (int i=0; i < featureindex.Length; i++)
+                {
                     Debug.Log("feature index ["+i+"]: "+featureindex[i]);
                 }
 
@@ -496,12 +571,12 @@ public class Planet : MonoBehaviour
                 break;
 
             default:
-                colourindex = 0;           
-                roughnessindex = 0;       
-                heightindex = 0;         
-                ringindex = 0;            
-                mooninessindex = 0;    
-                atmosphereindex = 0;     
+                colourindex = 0;
+                roughnessindex = 0;
+                heightindex = 0;
+                ringindex = 0;
+                mooninessindex = 0;
+                atmosphereindex = 0;
                 sunindex = 0;
                 break;
         }
@@ -557,4 +632,3 @@ public class Planet : MonoBehaviour
     // ********************************************************************** //
 
 }
-
