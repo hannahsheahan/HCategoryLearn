@@ -236,7 +236,7 @@ public class Planet : MonoBehaviour
         allExistingPlanets.allPlanetData.Add(planetData);  
 
         // convert the data to JSON format 
-        dataAsJson = JsonUtility.ToJson(allExistingPlanets); 
+        dataAsJson = JsonUtility.ToJson(allExistingPlanets);         Debug.Log(recordFilePath);
         File.WriteAllText(recordFilePath, dataAsJson);
 
  }
